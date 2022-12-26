@@ -10,3 +10,8 @@ inoremap <expr> [ autoclose#WriteCloseBracket("[")
 inoremap <expr> ) autoclose#NotDoubleCloseBracket(")")
 inoremap <expr> } autoclose#NotDoubleCloseBracket("}")
 inoremap <expr> ] autoclose#NotDoubleCloseBracket("]")
+
+" クォーテーション入力
+inoremap <expr> ' autoclose#AutoCloseQuot("\'")
+inoremap <expr> " autoclose#AutoCloseQuot("\"")
+inoremap <expr> ` autoclose#AutoCloseQuot("\`")
