@@ -35,7 +35,7 @@ function! autoclose#WriteCloseBracket(bracket) abort
 endfunction
 
 " 閉じ括弧入力時の挙動
-function! NotDoubleCloseBracket(closeBracket) abort
+function! autoclose#NotDoubleCloseBracket(closeBracket) abort
   let l:prevChar = getline('.')[charcol('.') - 2] " カーソルの前の文字
   let l:nextChar = getline('.')[charcol('.') - 1] " カーソルの次の文字
   " ()と入力した場合())とせずに()で止める
