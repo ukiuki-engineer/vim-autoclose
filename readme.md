@@ -1,4 +1,3 @@
-# [vimscript](https://github.com/ukiuki-engineer/vim-autoclose)からリプレイス中...!!
 ## 概要
 括弧、クォーテーション、タグを閉じる補完を良い感じに行うプラグイン。
 
