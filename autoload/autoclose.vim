@@ -1,5 +1,5 @@
 " 対の括弧を返す
-function! autoclose#ReverseBracket(bracket) abort
+function! ReverseBracket(bracket) abort
   let l:startBracket = {")": "(", "}": "{", "]": "["} " 括弧
   let l:closeBracket = {"(": ")", "{": "}", "[": "]"} " 閉じ括弧
 
@@ -24,7 +24,7 @@ function! autoclose#WriteCloseBracket(bracket) abort
   if l:nextChar =~ '\a' || l:nextChar =~ '\d' || l:nextChar =~ '[^\x01-\x7E]'
     return a:bracket " 括弧補完しない
   else
-    return a:bracket . autoclose#ReverseBracket(a:bracket) . "\<LEFT>" " 括弧補完
+    return a:bracket . ReverseBracket(a:bracket) . "\<LEFT>" " 括弧補完
   endif
 endfunction
 
@@ -33,7 +33,7 @@ function! autoclose#NotDoubleCloseBracket(closeBracket) abort
   let l:prevChar = getline('.')[charcol('.') - 2] " カーソルの前の文字
   let l:nextChar = getline('.')[charcol('.') - 1] " カーソルの次の文字
   " ()と入力した場合())とせずに()で止める
-  if l:nextChar == a:closeBracket && l:prevChar == autoclose#ReverseBracket(a:closeBracket)
+  if l:nextChar == a:closeBracket && l:prevChar == ReverseBracket(a:closeBracket)
     return "\<RIGHT>"
   else
     return a:closeBracket
@@ -41,7 +41,7 @@ function! autoclose#NotDoubleCloseBracket(closeBracket) abort
 endfunction
 
 " クォーテーション補完
-function! autoclose#AutoCloseQuot(quot)
+function! autoclose#AutoCloseQuot(quot) abort
   let l:prevChar = getline('.')[charcol('.') - 2] " カーソルの前の文字
   let l:nextChar = getline('.')[charcol('.') - 1] " カーソルの次の文字
   " カーソルの次の文字が以下に含まれている場合にクォーテーション補完を有効にする
@@ -61,5 +61,94 @@ function! autoclose#AutoCloseQuot(quot)
     return a:quot . a:quot . "\<LEFT>"
   else
     return a:quot
+  endif
+endfunction
+
+" 要素内文字列から要素名を抜き出す
+function! TrimElementName(strLineNum, strInTag) abort
+  let l:elementName = ""
+  let l:startRange = 1
+  " カーソル行とタグがある行が違う場合、
+  " インデントが含まれているので要素名抜き出しのスタート位置をずらす
+  if a:strLineNum != line('.')
+    let l:startRange = indent(a:strLineNum) + 1
+  endif
+  for i in range(l:startRange, strlen(a:strInTag))
+    if a:strInTag[i] == " "
+      break
+    endif
+    if a:strInTag[i] != "<"
+      let l:elementName = l:elementName . a:strInTag[i]
+    endif
+  endfor
+  return l:elementName
+endfunction
+
+" カーソルより前の一番近い要素名を取得する
+function! FindElementName(ket) abort
+  " カーソル行を検索
+  let l:strInTag = ""
+  for i in range(1, charcol('.'))
+    let l:targetChar = getline('.')[charcol('.') - 1 - i]
+    let l:strInTag = l:targetChar . l:strInTag
+    echo l:strInTag
+    if l:targetChar == "<"
+      break
+    endif
+  endfor
+  if "<" == matchstr(l:strInTag, "<")
+    return TrimElementName(line('.'), l:strInTag)
+  endif
+  " カーソルより上の行を検索
+  let l:strOnLine = ""
+  for i in range(1, line('.') - 1)
+    let l:strOnLine = getline(line('.') - i)
+    if "<" == matchstr(l:strOnLine, "<")
+      return TrimElementName(line('.') - i, l:strOnLine)
+    endif
+  endfor
+  return a:ket
+endfunction
+
+" 閉じタグを補完する
+function! WriteCloseTag(ket) abort
+  let l:prevChar = getline('.')[charcol('.') - 2] " カーソルの前の文字
+  let l:voidElements = ["br", "hr", "img", "input", "link", "meta"]
+  " 以下の場合は閉じタグ補完を行わない
+  " ・/>で閉じる場合
+  " ・->と入力した場合
+  " ・=>と入力した場合
+  " ・上記のl:voidElementsに含まれる要素
+  " ・l:elementNameに/が含まれる場合
+  " ・l:elementNameが空白の場合
+  let l:elementName = FindElementName(a:ket)
+  if l:prevChar == "/" || l:prevChar == "-" || l:prevChar == "=" || l:voidElements->count(l:elementName) == 1 || l:elementName =~ "/" || l:elementName == ""
+    return a:ket
+  else
+    return a:ket . "</" . l:elementName . a:ket . "\<ESC>F<i"
+  endif
+endfunction
+
+" 適用するFileType
+let s:enabledAutoCloseTagFileTypes = ["html", "xml", "javascript", "blade", "eruby", "vue"]
+" 適用する拡張子
+let s:enabledAutoCloseTagExtensions = ["html", "xml", "js", "blade.php", "erb", "vue"]
+
+" vimrcの設定を反映
+function! autoclose#ReflectVimrc() abort
+  if exists('g:enabledAutoCloseTagFileTypes')
+    let s:enabledAutoCloseTagFileTypes = s:enabledAutoCloseTagFileTypes + g:enabledAutoCloseTagFileTypes
+  endif
+  if exists('g:enabledAutoCloseTagExtensions')
+    let s:enabledAutoCloseTagExtensions = s:enabledAutoCloseTagExtensions + g:enabledAutoCloseTagExtensions
+  endif
+endfunction
+
+" 閉じタグ補完を有効化するか判定して、有効化する
+function! autoclose#EnableAutoCloseTag() abort
+  if s:enabledAutoCloseTagFileTypes->count(&filetype) == 1 || s:enabledAutoCloseTagExtensions->count(expand("%:e")) == 1
+    " memo: mapの引数に<buffer>を指定することで、カレントバッファだけマップする
+    inoremap <buffer> <expr> > WriteCloseTag(">")
+    inoremap <buffer> </ </<C-x><C-o><ESC>F<i
   endif
 endfunction
