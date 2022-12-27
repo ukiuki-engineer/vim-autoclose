@@ -58,7 +58,8 @@ git clone https://github.com/ukiuki-engineer/vim-autoclose
 - 括弧補完             →有効
 - クォーテーション補完 →有効
 - タグ補完             →有効
-- タグ補完が有効なファイルの種類
+- タグ補完が有効なファイルの種類  
+→
 ```
 FileTypes(ファイルタイプ): html, javascript, blade, vue
 Extensions(拡張子): *.html, *.js, *.blade.php, *.erb, *.vue
