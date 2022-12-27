@@ -152,3 +152,4 @@ function! autoclose#EnableAutoCloseTag() abort
     inoremap <buffer> </ </<C-x><C-o><ESC>F<i
   endif
 endfunction
+

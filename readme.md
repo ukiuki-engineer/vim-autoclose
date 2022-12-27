@@ -13,8 +13,8 @@ inoremap ' ''<LEFT>
 
 上記設定では、色々不便な点がある。  
 ```())```となってしまったり、括弧を閉じたくない時に閉じてしまったり...  
-このプラグインでは、上記補完をもっといい感じに発火するように色々と制御しています。
-加えて、htmlの閉じタグ補完機能も実装しています。
+このプラグインでは、上記補完をもっといい感じに発火するように色々と制御しています。  
+加えて、htmlの閉じタグ補完機能も実装しています。  
 全体的に大体VSCodeのような動きをイメージして実装しました。
 
 https://user-images.githubusercontent.com/101523180/207311455-5a2b63f4-6102-4607-b9f7-26e07552c7b8.mov
@@ -24,9 +24,6 @@ https://user-images.githubusercontent.com/101523180/207350557-5c52c90d-a058-45f1
 
 ## 機能
 - 閉じ括弧の補完
-<!-- memo: この機能はコメントアウト中
-- 括弧を改行したときにいい感じにしてくれる(この機能は削除するかも...)
--->
 - 閉じクォーテーションの補完
 - 閉じタグの補完  
 →以下を入力した場合に閉じタグが補完される  
@@ -42,9 +39,10 @@ https://user-images.githubusercontent.com/101523180/207350557-5c52c90d-a058-45f1
 
 ## インストール方法
 #### プラグインマネージャ経由
-以下を.vimrcに記述する
-```
-Plug 'ukiuki-engineer/vim-autoclose' # vim-plugの場合
+お好みのプラグインマネージャで'ukiuki-engineer/vim-autoclose'を追加してください。  
+```vim
+" 例)vim-plugの場合
+Plug 'ukiuki-engineer/vim-autoclose'
 ```
 #### 手動
 ```.vim/pack/plugins/start```というディレクトリを作成し、そこにこのプラグインを配置する
@@ -54,29 +52,50 @@ cd ~/.vim/pack/plugins/start
 git clone https://github.com/ukiuki-engineer/vim-autoclose
 ```
 
-## タグ補完を有効にするFileType、拡張子を追加する方法
-閉じタグ補完はデフォルトでは以下のファイルに対応しています。
+## デフォルト設定
+基本的に何も設定せずに使用可能です。  
+デフォルト設定は以下のようになっています。
+- 括弧補完             →有効
+- クォーテーション補完 →有効
+- タグ補完             →有効
+- タグ補完が有効なファイルの種類
 ```
-FileTypes: html, javascript, blade, vue
+FileTypes(ファイルタイプ): html, javascript, blade, vue
 Extensions(拡張子): *.html, *.js, *.blade.php, *.erb, *.vue
 ```
 
-上記以外のファイルで閉じタグ補完を有効化するには、vimrcに以下を追記すます
+## 設定
+- 括弧補完無効化
+vimrcに以下を追記
 ```vim
-" ex)
-let g:enabledAutoCloseTagFileTypes = ["vim", "php"] " FileType
-let g:enabledAutoCloseTagExtensions = ["vim", "php"] " extension
+let g:enableAutoCloseBrackets = 0
+```
+- クォーテーション補完無効化
+vimrcに以下を追記
+```vim
+let g:enableAutoCloseQuots = 0
+```
+- タグ補完無効化
+vimrcに以下を追記
+```vim
+let g:enableAutoCloseTags = 0
 ```
 
-## 特定のFileType、拡張子の閉じタグ補完を無効化する方法
-vimrcに以下を追記します
+- タグ補完を適用するファイルの種類を追加
+vimrcに以下を追記
+```vim
+" ex)
+let g:enabledAutoCloseTagFileTypes = ["vim", "php"]         " FileType
+let g:enabledAutoCloseTagExtensions = ["vim", "php"]        " extension
+```
 
+- タグ補完を適用**しない**ファイルの種類を追加
+vimrcに以下を追記します
 ```vim
 " ex)
 let g:disabledAutoCloseTagFileTypes = ["javascript", "php"] " FileType
-let g:disabledAutoCloseTagExtensions = ["js", "php"] " extension
+let g:disabledAutoCloseTagExtensions = ["js", "php"]        " extension
 ```
 
 ## 要望等
 対応可能なものであれば対応します([twitter](https://twitter.com/YUKI75191105))。  
-例えば、vim未満にも対応して欲しいなど。
