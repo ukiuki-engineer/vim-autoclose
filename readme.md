@@ -66,23 +66,23 @@ Extensions(拡張子): *.html, *.js, *.blade.php, *.erb, *.vue
 ```
 
 ## 設定
-- 括弧補完無効化
+- 括弧補完無効化  
 vimrcに以下を追記
 ```vim
 let g:enableAutoCloseBrackets = 0
 ```
-- クォーテーション補完無効化
+- クォーテーション補完無効化  
 vimrcに以下を追記
 ```vim
 let g:enableAutoCloseQuots = 0
 ```
-- タグ補完無効化
+- タグ補完無効化  
 vimrcに以下を追記
 ```vim
 let g:enableAutoCloseTags = 0
 ```
 
-- タグ補完を適用するファイルの種類を追加
+- タグ補完を適用するファイルの種類を追加  
 vimrcに以下を追記
 ```vim
 " ex)
@@ -90,7 +90,7 @@ let g:enabledAutoCloseTagFileTypes = ["vim", "php"]         " FileType
 let g:enabledAutoCloseTagExtensions = ["vim", "php"]        " extension
 ```
 
-- タグ補完を適用**しない**ファイルの種類を追加
+- タグ補完を適用**しない**ファイルの種類を追加  
 vimrcに以下を追記します
 ```vim
 " ex)
