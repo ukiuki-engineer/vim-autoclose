@@ -13,7 +13,8 @@ function! ReverseBracket(bracket) abort
 endfunction
 
 " 閉じ括弧を補完する
-" FIXME: 補完した操作を、.で繰り返すことができない
+" FIXME 補完した操作を、.で繰り返すことができない
+" FIXME 行内に全角文字があるとprevCharとnextCharが上手くハマってくれず、括弧補完できてほしい時もされないことがある
 function! autoclose#WriteCloseBracket(bracket) abort
   let l:prevChar = getline('.')[charcol('.') - 2] " カーソルの前の文字
   let l:nextChar = getline('.')[charcol('.') - 1] " カーソルの次の文字
@@ -91,15 +92,15 @@ function! FindElementName(ket) abort
   for i in range(1, charcol('.'))
     let l:targetChar = getline('.')[charcol('.') - 1 - i]
     let l:strInTag = l:targetChar . l:strInTag
-    echo l:strInTag
     if l:targetChar == "<"
       break
     endif
   endfor
+  " カーソル行で要素名が見つかれば要素名を返す
   if "<" == matchstr(l:strInTag, "<")
     return TrimElementName(line('.'), l:strInTag)
   endif
-  " カーソルより上の行を検索
+  " カーソル行で要素名が見つからなければ、上の行を見つかるまで逐次検索
   let l:strOnLine = ""
   for i in range(1, line('.') - 1)
     let l:strOnLine = getline(line('.') - i)
