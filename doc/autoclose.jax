@@ -28,24 +28,36 @@ License : MIT license  {{{
 使い方				|autoclose-usage|
 インターフェイス		|autoclose-interface|
   変数				  |autoclose-variables|
-  キーマッピング		  |autoclose-key-mappings|
-  関数				  |autoclose-functions|
 TODO				|autoclose-todo|
 
 
 ==============================================================================
 概要						*autoclose-introduction*
 
-*autoclose* は
-
-最新版:
-https://github.com/user/autoclose.vim
+括弧、クォーテーション、htmlのタグを閉じる補完を良い感じに行うプラグイン。
+まだあまりヘルプを書けていないので、詳しくはreadme(https://github.com/ukiuki-engineer/vim-autoclose/blob/master/readme.md)をご参照ください...
 
 
 ==============================================================================
 使い方						*autoclose-usage*
 
+特に何も設定せずに動作します。
 
+括弧・クォーテーション補完~
+括弧やクォーテーションを入力すると、自動で閉じます。
+
+htmlのタグ補完~
+">" or "</"を入力すると、自動で閉じタグを入力します。
+
+デフォルト設定~
+デフォルト設定は以下のようになっています。
+- 括弧補完             →有効
+- クォーテーション補完 →有効
+- タグ補完             →有効
+- タグ補完が有効なファイルの種類  
+	FileTypes(ファイルタイプ): html, javascript, blade, vue
+	Extensions(拡張子)       : *.html, *.js, *.blade.php, *.erb, *.vue
+これらの設定を変更するには|autoclose-variables|に記載されている、変数を設定します。
 
 ==============================================================================
 インターフェイス				*autoclose-interface*
@@ -69,41 +81,6 @@ g:enableAutoCloseTags				*g:enableAutoCloseTags*
 
 
 g:disabledAutoCloseTagFileTypes		*g:disabledAutoCloseTagFileTypes*
-
-
-------------------------------------------------------------------------------
-キーマッピング					*autoclose-key-mappings*
-
-------------------------------------------------------------------------------
-関数						*autoclose-functions*
-
-FindElementName({ket})				*FindElementName()*
-
-
-ReverseBracket({bracket})			*ReverseBracket()*
-
-
-						*TrimElementName()*
-TrimElementName({strLineNum}, {strInTag})
-
-
-WriteCloseTag({ket})				*WriteCloseTag()*
-
-
-autoclose#AutoCloseQuot({quot})			*autoclose#AutoCloseQuot()*
-
-
-autoclose#EnableAutoCloseTag()		*autoclose#EnableAutoCloseTag()*
-
-
-					*autoclose#NotDoubleCloseBracket()*
-autoclose#NotDoubleCloseBracket({closeBracket})
-
-
-autoclose#ReflectVimrc()			*autoclose#ReflectVimrc()*
-
-
-autoclose#WriteCloseBracket({bracket})	*autoclose#WriteCloseBracket()*
 
 
 ==============================================================================
