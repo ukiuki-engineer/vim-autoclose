@@ -56,10 +56,19 @@ https://github.com/user/autoclose.vim
 g:enabledAutoCloseTagFileTypes		*g:enabledAutoCloseTagFileTypes*
 
 
-g:disabledAutoCloseTagFileTypes		*g:disabledAutoCloseTagFileTypes*
+g:enableAutoCloseBrackets			*g:enableAutoCloseBrackets*
+
+
+g:enableAutoCloseQuots				*g:enableAutoCloseQuots*
 
 
 g:enabledAutoCloseTagExtensions		*g:enabledAutoCloseTagExtensions*
+
+
+g:enableAutoCloseTags				*g:enableAutoCloseTags*
+
+
+g:disabledAutoCloseTagFileTypes		*g:disabledAutoCloseTagFileTypes*
 
 
 ------------------------------------------------------------------------------
