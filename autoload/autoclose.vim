@@ -112,6 +112,7 @@ function! FindElementName(ket) abort
 endfunction
 
 " 閉じタグを補完する
+" FIXME: ->と入力したときにと自宅が補完されてしまう場合がある
 function! WriteCloseTag(ket) abort
   let l:prevChar = getline('.')[charcol('.') - 2] " カーソルの前の文字
   let l:voidElements = ["br", "hr", "img", "input", "link", "meta"]
@@ -148,7 +149,7 @@ endfunction
 " 閉じタグ補完を有効化するか判定して、有効化する
 function! autoclose#EnableAutoCloseTag() abort
   if s:enabledAutoCloseTagFileTypes->count(&filetype) == 1 || s:enabledAutoCloseTagExtensions->count(expand("%:e")) == 1
-    " memo: mapの引数に<buffer>を指定することで、カレントバッファだけマップする
+    " NOTE: mapの引数に<buffer>を指定することで、カレントバッファだけマップする
     inoremap <buffer> <expr> > WriteCloseTag(">")
     inoremap <buffer> </ </<C-x><C-o><ESC>F<i
   endif

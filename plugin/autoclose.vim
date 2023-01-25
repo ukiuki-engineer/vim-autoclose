@@ -1,7 +1,7 @@
 " vim-autoclose
 " カッコ、クォーテーション、タグの補完
 "
-" memo: 設定仕様
+" NOTE: 設定仕様
 " 変数で設定する。コマンドはない。
 " ・タグ補完を有効にする拡張子の指定
 " →g:enabledAutoCloseTagExtensions
