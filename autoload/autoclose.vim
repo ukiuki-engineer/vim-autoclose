@@ -116,15 +116,16 @@ endfunction
 function! WriteCloseTag(ket) abort
   let l:prevChar = getline('.')[charcol('.') - 2] " カーソルの前の文字
   let l:voidElements = ["br", "hr", "img", "input", "link", "meta"]
+  let l:notElement = ["%"]
   " 以下の場合は閉じタグ補完を行わない
   " ・/>で閉じる場合
   " ・->と入力した場合
   " ・=>と入力した場合
-  " ・上記のl:voidElementsに含まれる要素
+  " ・上記のl:voidElements,l:notElementに含まれる要素
   " ・l:elementNameに/が含まれる場合
   " ・l:elementNameが空白の場合
   let l:elementName = FindElementName(a:ket)
-  if l:prevChar == "/" || l:prevChar == "-" || l:prevChar == "=" || l:voidElements->count(l:elementName) == 1 || l:elementName =~ "/" || l:elementName == ""
+  if l:prevChar == "/" || l:prevChar == "-" || l:prevChar == "=" || join(l:voidElements + l:notElement) =~ l:elementName || l:elementName =~ "/" || l:elementName == ""
     return a:ket
   else
     return a:ket . "</" . l:elementName . a:ket . "\<ESC>F<i"
