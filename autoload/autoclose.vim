@@ -14,10 +14,9 @@ endfunction
 
 " 閉じ括弧を補完する
 " FIXME 補完した操作を、.で繰り返すことができない
-" FIXME 行内に全角文字があるとprevCharとnextCharが上手くハマってくれず、括弧補完できてほしい時もされないことがある
 function! autoclose#WriteCloseBracket(bracket) abort
-  let l:prevChar = getline('.')[charcol('.') - 2] " カーソルの前の文字
-  let l:nextChar = getline('.')[charcol('.') - 1] " カーソルの次の文字
+  let l:prevChar = getline('.')[col('.') - 2] " カーソルの前の文字
+  let l:nextChar = getline('.')[col('.') - 1] " カーソルの次の文字
   " 以下の場合は閉じ括弧を補完しない
   " ・カーソルの次の文字がアルファベット
   " ・カーソルの次の文字が数字
@@ -31,8 +30,8 @@ endfunction
 
 " 閉じ括弧入力時の挙動
 function! autoclose#NotDoubleCloseBracket(closeBracket) abort
-  let l:prevChar = getline('.')[charcol('.') - 2] " カーソルの前の文字
-  let l:nextChar = getline('.')[charcol('.') - 1] " カーソルの次の文字
+  let l:prevChar = getline('.')[col('.') - 2] " カーソルの前の文字
+  let l:nextChar = getline('.')[col('.') - 1] " カーソルの次の文字
   " ()と入力した場合())とせずに()で止める
   if l:nextChar == a:closeBracket && l:prevChar == ReverseBracket(a:closeBracket)
     return "\<RIGHT>"
@@ -43,8 +42,8 @@ endfunction
 
 " クォーテーション補完
 function! autoclose#AutoCloseQuot(quot) abort
-  let l:prevChar = getline('.')[charcol('.') - 2] " カーソルの前の文字
-  let l:nextChar = getline('.')[charcol('.') - 1] " カーソルの次の文字
+  let l:prevChar = getline('.')[col('.') - 2] " カーソルの前の文字
+  let l:nextChar = getline('.')[col('.') - 1] " カーソルの次の文字
   " カーソルの次の文字が以下に含まれている場合にクォーテーション補完を有効にする
   let l:availableNextChars = ["", " ", ",", "$", ")", "}", "]", ">"]
 
@@ -89,8 +88,8 @@ endfunction
 function! FindElementName(ket) abort
   " カーソル行を検索
   let l:strInTag = ""
-  for i in range(1, charcol('.'))
-    let l:targetChar = getline('.')[charcol('.') - 1 - i]
+  for i in range(1, col('.'))
+    let l:targetChar = getline('.')[col('.') - 1 - i]
     let l:strInTag = l:targetChar . l:strInTag
     if l:targetChar == "<"
       break
@@ -112,20 +111,20 @@ function! FindElementName(ket) abort
 endfunction
 
 " 閉じタグを補完する
-" FIXME: ->と入力したときにと自宅が補完されてしまう場合がある
 function! WriteCloseTag(ket) abort
-  let l:prevChar = getline('.')[charcol('.') - 2] " カーソルの前の文字
+  let l:prevChar = getline('.')[col('.') - 2] " カーソルの前の文字
   let l:voidElements = ["br", "hr", "img", "input", "link", "meta"]
   let l:notElement = ["%"]
   " 以下の場合は閉じタグ補完を行わない
   " ・/>で閉じる場合
   " ・->と入力した場合
   " ・=>と入力した場合
+  " ・%>と入力した場合
   " ・上記のl:voidElements,l:notElementに含まれる要素
   " ・l:elementNameに/が含まれる場合
   " ・l:elementNameが空白の場合
   let l:elementName = FindElementName(a:ket)
-  if l:prevChar == "/" || l:prevChar == "-" || l:prevChar == "=" || join(l:voidElements + l:notElement) =~ l:elementName || l:elementName =~ "/" || l:elementName == ""
+  if l:prevChar == "/" || l:prevChar == "-" || l:prevChar == "=" || l:prevChar == "%" || join(l:voidElements + l:notElement) =~ l:elementName || l:elementName =~ "/" || l:elementName == ""
     return a:ket
   else
     return a:ket . "</" . l:elementName . a:ket . "\<ESC>F<i"
