@@ -54,6 +54,7 @@ if !exists('g:enableAutoCloseTags') || (exists('g:enableAutoCloseTags') && g:ena
   endif
 endif
 
+" TODO: 設定で補完をオフにできるようにする
 " erubyの<%%>補完
 augroup VimAutoCloseEruby
   au!
