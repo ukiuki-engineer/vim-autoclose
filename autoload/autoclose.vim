@@ -13,7 +13,6 @@ function! ReverseBracket(bracket) abort
 endfunction
 
 " 閉じ括弧を補完する
-" FIXME 補完した操作を、.で繰り返すことができない
 function! autoclose#WriteCloseBracket(bracket) abort
   let l:prevChar = getline('.')[col('.') - 2] " カーソルの前の文字
   let l:nextChar = getline('.')[col('.') - 1] " カーソルの次の文字
@@ -124,10 +123,15 @@ function! WriteCloseTag(ket) abort
   " ・l:elementNameに/が含まれる場合
   " ・l:elementNameが空白の場合
   let l:elementName = FindElementName(a:ket)
+  let l:cursorTransition =""
+  for i in range(1, strlen(l:elementName) + 3)
+    let l:cursorTransition = l:cursorTransition .. "\<LEFT>" " カーソルをタグと閉じタグの中央に移動
+  endfor
+
   if l:prevChar == "/" || l:prevChar == "-" || l:prevChar == "=" || l:prevChar == "%" || join(l:voidElements + l:notElement) =~ l:elementName || l:elementName =~ "/" || l:elementName == ""
     return a:ket
   else
-    return a:ket . "</" . l:elementName . a:ket . "\<ESC>F<i"
+    return a:ket . "</" . l:elementName . a:ket . l:cursorTransition
   endif
 endfunction
 
