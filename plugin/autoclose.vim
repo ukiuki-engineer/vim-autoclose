@@ -54,3 +54,7 @@ if !exists('g:enableAutoCloseTags') || (exists('g:enableAutoCloseTags') && g:ena
   endif
 endif
 
+" eruby<%%>を補完
+if &filetype == "eruby" || expand("%:e") == "erb"
+  inoremap <buffer> <expr> % autoclose#AutoCloseErubyTag()
+endif

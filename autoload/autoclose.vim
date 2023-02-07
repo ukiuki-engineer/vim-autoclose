@@ -154,3 +154,14 @@ function! autoclose#EnableAutoCloseTag() abort
     inoremap <buffer> </ </<C-x><C-o><ESC>F<i
   endif
 endfunction
+
+" erubyの<%%>補完
+function! autoclose#AutoCloseErubyTag() abort
+  let l:prevChar = getline('.')[col('.') - 2] " カーソルの前の文字
+  " カーソルの前の文字が<の場合、%>を補完し、それ以外は%を返す
+  if l:prevChar == "<"
+    return "%%>\<LEFT>\<LEFT>"
+  else
+    return "%"
+  endif
+endfunction
