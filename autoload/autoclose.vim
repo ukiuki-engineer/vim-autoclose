@@ -160,12 +160,19 @@ function! autoclose#EnableAutoCloseTag() abort
 endfunction
 
 " erubyの<%%>補完
-function! autoclose#AutoCloseErubyTag() abort
+function! AutoCloseErubyTag() abort
   let l:prevChar = getline('.')[col('.') - 2] " カーソルの前の文字
   " カーソルの前の文字が<の場合、%>を補完し、それ以外は%を返す
   if l:prevChar == "<"
     return "%%>\<LEFT>\<LEFT>"
   else
     return "%"
+  endif
+endfunction
+
+" erubyの<%%>補完を有効化
+function! autoclose#EnableAutoCloseErubyTag() abort
+  if &filetype == "eruby" || expand("%:e") == "erb"
+    inoremap <buffer> <expr> % AutoCloseErubyTag()
   endif
 endfunction

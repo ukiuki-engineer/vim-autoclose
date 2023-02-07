@@ -41,7 +41,7 @@ if !exists('g:enableAutoCloseTags') || (exists('g:enableAutoCloseTags') && g:ena
   call autoclose#ReflectVimrc()
 
   " タグ入力
-  augroup AutoCloseTag
+  augroup VimAutoCloseTag
     au!
     au FileType,BufEnter * call autoclose#EnableAutoCloseTag()
   augroup END
@@ -54,7 +54,8 @@ if !exists('g:enableAutoCloseTags') || (exists('g:enableAutoCloseTags') && g:ena
   endif
 endif
 
-" eruby<%%>を補完
-if &filetype == "eruby" || expand("%:e") == "erb"
-  inoremap <buffer> <expr> % autoclose#AutoCloseErubyTag()
-endif
+" erubyの<%%>補完
+augroup VimAutoCloseEruby
+  au!
+  au FileType,BufEnter * call autoclose#EnableAutoCloseErubyTag()
+augroup END
