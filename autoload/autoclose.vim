@@ -125,7 +125,7 @@ function! WriteCloseTag(ket) abort
   let l:elementName = FindElementName(a:ket)
   let l:cursorTransition =""
   for i in range(1, strlen(l:elementName) + 3)
-    let l:cursorTransition = l:cursorTransition .. "\<LEFT>" " カーソルをタグと閉じタグの中央に移動
+    let l:cursorTransition = l:cursorTransition . "\<LEFT>" " カーソルをタグと閉じタグの中央に移動
   endfor
 
   if l:prevChar == "/" || l:prevChar == "-" || l:prevChar == "=" || l:prevChar == "%" || join(l:voidElements + l:notElement) =~ l:elementName || l:elementName =~ "/" || l:elementName == ""
