@@ -83,6 +83,11 @@ vimrcに以下を追記
 let g:enableAutoCloseTags = 0
 ```
 
+- erubyの<%%>補完を無効化
+```vim
+let g:enableAutoCloseErubyTag = 0
+```
+
 - タグ補完を適用するファイルの種類を追加  
 vimrcに以下を追記
 ```vim

@@ -37,6 +37,8 @@ TODO				|autoclose-todo|
 括弧、クォーテーション、htmlのタグを閉じる補完を良い感じに行うプラグイン。
 まだあまりヘルプを書けていないので、詳しくはreadme(https://github.com/ukiuki-engineer/vim-autoclose/blob/master/readme.md)をご参照ください...
 
+最新版:
+https://github.com/ukiuki-engineer/vim-autoclose
 
 ==============================================================================
 使い方						*autoclose-usage*
@@ -54,10 +56,12 @@ htmlのタグ補完~
 - 括弧補完             →有効
 - クォーテーション補完 →有効
 - タグ補完             →有効
+- erubyの<%%>補完      →有効
 - タグ補完が有効なファイルの種類  
 	FileTypes(ファイルタイプ): html, javascript, blade, vue
 	Extensions(拡張子)       : *.html, *.js, *.blade.php, *.erb, *.vue
 これらの設定を変更するには|autoclose-variables|に記載されている、変数を設定します。
+
 
 ==============================================================================
 インターフェイス				*autoclose-interface*
@@ -81,6 +85,9 @@ g:enableAutoCloseTags				*g:enableAutoCloseTags*
 
 
 g:disabledAutoCloseTagFileTypes		*g:disabledAutoCloseTagFileTypes*
+
+
+g:enableAutoCloseErubyTag			*g:enableAutoCloseErubyTag*
 
 
 ==============================================================================
