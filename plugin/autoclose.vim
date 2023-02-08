@@ -11,6 +11,7 @@
 " →g:enableAutoCloseBrackets
 " →g:enableAutoCloseQuots
 " →g:enableAutoCloseTags
+" →g:enableAutoCloseErubyTag
 " ・タグ補完を適用しないファイルの種類を指定
 " →g:disabledAutoCloseTagFileTypes
 " →g:disabledAutoCloseTagExtensions
@@ -54,9 +55,10 @@ if !exists('g:enableAutoCloseTags') || (exists('g:enableAutoCloseTags') && g:ena
   endif
 endif
 
-" TODO: 設定で補完をオフにできるようにする
 " erubyの<%%>補完
-augroup VimAutoCloseEruby
-  au!
-  au FileType,BufEnter * call autoclose#EnableAutoCloseErubyTag()
-augroup END
+if !exists('g:enableAutoCloseErubyTag') || (exists('g:enableAutoCloseErubyTag') && g:enableAutoCloseErubyTag == 1)
+  augroup VimAutoCloseErubyTag
+    au!
+    au FileType,BufEnter * call autoclose#EnableAutoCloseErubyTag()
+  augroup END
+endif
