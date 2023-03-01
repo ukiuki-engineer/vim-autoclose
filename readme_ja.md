@@ -1,42 +1,26 @@
-## 概要
+# vim-autoclose
 括弧、クォーテーション、htmlのタグを閉じる補完を良い感じに行うプラグイン。
 
-## 背景
-括弧やクォーテーションを閉じる設定として、以下がよく知られている。
-```
-inoremap { {}<LEFT>
-inoremap [ []<LEFT>
-inoremap ( ()<LEFT>
-inoremap " ""<LEFT>
-inoremap ' ''<LEFT>
-```
-
-上記設定では、色々不便な点がある。  
-```())```となってしまったり、括弧を閉じたくない時に閉じてしまったり...  
-このプラグインでは、上記補完をもっといい感じに発火するように色々と制御しています。  
-加えて、htmlの閉じタグ補完機能も実装しています。  
-全体的に大体VSCodeのような動きをイメージして実装しました。
-
-https://user-images.githubusercontent.com/101523180/207311455-5a2b63f4-6102-4607-b9f7-26e07552c7b8.mov
-
-https://user-images.githubusercontent.com/101523180/207350557-5c52c90d-a058-45f1-b226-2dded5c428a4.mov
-
-
-## 機能
+## features
 - 閉じ括弧の補完
 - 閉じクォーテーションの補完
 - 閉じタグの補完  
 →以下を入力した場合に閉じタグが補完される  
-```>```or```</```
+`>`or`</`
 - erubyの<%%>を補完
 - 補完をいい感じに制御
 →補完してほしくない時は無効になるようにいい感じに制御してある。
 例えば以下ように制御してある。(全部を書くと多いので一部だけです)
-  - ```()```と入力しても```())```とならないように
+  - `()`と入力しても`())`とならないように
   - いわゆる**void要素**(以下)は閉じタグを補完しない  
-  →```<br>```, ```<hr>```, ```<img>```, ```<input>```, ```<link>```, ```<meta>```
+  →`<br>`, `<hr>`, `<img>`, `<input>`, `<link>`, `<meta>`
   - タグじゃない場合の>は補完をしない  
-  →```=>```とか、```->```とか
+  →`=>`とか、`->`とか
+
+## デモ
+https://user-images.githubusercontent.com/101523180/207311455-5a2b63f4-6102-4607-b9f7-26e07552c7b8.mov
+
+https://user-images.githubusercontent.com/101523180/207350557-5c52c90d-a058-45f1-b226-2dded5c428a4.mov
 
 ## インストール方法
 #### プラグインマネージャ経由
@@ -46,7 +30,7 @@ https://user-images.githubusercontent.com/101523180/207350557-5c52c90d-a058-45f1
 Plug 'ukiuki-engineer/vim-autoclose'
 ```
 #### 手動
-```.vim/pack/plugins/start```というディレクトリを作成し、そこにこのプラグインを配置する
+`.vim/pack/plugins/start`というディレクトリを作成し、そこにこのプラグインを配置する
 ```
 mkdir -p ~/.vim/pack/plugins/start
 cd ~/.vim/pack/plugins/start
