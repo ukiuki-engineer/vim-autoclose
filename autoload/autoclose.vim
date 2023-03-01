@@ -46,15 +46,9 @@ function! autoclose#AutoCloseQuot(quot) abort
   " カーソルの次の文字が以下に含まれている場合にクォーテーション補完を有効にする
   let l:availableNextChars = ["", " ", ",", "$", ")", "}", "]", ">"]
 
-  if (l:prevChar == a:quot && l:nextChar == a:quot) " カーソルの左右にクォーテンションがある場合は何も入力せずにカーソルを移動
+  " カーソルの左右にクォーテンションがある場合は何も入力せずにカーソルを移動
+  if (l:prevChar == a:quot && l:nextChar == a:quot)
     return "\<RIGHT>"
-  " 以下の場合はクォーテーション補完を行わない
-  " ・カーソルの前の文字がアルファベット
-  " ・カーソルの前の文字が数字
-  " ・カーソルの前の文字が全角
-  " ・カーソルの前の文字がクォーテーション
-  elseif l:prevChar =~ "\a" || l:prevChar =~ "\d" || l:prevChar =~ "[^\x01-\x7E]" || l:prevChar == a:quot
-    return a:quot
   " カーソルの次の文字が上記のl:availableNextCharsに含まれている場合、クォーテーション補完する
   elseif l:availableNextChars->count(l:nextChar) == 1
     return a:quot . a:quot . "\<LEFT>"
