@@ -2,7 +2,7 @@
 This plugin automatically closes parentheses, brackets, quotes, and other paired characters in Vim.  
 [japanese](https://github.com/ukiuki-engineer/vim-autoclose/blob/feature/readme/readme_ja.md)
 
-## features
+## Features:
 - Automatically completes closing parentheses, brackets, and quotes
 - Completes closing tags when typing `>` or `</` for HTML
 - Completes `<%%>` in eruby
