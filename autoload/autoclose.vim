@@ -49,6 +49,9 @@ function! autoclose#AutoCloseQuot(quot) abort
   " カーソルの左右にクォーテンションがある場合は何も入力せずにカーソルを移動
   if (l:prevChar == a:quot && l:nextChar == a:quot)
     return "\<RIGHT>"
+  " カーソルの前の文字がクォーテーションの場合補完しない
+  elseif l:prevChar == a:quot
+    return a:quot
   " カーソルの次の文字が上記のl:availableNextCharsに含まれている場合、クォーテーション補完する
   elseif l:availableNextChars->count(l:nextChar) == 1
     return a:quot . a:quot . "\<LEFT>"
