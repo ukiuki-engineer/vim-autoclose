@@ -21,7 +21,7 @@ https://user-images.githubusercontent.com/101523180/207350557-5c52c90d-a058-45f1
 Add `ukiuki-engineer/vim-autoclose` to your preferred plugin manager.
 For example, with vim-plug:
 ```vim
-" 例)vim-plugの場合
+" For example, with vim-plug:
 Plug 'ukiuki-engineer/vim-autoclose'
 ```
 #### Manually
