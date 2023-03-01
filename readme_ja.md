@@ -80,7 +80,7 @@ let g:enabledAutoCloseTagFileTypes = ["vim", "php"]         " FileType
 let g:enabledAutoCloseTagExtensions = ["vim", "php"]        " extension
 ```
 
-- タグ補完を適用**しない**ファイルの種類を追加  
+- タグ補完を適用**しない**ファイルの種類を追加(実装中...未だ使用不可)  
 vimrcに以下を追記します
 ```vim
 " ex)

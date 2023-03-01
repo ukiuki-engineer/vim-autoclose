@@ -49,24 +49,24 @@ Add the following to your vimrc:
 ```vim
 let g:enableAutoCloseBrackets = 0
 ```
-- Disabling quotation completion
+- Disabling quotation completion  
 Add the following to your vimrc:
 ```vim
 let g:enableAutoCloseQuots = 0
 ```
-- Disabling tag completion
+- Disabling tag completion  
 Add the following to your vimrc:
 ```vim
 let g:enableAutoCloseTags = 0
 ```
 
-- Disabling completion of eruby's <%%>
+- Disabling completion of eruby's <%%>  
 Add the following to your vimrc:
 ```vim
 let g:enableAutoCloseErubyTag = 0
 ```
 
-- dding file types to which tag completion is applied
+- dding file types to which tag completion is applied  
 Add the following to your vimrc:
 ```vim
 " ex)
@@ -74,7 +74,7 @@ let g:enabledAutoCloseTagFileTypes = ["markdown", "php"]         " FileType
 let g:enabledAutoCloseTagExtensions = ["md", "php"]        " extension
 ```
 
-- Adding file types to which tag completion is **not** applied
+- Adding file types to which tag completion is **not** applied(developping... yet available)  
 Add the following to your vimrc:
 ```vim
 " ex)
