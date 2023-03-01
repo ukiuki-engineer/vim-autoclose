@@ -49,7 +49,7 @@ if !exists('g:enableAutoCloseTags') || (exists('g:enableAutoCloseTags') && g:ena
 
   " FIXME: iunmapで解除ではなく、配列からファイルを除く処理をReflectVimrc()に追加する
   " vimrcで設定したFileType、拡張子のファイルに対して閉じタグ補完の解除
-  if exists('g:disabledAutoCloseTagFileTypes') || exists('g:disabledAutoCloseTagFileTypes')
+  if exists('g:disabledAutoCloseTagFileTypes') || exists('g:disabledAutoCloseTagFileExtensions')
     iunmap >
     iunmap </
   endif
