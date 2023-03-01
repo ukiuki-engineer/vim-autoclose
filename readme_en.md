@@ -16,65 +16,65 @@ https://user-images.githubusercontent.com/101523180/207311455-5a2b63f4-6102-4607
 https://user-images.githubusercontent.com/101523180/207350557-5c52c90d-a058-45f1-b226-2dded5c428a4.mov
 
 ## Installation
-#### プラグインマネージャ経由
-お好みのプラグインマネージャで'ukiuki-engineer/vim-autoclose'を追加してください。  
+#### Via Plugin Manager
+Add `ukiuki-engineer/vim-autoclose` to your preferred plugin manager.
+For example, with vim-plug:
 ```vim
 " 例)vim-plugの場合
 Plug 'ukiuki-engineer/vim-autoclose'
 ```
-#### 手動
-```.vim/pack/plugins/start```というディレクトリを作成し、そこにこのプラグインを配置する
-```
+#### Manually
+Create a directory named `.vim/pack/plugins/start` and place the plugin there:
+```bash
 mkdir -p ~/.vim/pack/plugins/start
 cd ~/.vim/pack/plugins/start
 git clone https://github.com/ukiuki-engineer/vim-autoclose
 ```
 
-## デフォルト設定
-基本的に何も設定せずに動作します。
-デフォルト設定は以下のようになっています。
-- 括弧補完             →有効
-- クォーテーション補完 →有効
-- タグ補完             →有効
-- タグ補完が有効なファイルの種類  
+## Default settings
+- Bracket completion → enabled
+- Quotation completion → enabled
+- Tag completion → enabled
+- Types of files to which tag completion is applied
 →
 ```
-FileTypes(ファイルタイプ): html, javascript, blade, vue
-Extensions(拡張子): *.html, *.js, *.blade.php, *.erb, *.vue
+FileTypes: html, javascript, blade, vue
+Extensions: *.html, *.js, *.blade.php, *.erb, *.vue
 ```
 
-## 設定
-- 括弧補完無効化  
-vimrcに以下を追記
+## Settings
+- Disabling bracket completion  
+Add the following to your vimrc:
 ```vim
 let g:enableAutoCloseBrackets = 0
 ```
-- クォーテーション補完無効化  
-vimrcに以下を追記
+- Disabling quotation completion
+Add the following to your vimrc:
 ```vim
 let g:enableAutoCloseQuots = 0
 ```
-- タグ補完無効化  
-vimrcに以下を追記
+- Disabling tag completion
+Add the following to your vimrc:
 ```vim
 let g:enableAutoCloseTags = 0
 ```
 
-- erubyの<%%>補完を無効化
+- Disabling completion of eruby's <%%>
+Add the following to your vimrc:
 ```vim
 let g:enableAutoCloseErubyTag = 0
 ```
 
-- タグ補完を適用するファイルの種類を追加  
-vimrcに以下を追記
+- dding file types to which tag completion is applied
+Add the following to your vimrc:
 ```vim
 " ex)
 let g:enabledAutoCloseTagFileTypes = ["vim", "php"]         " FileType
 let g:enabledAutoCloseTagExtensions = ["vim", "php"]        " extension
 ```
 
-- タグ補完を適用**しない**ファイルの種類を追加  
-vimrcに以下を追記します
+- Adding file types to which tag completion is **not** applied
+Add the following to your vimrc:
 ```vim
 " ex)
 let g:disabledAutoCloseTagFileTypes = ["javascript", "php"] " FileType
