@@ -70,8 +70,8 @@ let g:enableAutoCloseErubyTag = 0
 Add the following to your vimrc:
 ```vim
 " ex)
-let g:enabledAutoCloseTagFileTypes = ["vim", "php"]         " FileType
-let g:enabledAutoCloseTagExtensions = ["vim", "php"]        " extension
+let g:enabledAutoCloseTagFileTypes = ["markdown", "php"]         " FileType
+let g:enabledAutoCloseTagExtensions = ["md", "php"]        " extension
 ```
 
 - Adding file types to which tag completion is **not** applied
