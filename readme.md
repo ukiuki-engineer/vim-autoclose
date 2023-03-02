@@ -52,7 +52,7 @@ let g:enable_autoclose_brackets = 0
 - Disabling quotation completion  
 Add the following to your vimrc:
 ```vim
-let g:enableautoclose_quots = 0
+let g:enable_autoclose_quots = 0
 ```
 - Disabling tag completion  
 Add the following to your vimrc:
@@ -63,7 +63,7 @@ let g:enable_autoclose_tags = 0
 - Disabling completion of eruby's <%%>  
 Add the following to your vimrc:
 ```vim
-let g:enableautoclose_eruby_tag = 0
+let g:enable_autoclose_eruby_tag = 0
 ```
 
 - Adding file types and extensions to which tag completion is applied  

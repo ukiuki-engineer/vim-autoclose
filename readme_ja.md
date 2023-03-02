@@ -59,7 +59,7 @@ let g:enable_autoclose_brackets = 0
 - クォーテーション補完無効化  
 vimrcに以下を追記
 ```vim
-let g:enableautoclose_quots = 0
+let g:enable_autoclose_quots = 0
 ```
 - タグ補完無効化  
 vimrcに以下を追記
@@ -69,7 +69,7 @@ let g:enable_autoclose_tags = 0
 
 - erubyの<%%>補完を無効化
 ```vim
-let g:enableautoclose_eruby_tag = 0
+let g:enable_autoclose_eruby_tag = 0
 ```
 
 - タグ補完を適用するファイルタイプ、拡張子を追加  
