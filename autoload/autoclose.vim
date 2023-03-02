@@ -136,6 +136,10 @@ endfunction
 let s:enabledAutoCloseTagFileTypes = ["html", "xml", "javascript", "blade", "eruby", "vue"]
 " 適用する拡張子
 let s:enabledAutoCloseTagExts = ["html", "xml", "js", "blade.php", "erb", "vue"]
+" 無効化するFileType
+let s:disabledAutoCloseTagFileTypes = []
+" 無効化する拡張子
+let s:disabledAutoCloseTagExts = []
 
 " vimrcの設定を反映
 function! autoclose#ReflectVimrc() abort
@@ -144,13 +148,19 @@ function! autoclose#ReflectVimrc() abort
   endif
   if exists('g:enabledAutoCloseTagExts')
     let s:enabledAutoCloseTagExts = s:enabledAutoCloseTagExts + map(g:enabledAutoCloseTagExts, 'substitute(v:val, "*.", "", "")')
-
+  endif
+  if exists('g:disabledAutoCloseTagFileTypes')
+    let s:disabledAutoCloseTagFileTypes = s:disabledAutoCloseTagFileTypes + g:disabledAutoCloseTagFileTypes
+  endif
+  if exists('g:disabledAutoCloseTagExts')
+    let s:disabledAutoCloseTagExts = s:disabledAutoCloseTagExts + map(g:disabledAutoCloseTagExts, 'substitute(v:val, "*.", "", "")')
   endif
 endfunction
 
 " 閉じタグ補完を有効化するか判定して、有効化する
 function! autoclose#EnableAutoCloseTag() abort
-  if index(s:enabledAutoCloseTagFileTypes, &filetype) != -1 || index(s:enabledAutoCloseTagExts, expand('%:e')) != -1
+  if (index(s:disabledAutoCloseTagFileTypes, &filetype) == -1 && index(s:disabledAutoCloseTagExts, expand('%:e')) == -1)
+    \&& (index(s:enabledAutoCloseTagFileTypes, &filetype) != -1 || index(s:enabledAutoCloseTagExts, expand('%:e')) != -1)
     " NOTE: mapの引数に<buffer>を指定することで、カレントバッファだけマップする
     inoremap <buffer> <expr> > WriteCloseTag(">")
     inoremap <buffer> </ </<C-x><C-o><ESC>F<i
