@@ -66,7 +66,7 @@ Add the following to your vimrc:
 let g:enableAutoCloseErubyTag = 0
 ```
 
-- adding file types and extensions to which tag completion is applied  
+- Adding file types and extensions to which tag completion is applied  
 Add the following to your vimrc:
 ```vim
 " ex)
