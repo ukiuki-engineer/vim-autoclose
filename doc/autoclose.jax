@@ -22,26 +22,29 @@ License : MIT license  {{{
 }}}
 
 ==============================================================================
-目次						*autoclose-contents*
+目次							*autoclose-contents*
 
 概要				|autoclose-introduction|
 使い方				|autoclose-usage|
-インターフェイス		|autoclose-interface|
-  変数				  |autoclose-variables|
-TODO				|autoclose-todo|
-
+設定				|autoclose-settings|
+  デフォルト設定					|autoclose-defaults|
+  括弧補完無効化					|autoclose-brackets|
+  クォーテーション補完無効化				|autoclose-quots|
+  タグ補完無効化					|autoclose-tags|
+  erubyの<%%>補完を無効化				|autoclose-eruby|
+  タグ補完を適用するファイルの種類を追加		|autoclose-file-types|
+  タグ補完を適用**しない**ファイルの種類を追加		|autoclose-file-exts|
 
 ==============================================================================
-概要						*autoclose-introduction*
+概要							*autoclose-introduction*
 
-括弧、クォーテーション、htmlのタグを閉じる補完を良い感じに行うプラグイン。
-まだあまりヘルプを書けていないので、詳しくはreadme(https://github.com/ukiuki-engineer/vim-autoclose/blob/master/readme.md)をご参照ください...
+括弧、クォーテーション、htmlの閉じタグ補完を行うプラグインです。
 
 最新版:
 https://github.com/ukiuki-engineer/vim-autoclose
 
 ==============================================================================
-使い方						*autoclose-usage*
+使い方							*autoclose-usage*
 
 特に何も設定せずに動作します。
 
@@ -51,48 +54,53 @@ https://github.com/ukiuki-engineer/vim-autoclose
 htmlのタグ補完~
 ">" or "</"を入力すると、自動で閉じタグを入力します。
 
-デフォルト設定~
-デフォルト設定は以下のようになっています。
-- 括弧補完             →有効
-- クォーテーション補完 →有効
-- タグ補完             →有効
-- erubyの<%%>補完      →有効
-- タグ補完が有効なファイルの種類  
-	FileTypes(ファイルタイプ): html, javascript, blade, vue
-	Extensions(拡張子)       : *.html, *.js, *.blade.php, *.erb, *.vue
-これらの設定を変更するには|autoclose-variables|に記載されている、変数を設定します。
-
-
 ==============================================================================
-インターフェイス				*autoclose-interface*
+設定							*autoclose-settings*
 
 ------------------------------------------------------------------------------
-変数						*autoclose-variables*
+デフォルト設定						*autoclose-defaults*
+デフォルト設定は以下のようになっています。
+	括弧補完             →有効
+	クォーテーション補完 →有効
+	タグ補完             →有効
+	erubyの<%%>補完      →有効
+	タグ補完が有効なファイルの種類:  
+		FileTypes(ファイルタイプ):
+			html, javascript, blade, vue  
+		Extensions(拡張子):
+			*.html, *.js, *.blade.php, *.erb, *.vue  
 
-g:enabledAutoCloseTagFileTypes		*g:enabledAutoCloseTagFileTypes*
+------------------------------------------------------------------------------
+括弧補完無効化						*autoclose-brackets*
+vimrcに以下を追記します:  
+	let g:enableAutoCloseBrackets = 0
 
+------------------------------------------------------------------------------
+クォーテーション補完無効化				*autoclose-quots*
+vimrcに以下を追記します:  
+	let g:enableAutoCloseQuots = 0
 
-g:enableAutoCloseBrackets			*g:enableAutoCloseBrackets*
+------------------------------------------------------------------------------
+タグ補完無効化						*autoclose-tags*
+vimrcに以下を追記します:  
+	let g:enableAutoCloseTags = 0
 
+------------------------------------------------------------------------------
+erubyの<%%>補完を無効化					*autoclose-eruby*
+vimrcに以下を追記します:  
+	let g:enableAutoCloseErubyTag = 0
 
-g:enableAutoCloseQuots				*g:enableAutoCloseQuots*
+------------------------------------------------------------------------------
+タグ補完を適用するファイルのタイプ、拡張子を追加	*autoclose-file-types*
+vimrcに以下を追記します:  
+	let g:enabledAutoCloseTagFileTypes = ["markdown", "php"]    " FileType
+	let g:enabledAutoCloseTagExts = ["*.md", "*.php"]           " extension
 
-
-g:enabledAutoCloseTagExtensions		*g:enabledAutoCloseTagExtensions*
-
-
-g:enableAutoCloseTags				*g:enableAutoCloseTags*
-
-
-g:disabledAutoCloseTagFileTypes		*g:disabledAutoCloseTagFileTypes*
-
-
-g:enableAutoCloseErubyTag			*g:enableAutoCloseErubyTag*
-
-
-==============================================================================
-TODO						*autoclose-todo*
-
+------------------------------------------------------------------------------
+タグ補完を適用**しない**ファイルタイプ、拡張子を追加	*autoclose-file-exts*
+vimrcに以下を追記します:  
+	let g:disabledAutoCloseTagFileTypes = ["javascript", "php"] " FileType
+	let g:disabledAutoCloseTagExts = ["*.js", "*.php"]          " extension
 
 
 ==============================================================================

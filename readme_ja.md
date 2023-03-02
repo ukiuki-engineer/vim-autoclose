@@ -72,7 +72,7 @@ let g:enableAutoCloseTags = 0
 let g:enableAutoCloseErubyTag = 0
 ```
 
-- タグ補完を適用するファイルの種類を追加  
+- タグ補完を適用するファイルタイプ、拡張子を追加  
 vimrcに以下を追記
 ```vim
 " ex)
@@ -80,7 +80,7 @@ let g:enabledAutoCloseTagFileTypes = ["markdown", "php"]    " FileType
 let g:enabledAutoCloseTagExts = ["*.md", "*.php"]           " extension
 ```
 
-- タグ補完を適用**しない**ファイルの種類を追加  
+- タグ補完を適用**しない**ファイルタイプ、拡張子を追加  
 vimrcに以下を追記します
 ```vim
 " ex)
