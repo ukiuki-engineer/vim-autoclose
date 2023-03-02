@@ -4,61 +4,53 @@
 " NOTE: 設定仕様
 " 変数で設定する。コマンドはない。
 " ・タグ補完を有効にする拡張子の指定
-" →g:enabledAutoCloseTagExts
+" →g:enabled_autoclose_tag_exts
 " ・タグ補完を有効にするFileTypeの指定
-" →g:enabledAutoCloseTagFileTypes
+" →g:enabled_autoclose_tag_filetypes
 " ・それぞれの補完機能のon/offを指定(0:off, 1:on(デフォルト))
-" →g:enableAutoCloseBrackets
-" →g:enableAutoCloseQuots
-" →g:enableAutoCloseTags
-" →g:enableAutoCloseErubyTag
-" ・タグ補完を適用しないファイルの種類を指定
-" →g:disabledAutoCloseTagFileTypes
-" →g:disabledAutoCloseTagExts
+" →g:enable_autoclose_brackets
+" →g:enable_autoclose_quots
+" →g:enable_autoclose_tags
+" →g:enable_autoclose_eruby_tag
+" ・タグ補完を適用しないファイルタイプ、拡張子を指定
+" →g:disabled_autoclose_tag_filetypes
+" →g:disabled_autoclose_tag_exts
 
 " 括弧補完
-if !exists('g:enableAutoCloseBrackets') || (exists('g:enableAutoCloseBrackets') && g:enableAutoCloseBrackets == 1)
+if !exists('g:enable_autoclose_brackets') || (exists('g:enable_autoclose_brackets') && g:enable_autoclose_brackets == 1)
   " 括弧入力
-  inoremap <expr> ( autoclose#WriteCloseBracket("(")
-  inoremap <expr> { autoclose#WriteCloseBracket("{")
-  inoremap <expr> [ autoclose#WriteCloseBracket("[")
+  inoremap <expr> ( autoclose#write_close_bracket("(")
+  inoremap <expr> { autoclose#write_close_bracket("{")
+  inoremap <expr> [ autoclose#write_close_bracket("[")
   " 閉じ括弧入力
-  inoremap <expr> ) autoclose#NotDoubleCloseBracket(")")
-  inoremap <expr> } autoclose#NotDoubleCloseBracket("}")
-  inoremap <expr> ] autoclose#NotDoubleCloseBracket("]")
+  inoremap <expr> ) autoclose#not_double_close_bracket(")")
+  inoremap <expr> } autoclose#not_double_close_bracket("}")
+  inoremap <expr> ] autoclose#not_double_close_bracket("]")
 endif
 
 
 " クォーテーション補完
-if !exists('g:enableAutoCloseQuots') || (exists('g:enableAutoCloseQuots') && g:enableAutoCloseQuots == 1)
-  inoremap <expr> ' autoclose#AutoCloseQuot("\'")
-  inoremap <expr> " autoclose#AutoCloseQuot("\"")
-  inoremap <expr> ` autoclose#AutoCloseQuot("\`")
+if !exists('g:enable_autoclose_quots') || (exists('g:enable_autoclose_quots') && g:enable_autoclose_quots == 1)
+  inoremap <expr> ' autoclose#autoclose_quot("\'")
+  inoremap <expr> " autoclose#autoclose_quot("\"")
+  inoremap <expr> ` autoclose#autoclose_quot("\`")
 endif
 
 " タグ補完
-if !exists('g:enableAutoCloseTags') || (exists('g:enableAutoCloseTags') && g:enableAutoCloseTags == 1)
+if !exists('g:enable_autoclose_tags') || (exists('g:enable_autoclose_tags') && g:enable_autoclose_tags == 1)
   " vimrcの設定を反映
-  call autoclose#ReflectVimrc()
-
+  call autoclose#reflect_vimrc()
   " タグ入力
   augroup VimAutoCloseTag
     au!
-    au FileType,BufEnter * call autoclose#EnableAutoCloseTag()
+    au FileType,BufEnter * call autoclose#enable_autoclose_tag()
   augroup END
-
-  " FIXME: iunmapで解除ではなく、配列からファイルを除く処理をReflectVimrc()に追加する
-  " vimrcで設定したFileType、拡張子のファイルに対して閉じタグ補完の解除
-  " if exists('g:disabledAutoCloseTagFileTypes') || exists('g:disabledAutoCloseTagFileExts')
-  "   iunmap >
-  "   iunmap </
-  " endif
 endif
 
 " erubyの<%%>補完
-if !exists('g:enableAutoCloseErubyTag') || (exists('g:enableAutoCloseErubyTag') && g:enableAutoCloseErubyTag == 1)
-  augroup VimAutoCloseErubyTag
+if !exists('g:enable_autoclose_eruby_tag') || (exists('g:enable_autoclose_eruby_tag') && g:enable_autoclose_eruby_tag == 1)
+  augroup VimautocloseErubyTag
     au!
-    au FileType,BufEnter * call autoclose#EnableAutoCloseErubyTag()
+    au FileType,BufEnter * call autoclose#enable_autoclose_eruby_tag()
   augroup END
 endif

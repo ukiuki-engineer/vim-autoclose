@@ -47,37 +47,37 @@ Extensions: *.html, *.js, *.blade.php, *.erb, *.vue
 - Disabling bracket completion  
 Add the following to your vimrc:
 ```vim
-let g:enableAutoCloseBrackets = 0
+let g:enable_autoclose_brackets = 0
 ```
 - Disabling quotation completion  
 Add the following to your vimrc:
 ```vim
-let g:enableAutoCloseQuots = 0
+let g:enableautoclose_quots = 0
 ```
 - Disabling tag completion  
 Add the following to your vimrc:
 ```vim
-let g:enableAutoCloseTags = 0
+let g:enable_autoclose_tags = 0
 ```
 
 - Disabling completion of eruby's <%%>  
 Add the following to your vimrc:
 ```vim
-let g:enableAutoCloseErubyTag = 0
+let g:enableautoclose_eruby_tag = 0
 ```
 
 - Adding file types and extensions to which tag completion is applied  
 Add the following to your vimrc:
 ```vim
 " ex)
-let g:enabledAutoCloseTagFileTypes = ["markdown", "php"]    " FileType
-let g:enabledAutoCloseTagExts = ["*.md", "*.php"]           " extension
+let g:enabled_autoclose_tag_filetypes = ["markdown", "php"]    " FileType
+let g:enabled_autoclose_tag_exts = ["*.md", "*.php"]           " extension
 ```
 
 - Adding file types and extensions to which tag completion is **not** applied  
 Add the following to your vimrc:
 ```vim
 " ex)
-let g:disabledAutoCloseTagFileTypes = ["javascript", "php"] " FileType
-let g:disabledAutoCloseTagExts = ["*.js", "*.php"]          " extension
+let g:disabled_autoclose_tag_filetypes = ["javascript", "php"] " FileType
+let g:disabled_autoclose_tag_exts = ["*.js", "*.php"]          " extension
 ```
