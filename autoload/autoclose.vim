@@ -53,7 +53,7 @@ function! autoclose#AutoCloseQuot(quot) abort
   elseif l:prevChar == a:quot
     return a:quot
   " カーソルの次の文字が上記のl:availableNextCharsに含まれている場合、クォーテーション補完する
-  elseif l:availableNextChars->count(l:nextChar) == 1
+  elseif index(l:availableNextChars, l:nextChar) != -1
     return a:quot . a:quot . "\<LEFT>"
   else
     return a:quot
@@ -135,21 +135,22 @@ endfunction
 " 適用するFileType
 let s:enabledAutoCloseTagFileTypes = ["html", "xml", "javascript", "blade", "eruby", "vue"]
 " 適用する拡張子
-let s:enabledAutoCloseTagExtensions = ["html", "xml", "js", "blade.php", "erb", "vue"]
+let s:enabledAutoCloseTagExts = ["html", "xml", "js", "blade.php", "erb", "vue"]
 
 " vimrcの設定を反映
 function! autoclose#ReflectVimrc() abort
   if exists('g:enabledAutoCloseTagFileTypes')
     let s:enabledAutoCloseTagFileTypes = s:enabledAutoCloseTagFileTypes + g:enabledAutoCloseTagFileTypes
   endif
-  if exists('g:enabledAutoCloseTagExtensions')
-    let s:enabledAutoCloseTagExtensions = s:enabledAutoCloseTagExtensions + g:enabledAutoCloseTagExtensions
+  if exists('g:enabledAutoCloseTagExts')
+    let s:enabledAutoCloseTagExts = s:enabledAutoCloseTagExts + map(g:enabledAutoCloseTagExts, 'substitute(v:val, "*.", "", "")')
+
   endif
 endfunction
 
 " 閉じタグ補完を有効化するか判定して、有効化する
 function! autoclose#EnableAutoCloseTag() abort
-  if s:enabledAutoCloseTagFileTypes->count(&filetype) == 1 || s:enabledAutoCloseTagExtensions->count(expand("%:e")) == 1
+  if index(s:enabledAutoCloseTagFileTypes, &filetype) != -1 || index(s:enabledAutoCloseTagExts, expand('%:e')) != -1
     " NOTE: mapの引数に<buffer>を指定することで、カレントバッファだけマップする
     inoremap <buffer> <expr> > WriteCloseTag(">")
     inoremap <buffer> </ </<C-x><C-o><ESC>F<i

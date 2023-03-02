@@ -4,7 +4,7 @@
 " NOTE: 設定仕様
 " 変数で設定する。コマンドはない。
 " ・タグ補完を有効にする拡張子の指定
-" →g:enabledAutoCloseTagExtensions
+" →g:enabledAutoCloseTagExts
 " ・タグ補完を有効にするFileTypeの指定
 " →g:enabledAutoCloseTagFileTypes
 " ・それぞれの補完機能のon/offを指定(0:off, 1:on(デフォルト))
@@ -14,7 +14,7 @@
 " →g:enableAutoCloseErubyTag
 " ・タグ補完を適用しないファイルの種類を指定
 " →g:disabledAutoCloseTagFileTypes
-" →g:disabledAutoCloseTagExtensions
+" →g:disabledAutoCloseTagExts
 
 " 括弧補完
 if !exists('g:enableAutoCloseBrackets') || (exists('g:enableAutoCloseBrackets') && g:enableAutoCloseBrackets == 1)
@@ -49,7 +49,7 @@ if !exists('g:enableAutoCloseTags') || (exists('g:enableAutoCloseTags') && g:ena
 
   " FIXME: iunmapで解除ではなく、配列からファイルを除く処理をReflectVimrc()に追加する
   " vimrcで設定したFileType、拡張子のファイルに対して閉じタグ補完の解除
-  " if exists('g:disabledAutoCloseTagFileTypes') || exists('g:disabledAutoCloseTagFileExtensions')
+  " if exists('g:disabledAutoCloseTagFileTypes') || exists('g:disabledAutoCloseTagFileExts')
   "   iunmap >
   "   iunmap </
   " endif

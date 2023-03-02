@@ -71,7 +71,7 @@ Add the following to your vimrc:
 ```vim
 " ex)
 let g:enabledAutoCloseTagFileTypes = ["markdown", "php"]    " FileType
-let g:enabledAutoCloseTagExtensions = ["md", "php"]         " extension
+let g:enabledAutoCloseTagExts = ["*.md", "*.php"]           " extension
 ```
 
 - Adding file types to which tag completion is **not** applied(developping... yet available)  
@@ -79,5 +79,5 @@ Add the following to your vimrc:
 ```vim
 " ex)
 let g:disabledAutoCloseTagFileTypes = ["javascript", "php"] " FileType
-let g:disabledAutoCloseTagExtensions = ["js", "php"]        " extension
+let g:disabledAutoCloseTagExts = ["*.js", "*.php"]          " extension
 ```

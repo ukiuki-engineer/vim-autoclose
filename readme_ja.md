@@ -77,7 +77,7 @@ vimrcに以下を追記
 ```vim
 " ex)
 let g:enabledAutoCloseTagFileTypes = ["markdown", "php"]    " FileType
-let g:enabledAutoCloseTagExtensions = ["md", "php"]         " extension
+let g:enabledAutoCloseTagExts = ["*.md", "*.php"]           " extension
 ```
 
 - タグ補完を適用**しない**ファイルの種類を追加(実装中...未だ使用不可)  
@@ -85,5 +85,5 @@ vimrcに以下を追記します
 ```vim
 " ex)
 let g:disabledAutoCloseTagFileTypes = ["javascript", "php"] " FileType
-let g:disabledAutoCloseTagExtensions = ["js", "php"]        " extension
+let g:disabledAutoCloseTagExts = ["*.js", "*.php"]          " extension
 ```
