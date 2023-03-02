@@ -1,6 +1,6 @@
 # vim-autoclose
 This plugin automatically closes parentheses, brackets, quotes, and other paired characters in Vim.  
-[japanese](https://github.com/ukiuki-engineer/vim-autoclose/blob/feature/readme/readme_ja.md)
+[japanese](https://github.com/ukiuki-engineer/vim-autoclose/blob/master/readme_ja.md)
 
 ## Features:
 - Automatically completes closing parentheses, brackets, and quotes
