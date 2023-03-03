@@ -54,36 +54,44 @@ Extensions(拡張子): *.html, *.js, *.blade.php, *.erb, *.vue
 - 括弧補完無効化  
 vimrcに以下を追記
 ```vim
-let g:enable_autoclose_brackets = 0
+let g:autoclosing_brackets = 0
 ```
 - クォーテーション補完無効化  
 vimrcに以下を追記
 ```vim
-let g:enable_autoclose_quots = 0
+let g:autoclosing_quots = 0
 ```
 - タグ補完無効化  
 vimrcに以下を追記
 ```vim
-let g:enable_autoclose_tags = 0
+let g:autoclosing_tags = 0
 ```
 
 - erubyの<%%>補完を無効化
 ```vim
-let g:enable_autoclose_eruby_tag = 0
+let g:autoclosing_eruby_tags = 0
 ```
 
 - タグ補完を適用するファイルタイプ、拡張子を追加  
 vimrcに以下を追記
 ```vim
 " ex)
-let g:enabled_autoclose_tag_filetypes = ["markdown", "php"]    " FileType
-let g:enabled_autoclose_tag_exts = ["*.md", "*.php"]           " extension
+let g:enabled_autoclosing_tags_filetypes = ["markdown", "php"]    " FileType
+let g:enabled_autoclosing_tags_exts = ["*.md", "*.php"]           " extension
 ```
 
 - タグ補完を適用**しない**ファイルタイプ、拡張子を追加  
 vimrcに以下を追記します
 ```vim
 " ex)
-let g:disabled_autoclose_tag_filetypes = ["javascript", "php"] " FileType
-let g:disabled_autoclose_tag_exts = ["*.js", "*.php"]          " extension
+let g:disabled_autoclosing_tags_filetypes = ["javascript", "php"] " FileType
+let g:disabled_autoclosing_tags_exts = ["*.js", "*.php"]          " extension
 ```
+
+## TODO
+- `<C-c>`による補完キャンセル機能  
+補完された後、インサートモードのまま`<C-c>`で補完をキャンセルしてノーマルモードにする機能をオプションで利用可能にする。
+- ユーザー定義タグ
+ユーザーが定義したタグの補完をできるようにする。  
+例えば、erubyの`<%%>`は、現状デフォルトで組み込まれているがこれを外し、代わりにユーザーが定義した独自のタグを補完できるように拡張する。  
+これが実装されれば、erubyの`<%%>`や、Djangoの`{%%}`など様々な種類のタグに対応できるようになる。
