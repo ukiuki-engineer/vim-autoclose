@@ -16,8 +16,11 @@
 " →g:disabled_autoclosing_tags_filetypes
 " →g:disabled_autoclosing_tags_exts
 
+" vimrcの設定を反映
+call autoclose#reflect_vimrc()
+
 " 括弧補完
-if !exists('g:autoclosing_brackets') || (exists('g:autoclosing_brackets') && g:autoclosing_brackets == true)
+if g:autoclosing_brackets == 1
   " 括弧入力
   inoremap <expr> ( autoclose#write_close_bracket("(")
   inoremap <expr> { autoclose#write_close_bracket("{")
@@ -30,16 +33,14 @@ endif
 
 
 " クォーテーション補完
-if !exists('g:autoclosing_quots') || (exists('g:autoclosing_quots') && g:autoclosing_quots == true)
+if g:autoclosing_quots == 1
   inoremap <expr> ' autoclose#autoclose_quot("\'")
   inoremap <expr> " autoclose#autoclose_quot("\"")
   inoremap <expr> ` autoclose#autoclose_quot("\`")
 endif
 
 " タグ補完
-if !exists('g:autoclosing_tags') || (exists('g:autoclosing_tags') && g:autoclosing_tags == true)
-  " vimrcの設定を反映
-  call autoclose#reflect_vimrc()
+if g:autoclosing_tags == 1
   " タグ入力
   augroup VimAutoCloseTag
     au!
@@ -48,7 +49,7 @@ if !exists('g:autoclosing_tags') || (exists('g:autoclosing_tags') && g:autoclosi
 endif
 
 " erubyの<%%>補完
-if !exists('g:autoclosing_eruby_tags') || (exists('g:autoclosing_eruby_tags') && g:autoclosing_eruby_tags == true)
+if g:autoclosing_eruby_tags == 1
   augroup VimautocloseErubyTag
     au!
     au FileType,BufEnter * call autoclose#enable_autoclose_eruby_tag()

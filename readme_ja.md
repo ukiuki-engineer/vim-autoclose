@@ -54,22 +54,22 @@ Extensions(拡張子): *.html, *.js, *.blade.php, *.erb, *.vue
 - 括弧補完無効化  
 vimrcに以下を追記
 ```vim
-let g:autoclosing_brackets = false
+let g:autoclosing_brackets = 0
 ```
 - クォーテーション補完無効化  
 vimrcに以下を追記
 ```vim
-let g:autoclosing_quots = false
+let g:autoclosing_quots = 0
 ```
 - タグ補完無効化  
 vimrcに以下を追記
 ```vim
-let g:autoclosing_tags = false
+let g:autoclosing_tags = 0
 ```
 
 - erubyの<%%>補完を無効化
 ```vim
-let g:autoclosing_eruby_tags = false
+let g:autoclosing_eruby_tags = 0
 ```
 
 - タグ補完を適用するファイルタイプ、拡張子を追加  

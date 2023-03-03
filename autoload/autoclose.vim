@@ -143,6 +143,18 @@ let s:disabled_autoclosing_tags_exts = []
 
 " vimrcの設定を反映
 function! autoclose#reflect_vimrc() abort
+  if !exists('g:autoclosing_brackets')
+    let g:autoclosing_brackets = 1
+  endif
+  if !exists('g:autoclosing_quots')
+    let g:autoclosing_quots = 1
+  endif
+  if !exists('g:autoclosing_tags')
+    let g:autoclosing_tags = 1
+  endif
+  if !exists('g:autoclosing_eruby_tags')
+    let g:autoclosing_eruby_tags = 1
+  endif
   if exists('g:enabled_autoclosing_tags_filetypes')
     let s:enabled_autoclosing_tags_filetypes = s:enabled_autoclosing_tags_filetypes + g:enabled_autoclosing_tags_filetypes
   endif
