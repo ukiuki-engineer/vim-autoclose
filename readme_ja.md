@@ -54,36 +54,36 @@ Extensions(拡張子): *.html, *.js, *.blade.php, *.erb, *.vue
 - 括弧補完無効化  
 vimrcに以下を追記
 ```vim
-let g:enable_autoclose_brackets = 0
+let g:autoclosing_brackets = false
 ```
 - クォーテーション補完無効化  
 vimrcに以下を追記
 ```vim
-let g:enable_autoclose_quots = 0
+let g:autoclosing_quots = false
 ```
 - タグ補完無効化  
 vimrcに以下を追記
 ```vim
-let g:enable_autoclose_tags = 0
+let g:autoclosing_tags = false
 ```
 
 - erubyの<%%>補完を無効化
 ```vim
-let g:enable_autoclose_eruby_tag = 0
+let g:autoclosing_eruby_tags = false
 ```
 
 - タグ補完を適用するファイルタイプ、拡張子を追加  
 vimrcに以下を追記
 ```vim
 " ex)
-let g:enabled_autoclose_tag_filetypes = ["markdown", "php"]    " FileType
-let g:enabled_autoclose_tag_exts = ["*.md", "*.php"]           " extension
+let g:enabled_autoclosing_tags_filetypes = ["markdown", "php"]    " FileType
+let g:enabled_autoclosing_tags_exts = ["*.md", "*.php"]           " extension
 ```
 
 - タグ補完を適用**しない**ファイルタイプ、拡張子を追加  
 vimrcに以下を追記します
 ```vim
 " ex)
-let g:disabled_autoclose_tag_filetypes = ["javascript", "php"] " FileType
-let g:disabled_autoclose_tag_exts = ["*.js", "*.php"]          " extension
+let g:disabled_autoclosing_tags_filetypes = ["javascript", "php"] " FileType
+let g:disabled_autoclosing_tags_exts = ["*.js", "*.php"]          " extension
 ```
