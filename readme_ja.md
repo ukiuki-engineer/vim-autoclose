@@ -87,3 +87,11 @@ vimrcに以下を追記します
 let g:disabled_autoclosing_tags_filetypes = ["javascript", "php"] " FileType
 let g:disabled_autoclosing_tags_exts = ["*.js", "*.php"]          " extension
 ```
+
+## TODO
+- `<C-c>`による補完キャンセル機能  
+補完された後、インサートモードのまま`<C-c>`で補完をキャンセルしてノーマルモードにする機能をオプションで利用可能にする。
+- ユーザー定義タグ
+ユーザーが定義したタグの補完をできるようにする。  
+例えば、erubyの`<%%>`は、現状デフォルトで組み込まれているがこれを外し、代わりにユーザーが定義した独自のタグを補完できるように拡張する。  
+これが実装されれば、erubyの`<%%>`や、Djangoの`{%%}`など様々な種類のタグに対応できるようになる。

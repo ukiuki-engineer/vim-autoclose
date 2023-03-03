@@ -81,3 +81,11 @@ Add the following to your vimrc:
 let g:disabled_autoclosing_tags_filetypes = ["javascript", "php"] " FileType
 let g:disabled_autoclosing_tags_exts = ["*.js", "*.php"]          " extension
 ```
+
+## TODO
+- Completion cancellation with `<C-c>`  
+Make it possible to cancel completion and switch to normal mode by typing `<C-c>` while in insert mode after completion. This feature should be optional.  
+- User-defined tags
+Enable completion of user-defined tags.  
+For example, the default eruby `<%%>` tag could be removed, and instead, users could define their own custom tags for completion.  
+This would allow support for various tag types such as eruby's `<%%>` or Django's `{%%}`.
