@@ -16,6 +16,13 @@
 " →g:disabled_autoclosing_tags_filetypes
 " →g:disabled_autoclosing_tags_exts
 
+" 2重読み込み防止処理
+if exists('g:ukiuki_engineer#loaded_autoclose')
+  finish
+endif
+
+let g:ukiuki_engineer#loaded_autoclose = 1
+
 " vimrcの設定を反映
 call autoclose#reflect_vimrc()
 
