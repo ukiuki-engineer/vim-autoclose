@@ -82,7 +82,7 @@ let g:autoclose#disabled_autoclosing_tags_filetypes = ["javascript", "php"] " Fi
 let g:autoclose#disabled_autoclosing_tags_exts = ["*.js", "*.php"]          " extension
 ```
 
-- Autocompletion Cancel Feature
+- Autocompletion Cancel Feature  
 You can cancel autocompletion if you don't want to use it. This feature is off by default.  
 To use this feature, add the following to your vimrc file.
 ```vim

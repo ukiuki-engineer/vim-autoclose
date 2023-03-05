@@ -88,7 +88,7 @@ let g:autoclose#disabled_autoclosing_tags_filetypes = ["javascript", "php"] " Fi
 let g:autoclose#disabled_autoclosing_tags_exts = ["*.js", "*.php"]          " extension
 ```
 
-- 補完キャンセル機能
+- 補完キャンセル機能  
 補完したくない場合、補完をキャンセルする事ができます。この機能は、デフォルトではオフになっています。  
 この機能を使用するには、vimrcに以下を追記します。
 ```vim
