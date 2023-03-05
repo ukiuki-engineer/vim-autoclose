@@ -73,17 +73,17 @@ htmlのタグ補完
 ------------------------------------------------------------------------------
 括弧補完無効化						*autoclose-brackets*
 vimrcに以下を追記します。:  
-	let g:autoclose#autoclosing_brackets = 0
+	let g:autoclose#autoclosing_brackets_enable = 0
 
 ------------------------------------------------------------------------------
 クォーテーション補完無効化				*autoclose-quots*
 vimrcに以下を追記します。:  
-	let g:autoclose#autoclosing_quots = 0
+	let g:autoclose#autoclosing_quots_enable = 0
 
 ------------------------------------------------------------------------------
 タグ補完無効化						*autoclose-tags*
 vimrcに以下を追記します。:  
-	let g:autoclose#autoclosing_tags = 0
+	let g:autoclose#autoclosing_tags_enable = 0
 
 ------------------------------------------------------------------------------
 erubyの<%%>補完を無効化					*autoclose-eruby*

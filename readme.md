@@ -47,17 +47,17 @@ Extensions: *.html, *.js, *.blade.php, *.erb, *.vue
 - Disabling bracket completion  
 Add the following to your vimrc:
 ```vim
-let g:autoclose#autoclosing_brackets = 0
+let g:autoclose#autoclosing_brackets_enable = 0
 ```
 - Disabling quotation completion  
 Add the following to your vimrc:
 ```vim
-let g:autoclose#autoclosing_quots = 0
+let g:autoclose#autoclosing_quots_enable = 0
 ```
 - Disabling tag completion  
 Add the following to your vimrc:
 ```vim
-let g:autoclose#autoclosing_tags = 0
+let g:autoclose#autoclosing_tags_enable = 0
 ```
 
 - Disabling completion of eruby's <%%>  

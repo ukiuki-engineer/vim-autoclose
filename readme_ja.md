@@ -54,17 +54,17 @@ Extensions(拡張子): *.html, *.js, *.blade.php, *.erb, *.vue
 - 括弧補完無効化  
 vimrcに以下を追記
 ```vim
-let g:autoclose#autoclosing_brackets = 0
+let g:autoclose#autoclosing_brackets_enable = 0
 ```
 - クォーテーション補完無効化  
 vimrcに以下を追記
 ```vim
-let g:autoclose#autoclosing_quots = 0
+let g:autoclose#autoclosing_quots_enable = 0
 ```
 - タグ補完無効化  
 vimrcに以下を追記
 ```vim
-let g:autoclose#autoclosing_tags = 0
+let g:autoclose#autoclosing_tags_enable = 0
 ```
 
 - erubyの<%%>補完を無効化
