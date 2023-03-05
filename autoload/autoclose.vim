@@ -143,29 +143,29 @@ let s:disabled_autoclosing_tags_exts = []
 
 " vimrcの設定を反映
 function! autoclose#reflect_vimrc() abort
-  if !exists('g:autoclosing_brackets')
-    let g:autoclosing_brackets = 1
+  if !exists('g:autoclose#autoclosing_brackets')
+    let g:autoclose#autoclosing_brackets = 1
   endif
-  if !exists('g:autoclosing_quots')
-    let g:autoclosing_quots = 1
+  if !exists('g:autoclose#autoclosing_quots')
+    let g:autoclose#autoclosing_quots = 1
   endif
-  if !exists('g:autoclosing_tags')
-    let g:autoclosing_tags = 1
+  if !exists('g:autoclose#autoclosing_tags')
+    let g:autoclose#autoclosing_tags = 1
   endif
-  if !exists('g:autoclosing_eruby_tags')
-    let g:autoclosing_eruby_tags = 1
+  if !exists('g:autoclose#autoclosing_eruby_tags')
+    let g:autoclose#autoclosing_eruby_tags = 1
   endif
-  if exists('g:enabled_autoclosing_tags_filetypes')
-    let s:enabled_autoclosing_tags_filetypes = s:enabled_autoclosing_tags_filetypes + g:enabled_autoclosing_tags_filetypes
+  if exists('g:autoclose#enabled_autoclosing_tags_filetypes')
+    let s:enabled_autoclosing_tags_filetypes = s:enabled_autoclosing_tags_filetypes + g:autoclose#enabled_autoclosing_tags_filetypes
   endif
-  if exists('g:enabled_autoclosing_tags_exts')
-    let s:enabled_autoclosing_tags_exts = s:enabled_autoclosing_tags_exts + map(g:enabled_autoclosing_tags_exts, 'substitute(v:val, "*.", "", "")')
+  if exists('g:autoclose#enabled_autoclosing_tags_exts')
+    let s:enabled_autoclosing_tags_exts = s:enabled_autoclosing_tags_exts + map(g:autoclose#enabled_autoclosing_tags_exts, 'substitute(v:val, "*.", "", "")')
   endif
-  if exists('g:disabled_autoclosing_tags_filetypes')
-    let s:disabled_autoclosing_tags_filetypes = s:disabled_autoclosing_tags_filetypes + g:disabled_autoclosing_tags_filetypes
+  if exists('g:autoclose#disabled_autoclosing_tags_filetypes')
+    let s:disabled_autoclosing_tags_filetypes = s:disabled_autoclosing_tags_filetypes + g:autoclose#disabled_autoclosing_tags_filetypes
   endif
-  if exists('g:disabled_autoclosing_tags_exts')
-    let s:disabled_autoclosing_tags_exts = s:disabled_autoclosing_tags_exts + map(g:disabled_autoclosing_tags_exts, 'substitute(v:val, "*.", "", "")')
+  if exists('g:autoclose#disabled_autoclosing_tags_exts')
+    let s:disabled_autoclosing_tags_exts = s:disabled_autoclosing_tags_exts + map(g:autoclose#disabled_autoclosing_tags_exts, 'substitute(v:val, "*.", "", "")')
   endif
 endfunction
 
