@@ -33,7 +33,7 @@ License : MIT license  {{{
   タグ補完無効化					|autoclose-tags|
   erubyの<%%>補完を無効化				|autoclose-eruby|
   タグ補完を適用するファイルの種類を追加		|autoclose-file-types|
-  タグ補完を適用**しない**ファイルの種類を追加		|autoclose-file-exts|
+  補完キャンセル機能					|autoclose-cancel|
 
 ==============================================================================
 概要							*autoclose-introduction*
@@ -72,36 +72,42 @@ htmlのタグ補完
 
 ------------------------------------------------------------------------------
 括弧補完無効化						*autoclose-brackets*
-vimrcに以下を追記します:  
+vimrcに以下を追記します。:  
 	let g:autoclose#autoclosing_brackets = 0
 
 ------------------------------------------------------------------------------
 クォーテーション補完無効化				*autoclose-quots*
-vimrcに以下を追記します:  
+vimrcに以下を追記します。:  
 	let g:autoclose#autoclosing_quots = 0
 
 ------------------------------------------------------------------------------
 タグ補完無効化						*autoclose-tags*
-vimrcに以下を追記します:  
+vimrcに以下を追記します。:  
 	let g:autoclose#autoclosing_tags = 0
 
 ------------------------------------------------------------------------------
 erubyの<%%>補完を無効化					*autoclose-eruby*
-vimrcに以下を追記します:  
+vimrcに以下を追記します。:  
 	let g:autoclose#autoclosing_eruby_tags = 0
 
 ------------------------------------------------------------------------------
 タグ補完を適用するファイルのタイプ、拡張子を追加	*autoclose-file-types*
-vimrcに以下を追記します:  
+vimrcに以下を追記します。:  
 	let g:autoclose#enabled_autoclosing_tags_filetypes = ["markdown", "php"]    " FileType
 	let g:autoclose#enabled_autoclosing_tags_exts = ["*.md", "*.php"]           " extension
 
 ------------------------------------------------------------------------------
 タグ補完を適用**しない**ファイルタイプ、拡張子を追加	*autoclose-file-exts*
-vimrcに以下を追記します:  
+vimrcに以下を追記します。:  
 	let g:autoclose#disabled_autoclosing_tags_filetypes = ["javascript", "php"] " FileType
 	let g:autoclose#disabled_autoclosing_tags_exts = ["*.js", "*.php"]          " extension
 
+------------------------------------------------------------------------------
+補完キャンセル機能					*autoclose-cancel*
+補完したくない場合、補完をキャンセルする事ができます。この機能は、デフォルトではオフになっています。
+この機能を使用するには、vimrcに以下を追記します。:  
+	let g:autoclose#cancel_completion_enable = 1
+	inoremap <expr> <C-c> autoclose#is_completion() ? autoclose#cancel_completion() : "\<Esc>"
 
 ==============================================================================
 vim:tw=78:ts=8:ft=help:norl:noet:fen:

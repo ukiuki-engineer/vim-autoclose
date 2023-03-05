@@ -82,9 +82,15 @@ let g:autoclose#disabled_autoclosing_tags_filetypes = ["javascript", "php"] " Fi
 let g:autoclose#disabled_autoclosing_tags_exts = ["*.js", "*.php"]          " extension
 ```
 
+- Autocompletion Cancel Feature
+You can cancel autocompletion if you don't want to use it. This feature is off by default.  
+To use this feature, add the following to your vimrc file.
+```vim
+let g:autoclose#cancel_completion_enable = 1
+inoremap <expr> <C-c> autoclose#is_completion() ? autoclose#cancel_completion() : "\<Esc>"
+```
+
 ## TODO
-- Completion cancellation with `<C-c>`  
-Make it possible to cancel completion and switch to normal mode by typing `<C-c>` while in insert mode after completion. This feature should be optional.  
 - User-defined tags
 Enable completion of user-defined tags.  
 For example, the default eruby `<%%>` tag could be removed, and instead, users could define their own custom tags for completion.  
