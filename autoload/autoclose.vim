@@ -1,18 +1,7 @@
-" 対の括弧を返す
-function! s:reverse_bracket(bracket) abort
-  let l:start_bracket = {")": "(", "}": "{", "]": "["} " 括弧
-  let l:close_bracket = {"(": ")", "{": "}", "[": "]"} " 閉じ括弧
 
-  if has_key(l:close_bracket, a:bracket) " 括弧が渡されたら閉じ括弧を返す
-    return l:close_bracket[a:bracket]
-  elseif has_key(l:start_bracket, a:bracket) " 閉じ括弧が渡されたら括弧を返す
-    return l:start_bracket[a:bracket]
-  else
-    return ""
-  endif
-endfunction
-
+"
 " 閉じ括弧を補完する
+"
 function! autoclose#write_close_bracket(bracket) abort
   let l:prev_char = getline('.')[col('.') - 2] " カーソルの前の文字
   let l:next_char = getline('.')[col('.') - 1] " カーソルの次の文字
@@ -23,11 +12,16 @@ function! autoclose#write_close_bracket(bracket) abort
   if l:next_char =~ '\a' || l:next_char =~ '\d' || l:next_char =~ '[^\x01-\x7E]'
     return a:bracket " 括弧補完しない
   else
+    if exists('g:autoclose#cancel_completion_enable') && g:autoclose#cancel_completion_enable == 1
+      call s:save_completion_strings(a:bracket, s:reverse_bracket(a:bracket))
+    endif
     return a:bracket . s:reverse_bracket(a:bracket) . "\<LEFT>" " 括弧補完
   endif
 endfunction
 
+"
 " 閉じ括弧入力時の挙動
+"
 function! autoclose#not_double_close_bracket(close_bracket) abort
   let l:prev_char = getline('.')[col('.') - 2] " カーソルの前の文字
   let l:next_char = getline('.')[col('.') - 1] " カーソルの次の文字
@@ -39,7 +33,9 @@ function! autoclose#not_double_close_bracket(close_bracket) abort
   endif
 endfunction
 
+"
 " クォーテーション補完
+"
 function! autoclose#autoclose_quot(quot) abort
   let l:prev_char = getline('.')[col('.') - 2] " カーソルの前の文字
   let l:next_char = getline('.')[col('.') - 1] " カーソルの次の文字
@@ -54,59 +50,18 @@ function! autoclose#autoclose_quot(quot) abort
     return a:quot
   " カーソルの次の文字が上記のl:available_next_charsに含まれている場合、クォーテーション補完する
   elseif index(l:available_next_chars, l:next_char) != -1
+    if exists('g:autoclose#cancel_completion_enable') && g:autoclose#cancel_completion_enable == 1
+      call s:save_completion_strings(a:quot, a:quot)
+    endif
     return a:quot . a:quot . "\<LEFT>"
   else
     return a:quot
   endif
 endfunction
 
-" 要素内文字列から要素名を抜き出す
-function! s:trim_elementname(str_line_num, str_in_tags) abort
-  let l:element_name = ""
-  let l:start_range = 1
-  " カーソル行とタグがある行が違う場合、
-  " インデントが含まれているので要素名抜き出しのスタート位置をずらす
-  if a:str_line_num != line('.')
-    let l:start_range = indent(a:str_line_num) + 1
-  endif
-  for i in range(l:start_range, strlen(a:str_in_tags))
-    if a:str_in_tags[i] == " "
-      break
-    endif
-    if a:str_in_tags[i] != "<"
-      let l:element_name = l:element_name . a:str_in_tags[i]
-    endif
-  endfor
-  return l:element_name
-endfunction
-
-" カーソルより前の一番近い要素名を取得する
-function! s:find_element_name(ket) abort
-  " カーソル行を検索
-  let l:str_in_tag = ""
-  for i in range(1, col('.'))
-    let l:target_char = getline('.')[col('.') - 1 - i]
-    let l:str_in_tag = l:target_char . l:str_in_tag
-    if l:target_char == "<"
-      break
-    endif
-  endfor
-  " カーソル行で要素名が見つかれば要素名を返す
-  if "<" == matchstr(l:str_in_tag, "<")
-    return s:trim_elementname(line('.'), l:str_in_tag)
-  endif
-  " カーソル行で要素名が見つからなければ、上の行を見つかるまで逐次検索
-  let l:str_on_line = ""
-  for i in range(1, line('.') - 1)
-    let l:str_on_line = getline(line('.') - i)
-    if "<" == matchstr(l:str_on_line, "<")
-      return s:trim_elementname(line('.') - i, l:str_on_line)
-    endif
-  endfor
-  return a:ket
-endfunction
-
+"
 " 閉じタグを補完する
+"
 function! autoclose#write_close_tag(ket) abort
   let l:prev_char = getline('.')[col('.') - 2] " カーソルの前の文字
   let l:void_elements = ["br", "hr", "img", "input", "link", "meta"]
@@ -128,6 +83,9 @@ function! autoclose#write_close_tag(ket) abort
   if l:prev_char == "/" || l:prev_char == "-" || l:prev_char == "=" || l:prev_char == "%" || join(l:void_elements + l:not_element) =~ l:element_name || l:element_name =~ "/" || l:element_name == ""
     return a:ket
   else
+    if exists('g:autoclose#cancel_completion_enable') && g:autoclose#cancel_completion_enable == 1
+      call s:save_completion_strings(a:ket, "</" . l:element_name . a:ket)
+    endif
     return a:ket . "</" . l:element_name . a:ket . l:cursor_transition
   endif
 endfunction
@@ -141,7 +99,9 @@ let s:disabled_autoclosing_tags_filetypes = []
 " 無効化する拡張子
 let s:disabled_autoclosing_tags_exts = []
 
+"
 " vimrcの設定を反映
+"
 function! autoclose#reflect_vimrc() abort
   if !exists('g:autoclose#autoclosing_brackets')
     let g:autoclose#autoclosing_brackets = 1
@@ -169,7 +129,9 @@ function! autoclose#reflect_vimrc() abort
   endif
 endfunction
 
+"
 " 閉じタグ補完を有効化するか判定して、有効化する
+"
 function! autoclose#enable_autoclose_tag() abort
   if (index(s:disabled_autoclosing_tags_filetypes, &filetype) == -1 && index(s:disabled_autoclosing_tags_exts, expand('%:e')) == -1)
     \&& (index(s:enabled_autoclosing_tags_filetypes, &filetype) != -1 || index(s:enabled_autoclosing_tags_exts, expand('%:e')) != -1)
@@ -179,20 +141,136 @@ function! autoclose#enable_autoclose_tag() abort
   endif
 endfunction
 
+"
 " erubyの<%%>補完
+"
 function! autoclose#autoclose_eruby_tag() abort
   let l:prev_char = getline('.')[col('.') - 2] " カーソルの前の文字
   " カーソルの前の文字が<の場合、%>を補完し、それ以外は%を返す
   if l:prev_char == "<"
+    if exists('g:autoclose#cancel_completion_enable') && g:autoclose#cancel_completion_enable == 1
+      call s:save_completion_strings("<%", "%>")
+    endif
     return "%%>\<LEFT>\<LEFT>"
   else
     return "%"
   endif
 endfunction
 
+"
 " erubyの<%%>補完を有効化
+"
 function! autoclose#enable_autoclose_eruby_tag() abort
   if &filetype == "eruby" || expand("%:e") == "erb"
     inoremap <buffer> <expr> % autoclose#autoclose_eruby_tag()
   endif
+endfunction
+
+"
+" 補完をキャンセル
+"
+function! autoclose#cancel_completion() abort
+  if exists('g:autoclose#cancel_completion_enable') && g:autoclose#cancel_completion_enable == 1
+    return "\<RIGHT>\<Esc>" . strlen(g:autoclose#completion_strings['completed']) . "x"
+  else
+    return "\<Esc>"
+  endif
+endfunction
+
+"
+" 直前で補完が行われたかどうかを判定
+"
+function! autoclose#is_completion()
+  if !exists('g:autoclose#completion_strings')
+    return v:false
+  endif
+  let l:trigger_len = strlen(g:autoclose#completion_strings['trigger'])
+  let l:completed_len = strlen(g:autoclose#completion_strings['completed'])
+  let l:line = getline('.')
+  let l:col = col('.')
+  return l:line[l:col - l:trigger_len - 1 : l:col - 2] == g:autoclose#completion_strings['trigger']
+    \&& l:line[l:col - 1 : l:col + l:completed_len - 2] == g:autoclose#completion_strings['completed']
+endfunction
+
+" ------------------------------------------------------------------------------
+" private
+" ------------------------------------------------------------------------------
+"
+" 対の括弧を返す
+"
+function! s:reverse_bracket(bracket) abort
+  let l:start_bracket = {")": "(", "}": "{", "]": "["} " 括弧
+  let l:close_bracket = {"(": ")", "{": "}", "[": "]"} " 閉じ括弧
+
+  if has_key(l:close_bracket, a:bracket) " 括弧が渡されたら閉じ括弧を返す
+    return l:close_bracket[a:bracket]
+  elseif has_key(l:start_bracket, a:bracket) " 閉じ括弧が渡されたら括弧を返す
+    return l:start_bracket[a:bracket]
+  else
+    return ""
+  endif
+endfunction
+
+"
+" 要素内文字列から要素名を抜き出す
+"
+function! s:trim_elementname(str_line_num, str_in_tags) abort
+  let l:element_name = ""
+  let l:start_range = 1
+  " カーソル行とタグがある行が違う場合、
+  " インデントが含まれているので要素名抜き出しのスタート位置をずらす
+  if a:str_line_num != line('.')
+    let l:start_range = indent(a:str_line_num) + 1
+  endif
+  for i in range(l:start_range, strlen(a:str_in_tags))
+    if a:str_in_tags[i] == " "
+      break
+    endif
+    if a:str_in_tags[i] != "<"
+      let l:element_name = l:element_name . a:str_in_tags[i]
+    endif
+  endfor
+  return l:element_name
+endfunction
+
+"
+" カーソルより前の一番近い要素名を取得する
+"
+function! s:find_element_name(ket) abort
+  " カーソル行を検索
+  let l:str_in_tag = ""
+  for i in range(1, col('.'))
+    let l:target_char = getline('.')[col('.') - 1 - i]
+    let l:str_in_tag = l:target_char . l:str_in_tag
+    if l:target_char == "<"
+      break
+    endif
+  endfor
+  " カーソル行で要素名が見つかれば要素名を返す
+  if "<" == matchstr(l:str_in_tag, "<")
+    return s:trim_elementname(line('.'), l:str_in_tag)
+  endif
+  " カーソル行で要素名が見つからなければ、上の行を見つかるまで逐次検索
+  let l:str_on_line = ""
+  for i in range(1, line('.') - 1)
+    let l:str_on_line = getline(line('.') - i)
+    if "<" == matchstr(l:str_on_line, "<")
+      return s:trim_elementname(line('.') - i, l:str_on_line)
+    endif
+  endfor
+  return a:ket
+endfunction
+"
+" 補完トリガーの文字列と、補完された文字列を保存
+"
+function! s:save_completion_strings(trigger_str, completed_str) abort
+  let g:autoclose#completion_strings = {
+    \"trigger": a:trigger_str,
+    \"completed": a:completed_str
+  \}
+  " 保存文字列のクリア処理
+  augroup autocloseClearSavedCompletionStrings
+    au!
+    execute 'au InsertLeave * ++once unlet g:autoclose#completion_strings'
+  augroup END
 endfunction
