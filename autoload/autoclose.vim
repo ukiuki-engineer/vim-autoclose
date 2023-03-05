@@ -1,4 +1,3 @@
-
 "
 " 閉じ括弧を補完する
 "
@@ -90,27 +89,18 @@ function! autoclose#write_close_tag(ket) abort
   endif
 endfunction
 
-" 適用するFileType
-let s:enabled_autoclosing_tags_filetypes = ["html", "xml", "javascript", "blade", "eruby", "vue"]
-" 適用する拡張子
-let s:enabled_autoclosing_tags_exts = ["html", "xml", "js", "blade.php", "erb", "vue"]
-" 無効化するFileType
-let s:disabled_autoclosing_tags_filetypes = []
-" 無効化する拡張子
-let s:disabled_autoclosing_tags_exts = []
-
 "
 " vimrcの設定を反映
 "
 function! autoclose#reflect_vimrc() abort
-  if !exists('g:autoclose#autoclosing_brackets')
-    let g:autoclose#autoclosing_brackets = 1
+  if !exists('g:autoclose#autoclosing_brackets_enable')
+    let g:autoclose#autoclosing_brackets_enable = 1
   endif
-  if !exists('g:autoclose#autoclosing_quots')
-    let g:autoclose#autoclosing_quots = 1
+  if !exists('g:autoclose#autoclosing_quots_enable')
+    let g:autoclose#autoclosing_quots_enable = 1
   endif
-  if !exists('g:autoclose#autoclosing_tags')
-    let g:autoclose#autoclosing_tags = 1
+  if !exists('g:autoclose#autoclosing_tags_enable')
+    let g:autoclose#autoclosing_tags_enable = 1
   endif
   if !exists('g:autoclose#autoclosing_eruby_tags')
     let g:autoclose#autoclosing_eruby_tags = 1
@@ -195,6 +185,15 @@ endfunction
 " ------------------------------------------------------------------------------
 " private
 " ------------------------------------------------------------------------------
+" 適用するFileType
+let s:enabled_autoclosing_tags_filetypes = ["html", "xml", "javascript", "blade", "eruby", "vue"]
+" 適用する拡張子
+let s:enabled_autoclosing_tags_exts = ["html", "xml", "js", "blade.php", "erb", "vue"]
+" 無効化するFileType
+let s:disabled_autoclosing_tags_filetypes = []
+" 無効化する拡張子
+let s:disabled_autoclosing_tags_exts = []
+
 "
 " 対の括弧を返す
 "
@@ -260,6 +259,7 @@ function! s:find_element_name(ket) abort
   endfor
   return a:ket
 endfunction
+
 "
 " 補完トリガーの文字列と、補完された文字列を保存
 "

@@ -8,9 +8,9 @@
 " ・タグ補完を有効にするFileTypeの指定
 " →g:autoclose#enabled_autoclosing_tags_filetypes
 " ・それぞれの補完機能のon/offを指定(0:off, 1:on(デフォルト))
-" →g:autoclose#autoclosing_brackets
-" →g:autoclose#autoclosing_quots
-" →g:autoclose#autoclosing_tags
+" →g:autoclose#autoclosing_brackets_enable
+" →g:autoclose#autoclosing_quots_enable
+" →g:autoclose#autoclosing_tags_enable
 " →g:autoclose#autoclosing_eruby_tags
 " ・タグ補完を適用しないファイルタイプ、拡張子を指定
 " →g:autoclose#disabled_autoclosing_tags_filetypes
@@ -27,7 +27,7 @@ let g:autoclose#loaded_autoclose = 1
 call autoclose#reflect_vimrc()
 
 " 括弧補完
-if g:autoclose#autoclosing_brackets == 1
+if g:autoclose#autoclosing_brackets_enable == 1
   " 括弧入力
   inoremap <expr> ( autoclose#write_close_bracket("(")
   inoremap <expr> { autoclose#write_close_bracket("{")
@@ -40,14 +40,14 @@ endif
 
 
 " クォーテーション補完
-if g:autoclose#autoclosing_quots == 1
+if g:autoclose#autoclosing_quots_enable == 1
   inoremap <expr> ' autoclose#autoclose_quot("\'")
   inoremap <expr> " autoclose#autoclose_quot("\"")
   inoremap <expr> ` autoclose#autoclose_quot("\`")
 endif
 
 " タグ補完
-if g:autoclose#autoclosing_tags == 1
+if g:autoclose#autoclosing_tags_enable == 1
   " タグ入力
   augroup autocloseTag
     au!
