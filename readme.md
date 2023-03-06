@@ -93,6 +93,12 @@ If you do not specify any settings, these defaults will be applied.
 
 - Autocompletion Cancel Feature  
 You can cancel autocompletion if you don't want to use it. This feature is off by default.  
+After completion is performed, calling the cancel function removes the completed string and leaves only the input string. If the completion function is assigned to <C-c>, it behaves as follows:
+```vim
+"|"-><C-c>→"
+" |"-><C-c>→" 
+```
+Here, "|" represents the cursor position.
 To use this feature, add the following to your vimrc file.
 ```vim
 let g:autoclose#cancel_completion_enable = 1
