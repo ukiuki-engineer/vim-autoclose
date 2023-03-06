@@ -159,12 +159,10 @@ endfunction
 " 補完をキャンセル
 "
 function! autoclose#cancel_completion() abort
-  " FIXME: 補完される→任意の文字列を入力する→<C-c>にも対応させる
   if exists('g:autoclose#cancel_completion_enable') && g:autoclose#cancel_completion_enable == 1
     let l:trigger = g:autoclose#completion_strings['trigger']
     let l:completed = g:autoclose#completion_strings['completed']
-    let l:delete_num = strlen(l:completed) + strlen(l:trigger)
-    return "\<Esc>" . l:delete_num . "x\a" . l:trigger . "\<Esc>"
+    return "\<Esc>" . "F" . l:trigger . "\"zdt" . l:completed . "x\"zp"
   else
     return "\<Esc>"
   endif
@@ -181,8 +179,7 @@ function! autoclose#is_completion()
   let l:completed_len = strlen(g:autoclose#completion_strings['completed'])
   let l:line = getline('.')
   let l:col = col('.')
-  return l:line[l:col - l:trigger_len - 1 : l:col - 2] == g:autoclose#completion_strings['trigger']
-    \&& l:line[l:col - 1 : l:col + l:completed_len - 2] == g:autoclose#completion_strings['completed']
+  return l:line[l:col - 1 : l:col + l:completed_len - 2] == g:autoclose#completion_strings['completed']
 endfunction
 
 " ------------------------------------------------------------------------------
