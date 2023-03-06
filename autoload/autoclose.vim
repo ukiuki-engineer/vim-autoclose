@@ -166,7 +166,7 @@ function! autoclose#cancel_completion() abort
     let l:completed = g:autoclose#completion_strings['completed']
     let l:delete_num = strlen(l:trigger) + strlen(l:completed)
     if l:prev_char == l:trigger
-      return "\<Esc>" . l:delete_num . "x\a" . l:trigger . "\<Esc>"
+      return "\<Esc>" . l:delete_num . "xi" . l:trigger . "\<Esc>"
     else
       return "\<Esc>" . "F" . l:trigger . "\"zdt" . l:completed[0] . "x\"zp"
     endif
