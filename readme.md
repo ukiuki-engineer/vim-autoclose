@@ -98,7 +98,7 @@ After completion is performed, calling the cancel function removes the completed
 "|"-><C-c>→"
 " |"-><C-c>→" 
 ```
-Here, "|" represents the cursor position.
+Here, "|" represents the cursor position.  
 To use this feature, add the following to your vimrc file.
 ```vim
 let g:autoclose#cancel_completion_enable = 1
