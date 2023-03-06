@@ -47,44 +47,61 @@ Extensions: *.html, *.js, *.blade.php, *.erb, *.vue
 - Disabling bracket completion  
 Add the following to your vimrc:
 ```vim
-let g:autoclosing_brackets = 0
+let g:autoclose#autoclosing_brackets_enable = 0
 ```
 - Disabling quotation completion  
 Add the following to your vimrc:
 ```vim
-let g:autoclosing_quots = 0
+let g:autoclose#autoclosing_quots_enable = 0
 ```
 - Disabling tag completion  
 Add the following to your vimrc:
 ```vim
-let g:autoclosing_tags = 0
+let g:autoclose#autoclosing_tags_enable = 0
 ```
 
 - Disabling completion of eruby's <%%>  
 Add the following to your vimrc:
 ```vim
-let g:autoclosing_eruby_tags = 0
+let g:autoclose#autoclosing_eruby_tags = 0
 ```
 
-- Adding file types and extensions to which tag completion is applied  
-Add the following to your vimrc:
+- Set the filetypes and extensions for which tag auto-closing should be enabled  
+Add the following lines to your vimrc.
 ```vim
-" ex)
-let g:enabled_autoclosing_tags_filetypes = ["markdown", "php"]    " FileType
-let g:enabled_autoclosing_tags_exts = ["*.md", "*.php"]           " extension
+" FileTypes(default)
+let g:autoclose#enabled_autoclosing_tags_filetypes = [
+  \"html",
+  \"xml",
+  \"javascript",
+  \"blade",
+  \"eruby",
+  \"vue"
+\]
+" extension(default)
+let g:autoclose#enabled_autoclosing_tags_exts = [
+  \"*.html",
+  \"*.xml",
+  \"*.js",
+  \"*.blade.php",
+  \"*.erb",
+  \"*.vue"
+\]
 ```
+The above settings are the default configuration.  
+If you do not specify any settings, these defaults will be applied.
 
-- Adding file types and extensions to which tag completion is **not** applied  
-Add the following to your vimrc:
+- Autocompletion Cancel Feature  
+You can cancel autocompletion if you don't want to use it. This feature is off by default.  
+To use this feature, add the following to your vimrc file.
 ```vim
-" ex)
-let g:disabled_autoclosing_tags_filetypes = ["javascript", "php"] " FileType
-let g:disabled_autoclosing_tags_exts = ["*.js", "*.php"]          " extension
+let g:autoclose#cancel_completion_enable = 1
+inoremap <expr> <C-c> autoclose#is_completion() ? autoclose#cancel_completion() : "\<Esc>"
 ```
 
 ## TODO
-- Completion cancellation with `<C-c>`  
-Make it possible to cancel completion and switch to normal mode by typing `<C-c>` while in insert mode after completion. This feature should be optional.  
+- Allow users to define their own rules for parenthesis and quotation auto-closing  
+Currently, the plugin handles the auto-closing behavior. The goal is to allow users to define their own rules.
 - User-defined tags
 Enable completion of user-defined tags.  
 For example, the default eruby `<%%>` tag could be removed, and instead, users could define their own custom tags for completion.  
