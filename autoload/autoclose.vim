@@ -159,10 +159,17 @@ endfunction
 " 補完をキャンセル
 "
 function! autoclose#cancel_completion() abort
+  " FIXME: {{}}などのキャンセルにも対応させる
+  let l:prev_char = getline('.')[col('.') - 2] " カーソルの前の文字
   if exists('g:autoclose#cancel_completion_enable') && g:autoclose#cancel_completion_enable == 1
     let l:trigger = g:autoclose#completion_strings['trigger']
     let l:completed = g:autoclose#completion_strings['completed']
-    return "\<Esc>" . "F" . l:trigger . "\"zdt" . l:completed . "x\"zp"
+    let l:delete_num = strlen(l:trigger) + strlen(l:completed)
+    if l:prev_char == l:trigger
+      return "\<Esc>" . l:delete_num . "x\a" . l:trigger . "\<Esc>"
+    else
+      return "\<Esc>" . "F" . l:trigger . "\"zdt" . l:completed[0] . "x\"zp"
+    endif
   else
     return "\<Esc>"
   endif
