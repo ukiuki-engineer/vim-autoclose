@@ -100,6 +100,8 @@ inoremap <expr> <C-c> autoclose#is_completion() ? autoclose#cancel_completion() 
 ```
 
 ## TODO
+- Allow users to define their own rules for parenthesis and quotation auto-closing  
+Currently, the plugin handles the auto-closing behavior. The goal is to allow users to define their own rules.
 - User-defined tags
 Enable completion of user-defined tags.  
 For example, the default eruby `<%%>` tag could be removed, and instead, users could define their own custom tags for completion.  
