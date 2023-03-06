@@ -185,16 +185,40 @@ endfunction
 " private
 " ------------------------------------------------------------------------------
 " 適用するFileType(デフォルト)
-let s:enabled_autoclosing_tags_filetypes = ["html", "xml", "javascript", "blade", "eruby", "vue"]
+let s:enabled_autoclosing_tags_filetypes = [
+  \"html",
+  \"xml",
+  \"javascript",
+  \"blade",
+  \"eruby",
+  \"vue"
+\]
 " 適用する拡張子(デフォルト)
-let s:enabled_autoclosing_tags_exts = ["html", "xml", "js", "blade.php", "erb", "vue"]
+let s:enabled_autoclosing_tags_exts = [
+  \"html",
+  \"xml",
+  \"js",
+  \"blade.php",
+  \"erb",
+  \"vue"
+\]
 
 "
 " 対の括弧を返す
 "
 function! s:reverse_bracket(bracket) abort
-  let l:start_bracket = {")": "(", "}": "{", "]": "["} " 括弧
-  let l:close_bracket = {"(": ")", "{": "}", "[": "]"} " 閉じ括弧
+  " 括弧
+  let l:start_bracket = {
+    \")": "(",
+    \"}": "{",
+    \"]": "["
+  \}
+  " 閉じ括弧
+  let l:close_bracket = {
+    \"(": ")",
+    \"{": "}",
+    \"[": "]"
+  \}
 
   if has_key(l:close_bracket, a:bracket) " 括弧が渡されたら閉じ括弧を返す
     return l:close_bracket[a:bracket]
