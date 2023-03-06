@@ -1,5 +1,5 @@
 "
-" 閉じ括弧を補完する
+" 閉じ括弧補完
 "
 function! autoclose#write_close_bracket(bracket) abort
   let l:prev_char = getline('.')[col('.') - 2] " カーソルの前の文字
@@ -11,6 +11,7 @@ function! autoclose#write_close_bracket(bracket) abort
   if l:next_char =~ '\a' || l:next_char =~ '\d' || l:next_char =~ '[^\x01-\x7E]'
     return a:bracket " 括弧補完しない
   else
+    " キャンセル機能が有効な場合は、補完状態を保存する
     if exists('g:autoclose#cancel_completion_enable') && g:autoclose#cancel_completion_enable == 1
       call s:save_completion_strings(a:bracket, s:reverse_bracket(a:bracket))
     endif
@@ -38,23 +39,24 @@ endfunction
 function! autoclose#autoclose_quot(quot) abort
   let l:prev_char = getline('.')[col('.') - 2] " カーソルの前の文字
   let l:next_char = getline('.')[col('.') - 1] " カーソルの次の文字
-  " カーソルの次の文字が以下に含まれている場合にクォーテーション補完を有効にする
-  let l:available_next_chars = ["", " ", ",", "$", ")", "}", "]", ">"]
 
   " カーソルの左右にクォーテンションがある場合は何も入力せずにカーソルを移動
-  if (l:prev_char == a:quot && l:next_char == a:quot)
+  if l:prev_char == a:quot && l:next_char == a:quot
     return "\<RIGHT>"
-  " カーソルの前の文字がクォーテーションの場合補完しない
-  elseif l:prev_char == a:quot
+  " 以下の場合は閉じ括弧を補完しない
+  " ・カーソルの前の文字が(入力されたのと同じ)クォーテーション
+  " ・カーソルの次の文字がアルファベット
+  " ・カーソルの次の文字が数字
+  " ・カーソルの次の文字が全角
+  elseif l:prev_char == a:quot || l:next_char =~ '\a' || l:next_char =~ '\d' || l:next_char =~ '[^\x01-\x7E]'
     return a:quot
-  " カーソルの次の文字が上記のl:available_next_charsに含まれている場合、クォーテーション補完する
-  elseif index(l:available_next_chars, l:next_char) != -1
+  " それ以外はクォーテーション補完する
+  else
+    " キャンセル機能が有効な場合は、補完状態を保存する
     if exists('g:autoclose#cancel_completion_enable') && g:autoclose#cancel_completion_enable == 1
       call s:save_completion_strings(a:quot, a:quot)
     endif
     return a:quot . a:quot . "\<LEFT>"
-  else
-    return a:quot
   endif
 endfunction
 
@@ -82,6 +84,7 @@ function! autoclose#write_close_tag(ket) abort
   if l:prev_char == "/" || l:prev_char == "-" || l:prev_char == "=" || l:prev_char == "%" || join(l:void_elements + l:not_element) =~ l:element_name || l:element_name =~ "/" || l:element_name == ""
     return a:ket
   else
+    " キャンセル機能が有効な場合は、補完状態を保存する
     if exists('g:autoclose#cancel_completion_enable') && g:autoclose#cancel_completion_enable == 1
       call s:save_completion_strings(a:ket, "</" . l:element_name . a:ket)
     endif
@@ -138,6 +141,7 @@ function! autoclose#autoclose_eruby_tag() abort
   let l:prev_char = getline('.')[col('.') - 2] " カーソルの前の文字
   " カーソルの前の文字が<の場合、%>を補完し、それ以外は%を返す
   if l:prev_char == "<"
+    " キャンセル機能が有効な場合は、補完状態を保存する
     if exists('g:autoclose#cancel_completion_enable') && g:autoclose#cancel_completion_enable == 1
       call s:save_completion_strings("<%", "%>")
     endif
