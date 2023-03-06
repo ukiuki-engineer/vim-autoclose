@@ -66,21 +66,30 @@ Add the following to your vimrc:
 let g:autoclose#autoclosing_eruby_tags = 0
 ```
 
-- Adding file types and extensions to which tag completion is applied  
-Add the following to your vimrc:
+- Set the filetypes and extensions for which tag auto-closing should be enabled  
+Add the following lines to your vimrc.
 ```vim
-" ex)
-let g:autoclose#enabled_autoclosing_tags_filetypes = ["markdown", "php"]    " FileType
-let g:autoclose#enabled_autoclosing_tags_exts = ["*.md", "*.php"]           " extension
+" FileTypes(default)
+let g:autoclose#enabled_autoclosing_tags_filetypes = [
+  \"html",
+  \"xml",
+  \"javascript",
+  \"blade",
+  \"eruby",
+  \"vue"
+\]
+" extension(default)
+let g:autoclose#enabled_autoclosing_tags_exts = [
+  \"*.html",
+  \"*.xml",
+  \"*.js",
+  \"*.blade.php",
+  \"*.erb",
+  \"*.vue"
+\]
 ```
-
-- Adding file types and extensions to which tag completion is **not** applied  
-Add the following to your vimrc:
-```vim
-" ex)
-let g:autoclose#disabled_autoclosing_tags_filetypes = ["javascript", "php"] " FileType
-let g:autoclose#disabled_autoclosing_tags_exts = ["*.js", "*.php"]          " extension
-```
+The above settings are the default configuration.  
+If you do not specify any settings, these defaults will be applied.
 
 - Autocompletion Cancel Feature  
 You can cancel autocompletion if you don't want to use it. This feature is off by default.  

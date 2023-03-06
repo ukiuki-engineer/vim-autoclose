@@ -96,6 +96,7 @@ endfunction
 " vimrcの設定を反映
 "
 function! autoclose#reflect_vimrc() abort
+  " 設定されていなければデフォルト値を設定
   if !exists('g:autoclose#autoclosing_brackets_enable')
     let g:autoclose#autoclosing_brackets_enable = 1
   endif
@@ -108,17 +109,12 @@ function! autoclose#reflect_vimrc() abort
   if !exists('g:autoclose#autoclosing_eruby_tags')
     let g:autoclose#autoclosing_eruby_tags = 1
   endif
+  " 設定されていればデフォルト値を上書き
   if exists('g:autoclose#enabled_autoclosing_tags_filetypes')
-    let s:enabled_autoclosing_tags_filetypes = s:enabled_autoclosing_tags_filetypes + g:autoclose#enabled_autoclosing_tags_filetypes
+    let s:enabled_autoclosing_tags_filetypes = g:autoclose#enabled_autoclosing_tags_filetypes
   endif
   if exists('g:autoclose#enabled_autoclosing_tags_exts')
-    let s:enabled_autoclosing_tags_exts = s:enabled_autoclosing_tags_exts + map(g:autoclose#enabled_autoclosing_tags_exts, 'substitute(v:val, "*.", "", "")')
-  endif
-  if exists('g:autoclose#disabled_autoclosing_tags_filetypes')
-    let s:disabled_autoclosing_tags_filetypes = s:disabled_autoclosing_tags_filetypes + g:autoclose#disabled_autoclosing_tags_filetypes
-  endif
-  if exists('g:autoclose#disabled_autoclosing_tags_exts')
-    let s:disabled_autoclosing_tags_exts = s:disabled_autoclosing_tags_exts + map(g:autoclose#disabled_autoclosing_tags_exts, 'substitute(v:val, "*.", "", "")')
+    let s:enabled_autoclosing_tags_exts =  map(g:autoclose#enabled_autoclosing_tags_exts, 'substitute(v:val, "*.", "", "")')
   endif
 endfunction
 
@@ -126,8 +122,7 @@ endfunction
 " 閉じタグ補完を有効化するか判定して、有効化する
 "
 function! autoclose#enable_autoclose_tag() abort
-  if (index(s:disabled_autoclosing_tags_filetypes, &filetype) == -1 && index(s:disabled_autoclosing_tags_exts, expand('%:e')) == -1)
-    \&& (index(s:enabled_autoclosing_tags_filetypes, &filetype) != -1 || index(s:enabled_autoclosing_tags_exts, expand('%:e')) != -1)
+  if index(s:enabled_autoclosing_tags_filetypes, &filetype) != -1 || index(s:enabled_autoclosing_tags_exts, expand('%:e')) != -1
     " NOTE: mapの引数に<buffer>を指定することで、カレントバッファだけマップする
     inoremap <buffer> <expr> > autoclose#write_close_tag(">")
     inoremap <buffer> </ </<C-x><C-o><ESC>F<i
@@ -189,14 +184,10 @@ endfunction
 " ------------------------------------------------------------------------------
 " private
 " ------------------------------------------------------------------------------
-" 適用するFileType
+" 適用するFileType(デフォルト)
 let s:enabled_autoclosing_tags_filetypes = ["html", "xml", "javascript", "blade", "eruby", "vue"]
-" 適用する拡張子
+" 適用する拡張子(デフォルト)
 let s:enabled_autoclosing_tags_exts = ["html", "xml", "js", "blade.php", "erb", "vue"]
-" 無効化するFileType
-let s:disabled_autoclosing_tags_filetypes = []
-" 無効化する拡張子
-let s:disabled_autoclosing_tags_exts = []
 
 "
 " 対の括弧を返す

@@ -72,27 +72,38 @@ let g:autoclose#autoclosing_tags_enable = 0
 let g:autoclose#autoclosing_eruby_tags = 0
 ```
 
-- タグ補完を適用するファイルタイプ、拡張子を追加  
-vimrcに以下を追記
+- タグ補完を適用するファイルタイプ、拡張子を設定  
+vimrcに以下を追記します。
 ```vim
-" ex)
-let g:autoclose#enabled_autoclosing_tags_filetypes = ["markdown", "php"]    " FileType
-let g:autoclose#enabled_autoclosing_tags_exts = ["*.md", "*.php"]           " extension
+" FileTypes(default)
+let g:autoclose#enabled_autoclosing_tags_filetypes = [
+  \"html",
+  \"xml",
+  \"javascript",
+  \"blade",
+  \"eruby",
+  \"vue"
+\]
+" extension(default)
+let g:autoclose#enabled_autoclosing_tags_exts = [
+  \"*.html",
+  \"*.xml",
+  \"*.js",
+  \"*.blade.php",
+  \"*.erb",
+  \"*.vue"
+\]
 ```
-
-- タグ補完を適用**しない**ファイルタイプ、拡張子を追加  
-vimrcに以下を追記します
-```vim
-" ex)
-let g:autoclose#disabled_autoclosing_tags_filetypes = ["javascript", "php"] " FileType
-let g:autoclose#disabled_autoclosing_tags_exts = ["*.js", "*.php"]          " extension
-```
+上記はデフォルト設定です。  
+何も設定しなければ、デフォルトで上記設定が適用されます。
 
 - 補完キャンセル機能  
 補完したくない場合、補完をキャンセルする事ができます。この機能は、デフォルトではオフになっています。  
 この機能を使用するには、vimrcに以下を追記します。
 ```vim
+"Enable cancel feature
 let g:autoclose#cancel_completion_enable = 1
+"Key mapping for cancel feature
 inoremap <expr> <C-c> autoclose#is_completion() ? autoclose#cancel_completion() : "\<Esc>"
 ```
 
