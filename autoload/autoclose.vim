@@ -159,6 +159,7 @@ endfunction
 " 補完をキャンセル
 "
 function! autoclose#cancel_completion() abort
+  " FIXME: 補完される→任意の文字列を入力する→<C-c>にも対応させる
   if exists('g:autoclose#cancel_completion_enable') && g:autoclose#cancel_completion_enable == 1
     let l:trigger = g:autoclose#completion_strings['trigger']
     let l:completed = g:autoclose#completion_strings['completed']
