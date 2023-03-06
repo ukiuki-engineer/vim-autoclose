@@ -15,7 +15,7 @@ function! autoclose#write_close_bracket(bracket) abort
     if exists('g:autoclose#cancel_completion_enable') && g:autoclose#cancel_completion_enable == 1
       call s:save_completion_strings(a:bracket, s:reverse_bracket(a:bracket))
     endif
-    return a:bracket . s:reverse_bracket(a:bracket) . "\<LEFT>" " 括弧補完
+    return a:bracket . s:reverse_bracket(a:bracket) . "\<Left>" " 括弧補完
   endif
 endfunction
 
@@ -56,7 +56,7 @@ function! autoclose#autoclose_quot(quot) abort
     if exists('g:autoclose#cancel_completion_enable') && g:autoclose#cancel_completion_enable == 1
       call s:save_completion_strings(a:quot, a:quot)
     endif
-    return a:quot . a:quot . "\<LEFT>"
+    return a:quot . a:quot . "\<Left>"
   endif
 endfunction
 
@@ -78,7 +78,7 @@ function! autoclose#write_close_tag(ket) abort
   let l:element_name = s:find_element_name(a:ket)
   let l:cursor_transition =""
   for i in range(1, strlen(l:element_name) + 3)
-    let l:cursor_transition = l:cursor_transition . "\<LEFT>" " カーソルをタグと閉じタグの中央に移動
+    let l:cursor_transition = l:cursor_transition . "\<Left>" " カーソルをタグと閉じタグの中央に移動
   endfor
 
   if l:prev_char == "/" || l:prev_char == "-" || l:prev_char == "=" || l:prev_char == "%" || join(l:void_elements + l:not_element) =~ l:element_name || l:element_name =~ "/" || l:element_name == ""
@@ -140,7 +140,7 @@ function! autoclose#autoclose_eruby_tag() abort
     if exists('g:autoclose#cancel_completion_enable') && g:autoclose#cancel_completion_enable == 1
       call s:save_completion_strings("<%", "%>")
     endif
-    return "%%>\<LEFT>\<LEFT>"
+    return "%%>\<Left>\<Left>"
   else
     return "%"
   endif
@@ -160,7 +160,10 @@ endfunction
 "
 function! autoclose#cancel_completion() abort
   if exists('g:autoclose#cancel_completion_enable') && g:autoclose#cancel_completion_enable == 1
-    return "\<RIGHT>\<Esc>" . strlen(g:autoclose#completion_strings['completed']) . "x"
+    let l:trigger = g:autoclose#completion_strings['trigger']
+    let l:completed = g:autoclose#completion_strings['completed']
+    let l:delete_num = strlen(l:completed) + strlen(l:trigger)
+    return "\<Esc>" . l:delete_num . "x\<Insert>" . l:trigger . "\<Esc>"
   else
     return "\<Esc>"
   endif
