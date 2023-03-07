@@ -1,5 +1,6 @@
 "
 " 閉じ括弧補完
+" FIXME: {{}}などを.で繰り返しできるように
 "
 function! autoclose#write_close_bracket(bracket) abort
   let l:prev_char = getline('.')[col('.') - 2] " カーソルの前の文字
@@ -159,14 +160,22 @@ endfunction
 " 補完をキャンセル
 "
 function! autoclose#cancel_completion() abort
-  " FIXME: {{}}などのキャンセルにも対応させる
-  let l:prev_char = getline('.')[col('.') - 2] " カーソルの前の文字
   if exists('g:autoclose#cancel_completion_enable') && g:autoclose#cancel_completion_enable == 1
     let l:trigger = g:autoclose#completion_strings['trigger']
     let l:completed = g:autoclose#completion_strings['completed']
     let l:delete_num = strlen(l:trigger) + strlen(l:completed)
-    if l:prev_char == l:trigger
+    " カーソルの前の文字
+    let l:prev_char = getline('.')[col('.') - 2]
+    " 補完された文字列の次の文字
+    let l:next_char_of_completed = getline('.')[col('.') - 1 + strlen(l:completed)]
+
+    " 補完の後何も文字が入力されていないかつ、文末の場合
+    if l:prev_char == l:trigger && l:next_char_of_completed == ""
+      return "\<Esc>" . l:delete_num . "xa" . l:trigger . "\<Esc>"
+    " 補完の後何も文字が入力されていないかつ、文末ではない場合
+    elseif l:prev_char == l:trigger && l:next_char_of_completed != ""
       return "\<Esc>" . l:delete_num . "xi" . l:trigger . "\<Esc>"
+    " 補完の後何か文字が入力された場合
     else
       return "\<Esc>" . "F" . l:trigger . "\"zdt" . l:completed[0] . "x\"zp"
     endif
