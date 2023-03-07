@@ -1,6 +1,5 @@
 "
 " 閉じ括弧補完
-" FIXME: {{}}などを.で繰り返しできるように
 "
 function! autoclose#write_close_bracket(bracket) abort
   let l:prev_char = getline('.')[col('.') - 2] " カーソルの前の文字
@@ -16,7 +15,10 @@ function! autoclose#write_close_bracket(bracket) abort
     if exists('g:autoclose#cancel_completion_enable') && g:autoclose#cancel_completion_enable == 1
       call s:save_completion_strings(a:bracket, s:reverse_bracket(a:bracket))
     endif
-    return a:bracket . s:reverse_bracket(a:bracket) . "\<Left>" " 括弧補完
+    " NOTE: <C-g>Uは、undoの単位の分割をしないという意味
+    "       カーソル移動するとundoの単位が分割されるため、<C-g>Uでそれを防ぐ
+    "       ※<C-g>uは、undoの単位の分割。その時点で<Esc>したのと同じことになる。
+    return a:bracket . s:reverse_bracket(a:bracket) . "\<C-g>U\<Left>" " 括弧補完
   endif
 endfunction
 
@@ -79,7 +81,7 @@ function! autoclose#write_close_tag(ket) abort
   let l:element_name = s:find_element_name(a:ket)
   let l:cursor_transition =""
   for i in range(1, strlen(l:element_name) + 3)
-    let l:cursor_transition = l:cursor_transition . "\<Left>" " カーソルをタグと閉じタグの中央に移動
+    let l:cursor_transition = l:cursor_transition . "\<C-g>U\<Left>" " カーソルをタグと閉じタグの中央に移動
   endfor
 
   if l:prev_char == "/" || l:prev_char == "-" || l:prev_char == "=" || l:prev_char == "%" || join(l:void_elements + l:not_element) =~ l:element_name || l:element_name =~ "/" || l:element_name == ""
