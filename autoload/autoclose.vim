@@ -64,7 +64,7 @@ function! autoclose#autoclose_quot(quot) abort
 endfunction
 
 "
-" 閉じタグを補完する
+" 閉じタグ補完
 "
 function! autoclose#write_close_tag(ket) abort
   let l:prev_char = getline('.')[col('.') - 2] " カーソルの前の文字
@@ -162,6 +162,7 @@ endfunction
 " 補完をキャンセル
 "
 function! autoclose#cancel_completion() abort
+  " FIXME: A"<C-c>などもドットで繰り返せるように
   if exists('g:autoclose#cancel_completion_enable') && g:autoclose#cancel_completion_enable == 1
     let l:trigger = g:autoclose#completion_strings['trigger']
     let l:completed = g:autoclose#completion_strings['completed']

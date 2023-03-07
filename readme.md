@@ -106,9 +106,18 @@ inoremap <expr> <C-c> autoclose#is_completion() ? autoclose#cancel_completion() 
 ```
 
 ## TODO
-- Allow users to define their own rules for parenthesis and quotation auto-closing  
-Currently, the plugin handles the auto-closing behavior. The goal is to allow users to define their own rules.
-- User-defined tags
-Enable completion of user-defined tags.  
-For example, the default eruby `<%%>` tag could be removed, and instead, users could define their own custom tags for completion.  
-This would allow support for various tag types such as eruby's `<%%>` or Django's `{%%}`.
+- Allow users to define the control of bracket and quotation completion.  
+Currently, bracket and quotation completion are controlled by the plugin in the following way:
+→ Do not complete the closing bracket if:
+  - The next character after the cursor is an alphabet
+  - The next character after the cursor is a number  
+Allow users to configure this behavior in detail in the vimrc.
+- Add an option to insert a new line, similar to VSCode.  
+This feature was previously implemented but has since been removed. I will add an option to use it.  
+For example:
+```
+{|}
+{
+  |
+}
+```
