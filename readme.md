@@ -118,9 +118,9 @@ Currently, bracket and quotation completion are controlled by the plugin in the 
   Allow for fine-tuning of these settings in the vimrc file.  
 
 - Allow for setting tags to not be auto-completed.  
-Currently, so-called void elements (listed below) do not have closing tags auto-completed.  
-→ `<br>`, `<hr>`, `<img>`, `<input>`, `<link>`, `<meta>`  
-Allow for specifying these tags not to be auto-completed.
+  Currently, so-called void elements (listed below) do not have closing tags auto-completed.  
+  → `<br>`, `<hr>`, `<img>`, `<input>`, `<link>`, `<meta>`  
+  Allow for specifying these settings in the vimrc file.
 - Add an option to insert a new line, similar to VSCode.  
 This feature was previously implemented but has since been removed. I will add an option to use it.  
 For example:

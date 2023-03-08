@@ -127,7 +127,7 @@ inoremap <expr> <C-c> autoclose#is_completion() ? autoclose#cancel_completion() 
 - 補完しないタグを設定できるようにする
   現状、いわゆる**void要素**(以下)は閉じタグを補完しない  
   →`<br>`, `<hr>`, `<img>`, `<input>`, `<link>`, `<meta>`  
-  これらを、で指定できるようにする。
+  これらを、vimrcで指定できるようにする。
 - VSCodeのような改行をオプションで追加する  
 これは以前実装していたが、今は消している。これをオプションとして使用できるようにする。
 ```
