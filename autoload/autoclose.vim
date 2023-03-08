@@ -46,14 +46,14 @@ function! autoclose#autoclose_quot(quot) abort
   " カーソルの左右にクォーテンションがある場合は何も入力せずにカーソルを移動
   if l:prev_char == a:quot && l:next_char == a:quot
     return "\<RIGHT>"
-  " 以下の場合は閉じ括弧を補完しない
+  " 以下の場合は補完しない
   " ・カーソルの前の文字が(入力されたのと同じ)クォーテーション
   " ・カーソルの次の文字がアルファベット
   " ・カーソルの次の文字が数字
   " ・カーソルの次の文字が全角
   elseif l:prev_char == a:quot || l:next_char =~ '\a' || l:next_char =~ '\d' || l:next_char =~ '[^\x01-\x7E]'
     return a:quot
-  " それ以外はクォーテーション補完する
+  " それ以外は補完する
   else
     " キャンセル機能が有効な場合は、補完状態を保存する
     if exists('g:autoclose#cancel_completion_enable') && g:autoclose#cancel_completion_enable == 1
