@@ -111,7 +111,8 @@ Currently, bracket and quotation completion are controlled by the plugin in the 
 → Do not complete the closing bracket if:
   - The next character after the cursor is an alphabet
   - The next character after the cursor is a number  
-Allow users to configure this behavior in detail in the vimrc.
+
+  Allow users to configure this behavior in detail in the vimrc.
 - Add an option to insert a new line, similar to VSCode.  
 This feature was previously implemented but has since been removed. I will add an option to use it.  
 For example:
