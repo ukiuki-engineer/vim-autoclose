@@ -210,8 +210,16 @@ endfunction
 " ・カーソルの次の文字がアルファベット
 " ・カーソルの次の文字が数字
 " ・カーソルの次の文字が全角
-let s:disable_nextpattern_autoclosing_brackets = ['\a', '\d', '[^\x01-\x7E]']
-let s:disable_nextpattern_autoclosing_quots = ['\a', '\d', '[^\x01-\x7E]']
+let s:disable_nextpattern_autoclosing_brackets = [
+  \'\a',
+  \'\d',
+  \'[^\x01-\x7E]'
+\]
+let s:disable_nextpattern_autoclosing_quots = [
+  \'\a',
+  \'\d',
+  \'[^\x01-\x7E]'
+\]
 " 適用するFileType(デフォルト)
 let s:enabled_autoclosing_tags_filetypes = [
   \"html",
