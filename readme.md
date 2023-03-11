@@ -137,21 +137,6 @@ inoremap <expr> <C-c> autoclose#is_completion() ? autoclose#cancel_completion() 
 ```
 
 ## TODO
-- Allow users to define the control of bracket and quotation completion.  
-Currently, bracket and quotation completion are controlled by the plugin in the following way:  
-→Do not auto-complete parentheses in the following cases:
-
-  - The character immediately preceding the cursor is a quotation mark that matches the one that was entered.
-  - The character immediately following the cursor is an alphabet.
-  - The character immediately following the cursor is a number.
-  - The character immediately following the cursor is a full-width character.
-
-  Allow for fine-tuning of these settings in the vimrc file.  
-
-- Allow for setting tags to not be auto-completed.  
-  Currently, so-called void elements (listed below) do not have closing tags auto-completed.  
-  → `<br>`, `<hr>`, `<img>`, `<input>`, `<link>`, `<meta>`  
-  Allow for specifying these settings in the vimrc file.
 - Add an option to insert a new line, similar to VSCode.  
 This feature was previously implemented but has since been removed. I will add an option to use it.  
 For example:
@@ -161,3 +146,7 @@ For example:
   |
 }
 ```
+- Allow for setting tags to not be auto-completed.  
+  Currently, so-called void elements (listed below) do not have closing tags auto-completed.  
+  → `<br>`, `<hr>`, `<img>`, `<input>`, `<link>`, `<meta>`  
+  Allow for specifying these settings in the vimrc file.
