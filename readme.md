@@ -43,49 +43,79 @@ FileTypes: html, javascript, blade, vue
 Extensions: *.html, *.js, *.blade.php, *.erb, *.vue
 ```
 
-## Settings
+## Usage
+This plugin basically works without setting.
+
+## Configuration
 - Disabling bracket completion  
-Add the following to your vimrc:
+Default: `1`
 ```vim
 let g:autoclose#autoclosing_brackets_enable = 0
 ```
 - Disabling quotation completion  
-Add the following to your vimrc:
+Default: `1`
 ```vim
 let g:autoclose#autoclosing_quots_enable = 0
 ```
 - Disabling tag completion  
-Add the following to your vimrc:
+Default: `1`
 ```vim
 let g:autoclose#autoclosing_tags_enable = 0
 ```
-
 - Disabling completion of eruby's <%%>  
-Add the following to your vimrc:
+Default: `1`
 ```vim
 let g:autoclose#autoclosing_eruby_tags = 0
 ```
-
-- Set the filetypes and extensions for which tag auto-closing should be enabled  
-Add the following lines to your vimrc.
+- The setting for the pattern that disables bracket completion and quotation after the cursor.  
+By default, the following patterns are set:  
+Default\*: `['\a', '\d', '[^\x01-\x7E]']`  
+\*`\a`: alphabet  
+\*`\d`: number  
+\*`[^\x01-\x7E]`: Double-byte character  
+\*There are other configurable patterns as well. Please refer to :h pattern for details.  
+If the next character after the cursor matches the applicable pattern mentioned above, bracket completion will not be triggered.  
+To change this setting, add the following to your vimrc file.
 ```vim
-" FileTypes(default)
+" ex) add the end of line
+let g:autoclose#disable_nextpattern_autoclosing_brackets = [
+  \'\a',
+  \'\d',
+  \'[^\x01-\x7E]',
+  \'$'
+\]
+let g:autoclose#disable_nextpattern_autoclosing_quots = [
+  \'\a',
+  \'\d',
+  \'[^\x01-\x7E]',
+  \'$'
+\]
+- Filetypes which tag auto-closing should be enabled  
+Default: `["html", "xml", "javascript", "blade", "eruby", "vue"]`
+```vim
+" ex) add "markdown"
 let g:autoclose#enabled_autoclosing_tags_filetypes = [
   \"html",
   \"xml",
   \"javascript",
   \"blade",
   \"eruby",
-  \"vue"
+  \"vue",
+  \"markdown"
 \]
-" extension(default)
+```
+- Extensions which tag auto-closing should be enabled  
+Default: `["*.html", "*.xml", "*.javascript", "*.blade", "*.eruby", "*.vue"]`
+```vim
+" ex) add "*.md"
 let g:autoclose#enabled_autoclosing_tags_exts = [
   \"*.html",
   \"*.xml",
   \"*.js",
   \"*.blade.php",
   \"*.erb",
-  \"*.vue"
+  \"*.vue",
+  \"*.md"
 \]
 ```
 The above settings are the default configuration.  
@@ -101,7 +131,8 @@ After completion is performed, calling the cancel function removes the completed
 Here, "|" represents the cursor position.  
 To use this feature, add the following to your vimrc file.
 ```vim
-let g:autoclose#cancel_completion_enable = 1
+let g:autoclose#cancel_completion_enable = 1 " Default: 0
+"Key mapping for cancel feature
 inoremap <expr> <C-c> autoclose#is_completion() ? autoclose#cancel_completion() : "\<Esc>"
 ```
 

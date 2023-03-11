@@ -26,7 +26,7 @@ https://user-images.githubusercontent.com/101523180/207350557-5c52c90d-a058-45f1
 #### プラグインマネージャ経由
 お好みのプラグインマネージャで'ukiuki-engineer/vim-autoclose'を追加してください。  
 ```vim
-" 例)vim-plugの場合
+" ex) vim-plugの場合
 Plug 'ukiuki-engineer/vim-autoclose'
 ```
 #### 手動
@@ -37,66 +37,82 @@ cd ~/.vim/pack/plugins/start
 git clone https://github.com/ukiuki-engineer/vim-autoclose
 ```
 
-## デフォルト設定
+## 使い方
 基本的に何も設定せずに動作します。
-デフォルト設定は以下のようになっています。
-- 括弧補完             →有効
-- クォーテーション補完 →有効
-- タグ補完             →有効
-- タグ補完が有効なファイルの種類  
-→
-```
-FileTypes(ファイルタイプ): html, javascript, blade, vue
-Extensions(拡張子): *.html, *.js, *.blade.php, *.erb, *.vue
-```
 
 ## 設定
 - 括弧補完無効化  
-vimrcに以下を追記
+Default: `1`
 ```vim
 let g:autoclose#autoclosing_brackets_enable = 0
 ```
 - クォーテーション補完無効化  
-vimrcに以下を追記
+Default: `1`
 ```vim
 let g:autoclose#autoclosing_quots_enable = 0
 ```
 - タグ補完無効化  
-vimrcに以下を追記
+Default: `1`
 ```vim
 let g:autoclose#autoclosing_tags_enable = 0
 ```
-
 - erubyの<%%>補完を無効化
+Default: `1`
 ```vim
 let g:autoclose#autoclosing_eruby_tags = 0
 ```
-
-- タグ補完を適用するファイルタイプ、拡張子を設定  
-vimrcに以下を追記します。
+- 括弧補完、クォーテーションを無効にするカーソルの次の文字(pattern)の設定
+デフォルトでは以下が設定されています。  
+Default\*: `['\a', '\d', '[^\x01-\x7E]']`  
+\*`\a`: アルファベット  
+\*`\d`: 数字  
+\*`[^\x01-\x7E]`: 全角文字  
+\*設定可能なパターンは他にもあります。詳しくは、`:h pattern`を参照してください。  
+カーソルの次の文字が上記の該当した場合、括弧補完されません。  
+この設定を変更するには、vimrcに以下を追記します。
 ```vim
-" FileTypes(default)
+" ex) 行末を追加
+let g:autoclose#disable_nextpattern_autoclosing_brackets = [
+  \'\a',
+  \'\d',
+  \'[^\x01-\x7E]',
+  \'$'
+\]
+let g:autoclose#disable_nextpattern_autoclosing_quots = [
+  \'\a',
+  \'\d',
+  \'[^\x01-\x7E]',
+  \'$'
+\]
+```
+- タグ補完を適用するファイルタイプ  
+Default: `["html", "xml", "javascript", "blade", "eruby", "vue"]`
+```vim
+" ex) "markdown"を追加
 let g:autoclose#enabled_autoclosing_tags_filetypes = [
   \"html",
   \"xml",
   \"javascript",
   \"blade",
   \"eruby",
-  \"vue"
+  \"vue",
+  \"markdown"
 \]
-" extension(default)
+````
+- タグ補完を適用する拡張子  
+Default: `["*.html", "*.xml", "*.javascript", "*.blade", "*.eruby", "*.vue"]`
+```vim
+" ex) "*.md"を追加
 let g:autoclose#enabled_autoclosing_tags_exts = [
   \"*.html",
   \"*.xml",
   \"*.js",
   \"*.blade.php",
   \"*.erb",
-  \"*.vue"
+  \"*.vue",
+  \"*.md"
 \]
 ```
-上記はデフォルト設定です。  
-何も設定しなければ、デフォルトで上記設定が適用されます。
-
 - 補完キャンセル機能  
 補完したくない場合、補完をキャンセルする事ができます。この機能は、デフォルトではオフになっています。  
 補完が行われた後、キャンセル機能を呼び出すと、補完された文字列が削除され、入力した文字列のみが残ります。  
@@ -109,25 +125,12 @@ let g:autoclose#enabled_autoclosing_tags_exts = [
 この機能を使用するには、vimrcに以下を追記します。
 ```vim
 "Enable cancel feature
-let g:autoclose#cancel_completion_enable = 1
+let g:autoclose#cancel_completion_enable = 1 " Default: 0
 "Key mapping for cancel feature
 inoremap <expr> <C-c> autoclose#is_completion() ? autoclose#cancel_completion() : "\<Esc>"
 ```
 
 ## TODO
-- 括弧、クォーテーション補完の制御をユーザーが定義できるように  
-現状、括弧、クォーテーション補完はプラグイン側で以下のように制御されている。  
-→以下の場合は閉じ括弧を補完しない
-  - カーソルの前の文字が(入力されたのと同じ)クォーテーション
-  - カーソルの次の文字がアルファベット
-  - カーソルの次の文字が数字
-  - カーソルの次の文字が全角
-
-  これを、vimrc側で細かく設定できるようにする。  
-- 補完しないタグを設定できるようにする
-  現状、いわゆる**void要素**(以下)は閉じタグを補完しない  
-  →`<br>`, `<hr>`, `<img>`, `<input>`, `<link>`, `<meta>`  
-  これらを、vimrcで指定できるようにする。
 - VSCodeのような改行をオプションで追加する  
 これは以前実装していたが、今は消している。これをオプションとして使用できるようにする。
 ```
@@ -136,3 +139,7 @@ inoremap <expr> <C-c> autoclose#is_completion() ? autoclose#cancel_completion() 
   |
 }
 ```
+- 補完しないタグを設定できるようにする
+  現状、いわゆる**void要素**(以下)は閉じタグを補完しない  
+  →`<br>`, `<hr>`, `<img>`, `<input>`, `<link>`, `<meta>`  
+  これらを、vimrcで指定できるようにする。
