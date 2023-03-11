@@ -4,11 +4,8 @@
 function! autoclose#write_close_bracket(bracket) abort
   let l:prev_char = getline('.')[col('.') - 2] " カーソルの前の文字
   let l:next_char = getline('.')[col('.') - 1] " カーソルの次の文字
-  " 以下の場合は閉じ括弧を補完しない
-  " ・カーソルの次の文字がアルファベット
-  " ・カーソルの次の文字が数字
-  " ・カーソルの次の文字が全角
-  if l:next_char =~ '\a' || l:next_char =~ '\d' || l:next_char =~ '[^\x01-\x7E]'
+  " 指定されたパターンにマッチする場合は補完しない
+  if l:next_char =~ join(s:disable_nextpattern_autoclosing_brackets, '\|') && !empty(s:disable_nextpattern_autoclosing_brackets)
     return a:bracket " 括弧補完しない
   else
     " キャンセル機能が有効な場合は、補完状態を保存する
@@ -46,12 +43,11 @@ function! autoclose#autoclose_quot(quot) abort
   " カーソルの左右にクォーテンションがある場合は何も入力せずにカーソルを移動
   if l:prev_char == a:quot && l:next_char == a:quot
     return "\<RIGHT>"
-  " 以下の場合は補完しない
-  " ・カーソルの前の文字が(入力されたのと同じ)クォーテーション
-  " ・カーソルの次の文字がアルファベット
-  " ・カーソルの次の文字が数字
-  " ・カーソルの次の文字が全角
-  elseif l:prev_char == a:quot || l:next_char =~ '\a' || l:next_char =~ '\d' || l:next_char =~ '[^\x01-\x7E]'
+  " カーソルの前の文字が入力されたクォーテーションの場合は補完しない
+  elseif l:prev_char == a:quot
+    return a:quot
+  " 指定されたパターンにマッチする場合は補完しない
+  elseif l:next_char =~ join(s:disable_nextpattern_autoclosing_quots, '\|') && !empty(s:disable_nextpattern_autoclosing_quots)
     return a:quot
   " それ以外は補完する
   else
@@ -113,6 +109,12 @@ function! autoclose#reflect_vimrc() abort
     let g:autoclose#autoclosing_eruby_tags = 1
   endif
   " 設定されていればデフォルト値を上書き
+  if exists('g:autoclose#disable_nextpattern_autoclosing_brackets')
+    let s:disable_nextpattern_autoclosing_brackets = g:autoclose#disable_nextpattern_autoclosing_brackets
+  endif
+  if exists('g:autoclose#disable_nextpattern_autoclosing_quots')
+    let s:disable_nextpattern_autoclosing_quots = g:autoclose#disable_nextpattern_autoclosing_quots
+  endif
   if exists('g:autoclose#enabled_autoclosing_tags_filetypes')
     let s:enabled_autoclosing_tags_filetypes = g:autoclose#enabled_autoclosing_tags_filetypes
   endif
@@ -207,6 +209,20 @@ endfunction
 " ------------------------------------------------------------------------------
 " private
 " ------------------------------------------------------------------------------
+" カーソルの次の文字が以下にマッチする場合は括弧、クォーテーション補完を無効にする(デフォルト)
+" ・カーソルの次の文字がアルファベット
+" ・カーソルの次の文字が数字
+" ・カーソルの次の文字が全角
+let s:disable_nextpattern_autoclosing_brackets = [
+  \'\a',
+  \'\d',
+  \'[^\x01-\x7E]'
+\]
+let s:disable_nextpattern_autoclosing_quots = [
+  \'\a',
+  \'\d',
+  \'[^\x01-\x7E]'
+\]
 " 適用するFileType(デフォルト)
 let s:enabled_autoclosing_tags_filetypes = [
   \"html",
