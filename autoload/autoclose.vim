@@ -43,6 +43,9 @@ function! autoclose#autoclose_quot(quot) abort
   " カーソルの左右にクォーテンションがある場合は何も入力せずにカーソルを移動
   if l:prev_char == a:quot && l:next_char == a:quot
     return "\<RIGHT>"
+  " カーソルの前の文字が入力されたクォーテーションの場合は補完しない
+  elseif l:prev_char == a:quot
+    return a:quot
   " 指定されたパターンにマッチする場合は補完しない
   elseif l:next_char =~ join(s:disable_nextpattern_autoclosing_quots, '\|') && !empty(s:disable_nextpattern_autoclosing_quots)
     return a:quot
