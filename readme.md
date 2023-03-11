@@ -90,6 +90,7 @@ let g:autoclose#disable_nextpattern_autoclosing_quots = [
   \'[^\x01-\x7E]',
   \'$'
 \]
+```
 - Filetypes which tag auto-closing should be enabled  
 Default: `["html", "xml", "javascript", "blade", "eruby", "vue"]`
 ```vim
