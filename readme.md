@@ -1,5 +1,5 @@
 # vim-autoclose
-This plugin automatically closes brackets, quotes, and other paired characters in Vim.  
+This plugin automatically closes brackets, quotes, and HTML tags in Vim.  
 [japanese](https://github.com/ukiuki-engineer/vim-autoclose/blob/master/readme_ja.md)
 
 ## Features:
