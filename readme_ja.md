@@ -148,9 +148,9 @@ https://user-images.githubusercontent.com/101523180/224526079-97927c75-4034-4f82
 
 この機能を使用するには、vimrcに以下を追記します。
 ```vim
-"Enable cancel feature
+" Enable cancel feature
 let g:autoclose#cancel_completion_enable = 1 " Default: 0
-"Key mapping for cancel feature
+" Key mapping for cancel feature
 inoremap <expr> <C-c> autoclose#is_completion() ? autoclose#cancel_completion() : "\<Esc>"
 ```
 

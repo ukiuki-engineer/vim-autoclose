@@ -155,8 +155,9 @@ https://user-images.githubusercontent.com/101523180/224526079-97927c75-4034-4f82
 
 To use this feature, add the following to your vimrc file.
 ```vim
+" Enable cancel feature
 let g:autoclose#cancel_completion_enable = 1 " Default: 0
-"Key mapping for cancel feature
+" Key mapping for cancel feature
 inoremap <expr> <C-c> autoclose#is_completion() ? autoclose#cancel_completion() : "\<Esc>"
 ```
 
