@@ -35,6 +35,7 @@ License : MIT license  {{{
   カーソルの次の文字で括弧補完、
   クォーテーション補完を制御				|autoclose-nextpattern|
   タグ補完を適用するファイルタイプ、拡張子の設定	|autoclose-file-types|
+  改行の自動整形機能					|autoclose-newline|
   補完キャンセル機能					|autoclose-cancel|
 
 ==============================================================================
@@ -140,6 +141,26 @@ vimrcに以下を追記します。:
 
 上記はデフォルト設定です。  
 何も設定しなければ、デフォルトで上記設定が適用されます。
+
+------------------------------------------------------------------------------
+改行の自動整形機能					*autoclose-newline*
+括弧、htmlタグの改行を自動整形します。:  
+	ex) In brackets
+	{|}
+	{
+	  |
+	}
+	ex) In html tags
+	<div>|<div>
+	<div>
+	  |
+	<div>
+この機能はデフォルトでオンになっています。  
+設定を変更するにはvimrcに以下を追記します。:  
+	" on(default)
+	let g:autoclose#autoformat_newline_enable = 1
+	" off
+	let g:autoclose#autoformat_newline_enable = 0
 
 ------------------------------------------------------------------------------
 補完キャンセル機能					*autoclose-cancel*

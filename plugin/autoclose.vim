@@ -43,9 +43,14 @@ if g:autoclose#autoclosing_tags_enable == 1
 endif
 
 " erubyの<%%>補完
-if g:autoclose#autoclosing_eruby_tags == 1
+if g:autoclose#autoclosing_eruby_tags_enable == 1
   augroup autocloseErubyTag
     au!
     au FileType,BufEnter * call autoclose#enable_autoclose_eruby_tag()
   augroup END
+endif
+
+" 改行を良い感じに
+if g:autoclose#autoformat_newline_enable == 1
+  inoremap <expr> <Cr> autoclose#autoformat_newline()
 endif
