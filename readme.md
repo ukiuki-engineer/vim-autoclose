@@ -1,10 +1,10 @@
 # vim-autoclose
-This plugin automatically closes parentheses, brackets, quotes, and other paired characters in Vim.  
+This plugin automatically closes brackets, quotes, and other paired characters in Vim.  
 [japanese](https://github.com/ukiuki-engineer/vim-autoclose/blob/master/readme_ja.md)
 
 ## Features:
-- Automatically completes closing parentheses, brackets, and quotes
-- Completes closing tags when typing `>` or `</` for HTML
+- Automatically close brackets and quotes.
+- Completes closing HTML tags when typing `>` or `</`.
 - Completes `<%%>` in eruby
 - Provides smart control over completion, so it doesn't interfere when you don't want it to. For example:
   - Doesn't automatically complete the closing character if you already typed both (e.g., `()` won't become `())`)
@@ -18,7 +18,7 @@ https://user-images.githubusercontent.com/101523180/207350557-5c52c90d-a058-45f1
 
 ## Installation
 #### Via Plugin Manager
-Add `ukiuki-engineer/vim-autoclose` to your preferred plugin manager.
+Add `ukiuki-engineer/vim-autoclose` to your preferred plugin manager.  
 For example, with vim-plug:
 ```vim
 " ex)vim-plug
@@ -36,7 +36,7 @@ git clone https://github.com/ukiuki-engineer/vim-autoclose
 - Bracket completion → enabled
 - Quotation completion → enabled
 - Tag completion → enabled
-- Types of files to which tag completion is applied
+- Types of files to which tag completion is applied  
 →
 ```
 FileTypes: html, javascript, blade, vue
@@ -67,14 +67,14 @@ Default: `1`
 ```vim
 let g:autoclose#autoclosing_eruby_tags = 0
 ```
-- The setting for the pattern that disables bracket completion and quotation after the cursor.  
+- The setting for the next pattern after cursor that disables bracket and quotation completion.  
 By default, the following patterns are set:  
 Default\*: `['\a', '\d', '[^\x01-\x7E]']`  
 \*`\a`: alphabet  
 \*`\d`: number  
 \*`[^\x01-\x7E]`: Double-byte character  
 \*There are other configurable patterns as well. Please refer to :h pattern for details.  
-If the next character after the cursor matches the applicable pattern mentioned above, bracket completion will not be triggered.  
+If the next pattern after the cursor matches the applicable pattern mentioned above, bracket completion will not be triggered.  
 To change this setting, add the following to your vimrc file.
 ```vim
 " ex) add the end of line
@@ -144,7 +144,7 @@ let g:autoclose#autoformat_newline_enable = 0
 ```
 - Autocompletion Cancel Feature  
 You can cancel autocompletion if you don't want to use it. This feature is off by default.  
-After completion is performed, calling the cancel function removes the completed string and leaves only the input string. If the completion function is assigned to <C-c>, it behaves as follows:
+After completion is performed, calling the cancel function removes the completed string and leaves only the input string. If the completion function is assigned to `<C-c>`, it behaves as follows:
 ```vim
 "|"-><C-c>→"
 " |"-><C-c>→" 
