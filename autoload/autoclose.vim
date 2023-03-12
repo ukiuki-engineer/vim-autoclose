@@ -108,8 +108,8 @@ function! autoclose#reflect_vimrc() abort
   if !exists('g:autoclose#autoclosing_eruby_tags_enable')
     let g:autoclose#autoclosing_eruby_tags_enable = 1
   endif
-  if !exists('g:autoclose#autoformat_new_line_enable')
-    let g:autoclose#autoformat_new_line_enable = 1
+  if !exists('g:autoclose#autoformat_newline_enable')
+    let g:autoclose#autoformat_newline_enable = 1
   endif
   " 設定されていればデフォルト値を上書き
   if exists('g:autoclose#disable_nextpattern_autoclosing_brackets')
@@ -212,7 +212,7 @@ endfunction
 "
 " 改行時の挙動
 "
-function! autoclose#autoformat_new_line()
+function! autoclose#autoformat_newline()
   let l:prev_char = getline('.')[col('.') - 2] " カーソルの前の文字
   let l:next_char = getline('.')[col('.') - 1] " カーソルの次の文字
   if l:next_char != "" && l:next_char == s:reverse_bracket(l:prev_char)

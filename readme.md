@@ -137,10 +137,10 @@ For Example:
 This feature is enabled by default.  
 Default: `1`
 ```vim
-" on(dafault)
-let g:autoclose#autoformat_new_line_enable = 1
+" on(default)
+let g:autoclose#autoformat_newline_enable = 1
 " off
-let g:autoclose#autoformat_new_line_enable = 0
+let g:autoclose#autoformat_newline_enable = 0
 ```
 - Autocompletion Cancel Feature  
 You can cancel autocompletion if you don't want to use it. This feature is off by default.  

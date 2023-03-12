@@ -129,10 +129,10 @@ let g:autoclose#enabled_autoclosing_tags_exts = [
 この機能はデフォルトでオンになっています。
 Default: `1`
 ```vim
-" on(dafault)
-let g:autoclose#autoformat_new_line_enable = 1
+" on(default)
+let g:autoclose#autoformat_newline_enable = 1
 " off
-let g:autoclose#autoformat_new_line_enable = 0
+let g:autoclose#autoformat_newline_enable = 0
 ```
 - 補完キャンセル機能  
 補完したくない場合、補完をキャンセルする事ができます。この機能は、デフォルトではオフになっています。  
