@@ -122,6 +122,9 @@ let g:autoclose#enabled_autoclosing_tags_exts = [
 " |"-><C-c>→" 
 ```
 ここで、`|`はカーソル位置です。  
+
+https://user-images.githubusercontent.com/101523180/224526079-97927c75-4034-4f82-bab1-0091fd444dad.mov
+
 この機能を使用するには、vimrcに以下を追記します。
 ```vim
 "Enable cancel feature
