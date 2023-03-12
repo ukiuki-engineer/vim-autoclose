@@ -113,6 +113,27 @@ let g:autoclose#enabled_autoclosing_tags_exts = [
   \"*.md"
 \]
 ```
+- 改行の自動整形機能  
+括弧、クォーテーション、htmlタグの改行を自動整形します。  
+例:
+```
+{|}
+{
+  |
+}
+<div>|<div>
+<div>
+  |
+<div>
+```
+この機能はデフォルトでオンになっています。
+Default: `1`
+```vim
+" on(dafault)
+let g:autoclose#autoformat_new_line_enable = 1
+" off
+let g:autoclose#autoformat_new_line_enable = 0
+```
 - 補完キャンセル機能  
 補完したくない場合、補完をキャンセルする事ができます。この機能は、デフォルトではオフになっています。  
 補完が行われた後、キャンセル機能を呼び出すと、補完された文字列が削除され、入力した文字列のみが残ります。  
@@ -134,14 +155,6 @@ inoremap <expr> <C-c> autoclose#is_completion() ? autoclose#cancel_completion() 
 ```
 
 ## TODO
-- VSCodeのような改行をオプションで追加する  
-これは以前実装していたが、今は消している。これをオプションとして使用できるようにする。
-```
-{|}
-{
-  |
-}
-```
 - 補完しないタグを設定できるようにする
   現状、いわゆる**void要素**(以下)は閉じタグを補完しない  
   →`<br>`, `<hr>`, `<img>`, `<input>`, `<link>`, `<meta>`  

@@ -105,8 +105,11 @@ function! autoclose#reflect_vimrc() abort
   if !exists('g:autoclose#autoclosing_tags_enable')
     let g:autoclose#autoclosing_tags_enable = 1
   endif
-  if !exists('g:autoclose#autoclosing_eruby_tags')
-    let g:autoclose#autoclosing_eruby_tags = 1
+  if !exists('g:autoclose#autoclosing_eruby_tags_enable')
+    let g:autoclose#autoclosing_eruby_tags_enable = 1
+  endif
+  if !exists('g:autoclose#autoformat_new_line_enable')
+    let g:autoclose#autoformat_new_line_enable = 1
   endif
   " 設定されていればデフォルト値を上書き
   if exists('g:autoclose#disable_nextpattern_autoclosing_brackets')
@@ -206,6 +209,17 @@ function! autoclose#is_completion()
   return l:line[l:col - 1 : l:col + l:completed_len - 2] == g:autoclose#completion_strings['completed']
 endfunction
 
+"
+" 改行時の挙動
+"
+function! autoclose#autoformat_new_line()
+  let l:prev_char = getline('.')[col('.') - 2] " カーソルの前の文字
+  let l:next_char = getline('.')[col('.') - 1] " カーソルの次の文字
+  if l:next_char == s:reverse_bracket(l:prev_char)
+    return "\<Cr>\<Esc>O"
+  endif
+endfunction
+
 " ------------------------------------------------------------------------------
 " private
 " ------------------------------------------------------------------------------
@@ -250,13 +264,15 @@ function! s:reverse_bracket(bracket) abort
   let l:start_bracket = {
     \")": "(",
     \"}": "{",
-    \"]": "["
+    \"]": "[",
+    \">": "<"
   \}
   " 閉じ括弧
   let l:close_bracket = {
     \"(": ")",
     \"{": "}",
-    \"[": "]"
+    \"[": "]",
+    \"<": ">"
   \}
 
   if has_key(l:close_bracket, a:bracket) " 括弧が渡されたら閉じ括弧を返す

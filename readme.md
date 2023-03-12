@@ -121,7 +121,27 @@ let g:autoclose#enabled_autoclosing_tags_exts = [
 ```
 The above settings are the default configuration.  
 If you do not specify any settings, these defaults will be applied.
-
+- Auto-format New Line Feature  
+Auto-format brackets, quotations, and line breaks in html tags.  
+For Example:
+```
+{|}
+{
+  |
+}
+<div>|<div>
+<div>
+  |
+<div>
+```
+This feature is enabled by default.  
+Default: `1`
+```vim
+" on(dafault)
+let g:autoclose#autoformat_new_line_enable = 1
+" off
+let g:autoclose#autoformat_new_line_enable = 0
+```
 - Autocompletion Cancel Feature  
 You can cancel autocompletion if you don't want to use it. This feature is off by default.  
 After completion is performed, calling the cancel function removes the completed string and leaves only the input string. If the completion function is assigned to <C-c>, it behaves as follows:
@@ -141,15 +161,6 @@ inoremap <expr> <C-c> autoclose#is_completion() ? autoclose#cancel_completion() 
 ```
 
 ## TODO
-- Add an option to insert a new line, similar to VSCode.  
-This feature was previously implemented but has since been removed. I will add an option to use it.  
-For example:
-```
-{|}
-{
-  |
-}
-```
 - Allow for setting tags to not be auto-completed.  
   Currently, so-called void elements (listed below) do not have closing tags auto-completed.  
   → `<br>`, `<hr>`, `<img>`, `<input>`, `<link>`, `<meta>`  
