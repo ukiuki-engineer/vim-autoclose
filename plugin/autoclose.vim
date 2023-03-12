@@ -52,5 +52,5 @@ endif
 
 " 改行を良い感じに
 if g:autoclose#autoformat_new_line_enable == 1
-  inoremap <expr> <Cr> autoclose#format_new_line()
+  inoremap <expr> <Cr> autoclose#autoformat_new_line()
 endif
