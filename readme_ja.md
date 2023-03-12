@@ -114,7 +114,7 @@ let g:autoclose#enabled_autoclosing_tags_exts = [
 \]
 ```
 - 改行の自動整形機能  
-括弧、クォーテーション、htmlタグの改行を自動整形します。  
+括弧、htmlタグの改行を自動整形します。  
 例:
 ```
 {|}

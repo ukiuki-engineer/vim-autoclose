@@ -121,8 +121,8 @@ let g:autoclose#enabled_autoclosing_tags_exts = [
 ```
 The above settings are the default configuration.  
 If you do not specify any settings, these defaults will be applied.
-- Auto-format New Line Feature  
-Auto-format brackets, quotations, and line breaks in html tags.  
+- Auto-format Line-Break Feature  
+Auto-format line-break in brackets and html tags.  
 For Example:
 ```
 {|}
