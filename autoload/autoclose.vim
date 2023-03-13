@@ -9,7 +9,7 @@ function! autoclose#write_close_bracket(bracket) abort
     return a:bracket " 括弧補完しない
   else
     " キャンセル機能が有効な場合は、補完状態を保存する
-    if exists('g:autoclose#cancel_completion_enable') && g:autoclose#cancel_completion_enable == 1
+    if g:autoclose#cancel_completion_enable == 1
       call s:save_completion_strings(a:bracket, s:reverse_bracket(a:bracket))
     endif
     " NOTE: <C-g>Uは、undoの単位の分割をしないという意味
@@ -52,7 +52,7 @@ function! autoclose#autoclose_quot(quot) abort
   " それ以外は補完する
   else
     " キャンセル機能が有効な場合は、補完状態を保存する
-    if exists('g:autoclose#cancel_completion_enable') && g:autoclose#cancel_completion_enable == 1
+    if g:autoclose#cancel_completion_enable == 1
       call s:save_completion_strings(a:quot, a:quot)
     endif
     return a:quot . a:quot . "\<Left>"
@@ -84,45 +84,10 @@ function! autoclose#write_close_tag(ket) abort
     return a:ket
   else
     " キャンセル機能が有効な場合は、補完状態を保存する
-    if exists('g:autoclose#cancel_completion_enable') && g:autoclose#cancel_completion_enable == 1
+    if g:autoclose#cancel_completion_enable == 1
       call s:save_completion_strings(a:ket, "</" . l:element_name . a:ket)
     endif
     return a:ket . "</" . l:element_name . a:ket . l:cursor_transition
-  endif
-endfunction
-
-"
-" vimrcの設定を反映
-"
-function! autoclose#reflect_vimrc() abort
-  " 設定されていなければデフォルト値を設定
-  if !exists('g:autoclose#autoclosing_brackets_enable')
-    let g:autoclose#autoclosing_brackets_enable = 1
-  endif
-  if !exists('g:autoclose#autoclosing_quots_enable')
-    let g:autoclose#autoclosing_quots_enable = 1
-  endif
-  if !exists('g:autoclose#autoclosing_tags_enable')
-    let g:autoclose#autoclosing_tags_enable = 1
-  endif
-  if !exists('g:autoclose#autoclosing_eruby_tags_enable')
-    let g:autoclose#autoclosing_eruby_tags_enable = 1
-  endif
-  if !exists('g:autoclose#autoformat_newline_enable')
-    let g:autoclose#autoformat_newline_enable = 1
-  endif
-  " 設定されていればデフォルト値を上書き
-  if exists('g:autoclose#disable_nextpattern_autoclosing_brackets')
-    let s:disable_nextpattern_autoclosing_brackets = g:autoclose#disable_nextpattern_autoclosing_brackets
-  endif
-  if exists('g:autoclose#disable_nextpattern_autoclosing_quots')
-    let s:disable_nextpattern_autoclosing_quots = g:autoclose#disable_nextpattern_autoclosing_quots
-  endif
-  if exists('g:autoclose#enabled_autoclosing_tags_filetypes')
-    let s:enabled_autoclosing_tags_filetypes = g:autoclose#enabled_autoclosing_tags_filetypes
-  endif
-  if exists('g:autoclose#enabled_autoclosing_tags_exts')
-    let s:enabled_autoclosing_tags_exts =  map(g:autoclose#enabled_autoclosing_tags_exts, 'substitute(v:val, "*.", "", "")')
   endif
 endfunction
 
@@ -145,7 +110,7 @@ function! autoclose#autoclose_eruby_tag() abort
   " カーソルの前の文字が<の場合、%>を補完し、それ以外は%を返す
   if l:prev_char == "<"
     " キャンセル機能が有効な場合は、補完状態を保存する
-    if exists('g:autoclose#cancel_completion_enable') && g:autoclose#cancel_completion_enable == 1
+    if g:autoclose#cancel_completion_enable == 1
       call s:save_completion_strings("<%", "%>")
     endif
     return "%%>\<Left>\<Left>"
@@ -222,6 +187,44 @@ function! autoclose#autoformat_newline()
   endif
 endfunction
 
+"
+" vimrcの設定を反映
+"
+function! autoclose#reflect_vimrc() abort
+  " 設定されていなければデフォルト値を設定
+  if !exists('g:autoclose#autoclosing_brackets_enable')
+    let g:autoclose#autoclosing_brackets_enable = 1
+  endif
+  if !exists('g:autoclose#autoclosing_quots_enable')
+    let g:autoclose#autoclosing_quots_enable = 1
+  endif
+  if !exists('g:autoclose#autoclosing_tags_enable')
+    let g:autoclose#autoclosing_tags_enable = 1
+  endif
+  if !exists('g:autoclose#autoclosing_eruby_tags_enable')
+    let g:autoclose#autoclosing_eruby_tags_enable = 1
+  endif
+  if !exists('g:autoclose#autoformat_newline_enable')
+    let g:autoclose#autoformat_newline_enable = 1
+  endif
+  if !exists('g:autoclose#cancel_completion_enable')
+    let g:autoclose#cancel_completion_enable = 0
+  endif
+  " 設定されていればデフォルト値を上書き
+  if exists('g:autoclose#disable_nextpattern_autoclosing_brackets')
+    let s:disable_nextpattern_autoclosing_brackets = g:autoclose#disable_nextpattern_autoclosing_brackets
+  endif
+  if exists('g:autoclose#disable_nextpattern_autoclosing_quots')
+    let s:disable_nextpattern_autoclosing_quots = g:autoclose#disable_nextpattern_autoclosing_quots
+  endif
+  if exists('g:autoclose#enabled_autoclosing_tags_filetypes')
+    let s:enabled_autoclosing_tags_filetypes = g:autoclose#enabled_autoclosing_tags_filetypes
+  endif
+  if exists('g:autoclose#enabled_autoclosing_tags_exts')
+    let s:enabled_autoclosing_tags_exts =  map(g:autoclose#enabled_autoclosing_tags_exts, 'substitute(v:val, "*.", "", "")')
+  endif
+endfunction
+
 " ------------------------------------------------------------------------------
 " private
 " ------------------------------------------------------------------------------
@@ -277,7 +280,7 @@ function! s:reverse_bracket(bracket) abort
     \"<": ">"
   \}
 
-  if has_key(l:close_bracket, a:bracket) " 括弧が渡されたら閉じ括弧を返す
+  if has_key(l:close_bracket, a:bracket)     " 括弧が渡されたら閉じ括弧を返す
     return l:close_bracket[a:bracket]
   elseif has_key(l:start_bracket, a:bracket) " 閉じ括弧が渡されたら括弧を返す
     return l:start_bracket[a:bracket]

@@ -51,6 +51,7 @@ if g:autoclose#autoclosing_eruby_tags_enable == 1
 endif
 
 " 改行を良い感じに
+" FIXME: cocの補完決定とダブってしまう。coc-pairsではどうしているのかを見てみる
 if g:autoclose#autoformat_newline_enable == 1
   inoremap <expr> <Cr> autoclose#autoformat_newline()
 endif
