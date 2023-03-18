@@ -2,20 +2,24 @@
 " 閉じ括弧補完
 "
 function! autoclose#write_close_bracket(bracket) abort
-  let l:prev_char = getline('.')[col('.') - 2] " カーソルの前の文字
-  let l:next_char = getline('.')[col('.') - 1] " カーソルの次の文字
+  " カーソルの前の文字
+  let l:prev_char = getline('.')[col('.') - 2]
+  " カーソルの次の文字
+  let l:next_char = getline('.')[col('.') - 1]
   " 指定されたパターンにマッチする場合は補完しない
   if l:next_char =~ join(s:disable_nextpattern_autoclosing_brackets, '\|') && !empty(s:disable_nextpattern_autoclosing_brackets)
-    return a:bracket " 括弧補完しない
+    " 括弧補完しない
+    return a:bracket
   else
     " キャンセル機能が有効な場合は、補完状態を保存する
-    if exists('g:autoclose#cancel_completion_enable') && g:autoclose#cancel_completion_enable == 1
+    if g:autoclose#cancel_completion_enable == 1
       call s:save_completion_strings(a:bracket, s:reverse_bracket(a:bracket))
     endif
     " NOTE: <C-g>Uは、undoの単位の分割をしないという意味
     "       カーソル移動するとundoの単位が分割されるため、<C-g>Uでそれを防ぐ
     "       ※<C-g>uは、undoの単位の分割。その時点で<Esc>したのと同じことになる。
-    return a:bracket . s:reverse_bracket(a:bracket) . "\<C-g>U\<Left>" " 括弧補完
+    " 括弧補完
+    return a:bracket . s:reverse_bracket(a:bracket) . "\<C-g>U\<Left>"
   endif
 endfunction
 
@@ -23,8 +27,10 @@ endfunction
 " 閉じ括弧入力時の挙動
 "
 function! autoclose#not_double_close_bracket(close_bracket) abort
-  let l:prev_char = getline('.')[col('.') - 2] " カーソルの前の文字
-  let l:next_char = getline('.')[col('.') - 1] " カーソルの次の文字
+  " カーソルの前の文字
+  let l:prev_char = getline('.')[col('.') - 2]
+  " カーソルの次の文字
+  let l:next_char = getline('.')[col('.') - 1]
   " ()と入力した場合())とせずに()で止める
   if l:next_char == a:close_bracket && l:prev_char == s:reverse_bracket(a:close_bracket)
     return "\<RIGHT>"
@@ -37,8 +43,10 @@ endfunction
 " クォーテーション補完
 "
 function! autoclose#autoclose_quot(quot) abort
-  let l:prev_char = getline('.')[col('.') - 2] " カーソルの前の文字
-  let l:next_char = getline('.')[col('.') - 1] " カーソルの次の文字
+  " カーソルの前の文字
+  let l:prev_char = getline('.')[col('.') - 2]
+  " カーソルの次の文字
+  let l:next_char = getline('.')[col('.') - 1]
 
   " カーソルの左右にクォーテンションがある場合は何も入力せずにカーソルを移動
   if l:prev_char == a:quot && l:next_char == a:quot
@@ -52,7 +60,7 @@ function! autoclose#autoclose_quot(quot) abort
   " それ以外は補完する
   else
     " キャンセル機能が有効な場合は、補完状態を保存する
-    if exists('g:autoclose#cancel_completion_enable') && g:autoclose#cancel_completion_enable == 1
+    if g:autoclose#cancel_completion_enable == 1
       call s:save_completion_strings(a:quot, a:quot)
     endif
     return a:quot . a:quot . "\<Left>"
@@ -63,7 +71,8 @@ endfunction
 " 閉じタグ補完
 "
 function! autoclose#write_close_tag(ket) abort
-  let l:prev_char = getline('.')[col('.') - 2] " カーソルの前の文字
+  " カーソルの前の文字
+  let l:prev_char = getline('.')[col('.') - 2]
   let l:void_elements = ["br", "hr", "img", "input", "link", "meta"]
   let l:not_element = ["%"]
   " 以下の場合は閉じタグ補完を行わない
@@ -77,52 +86,18 @@ function! autoclose#write_close_tag(ket) abort
   let l:element_name = s:find_element_name(a:ket)
   let l:cursor_transition =""
   for i in range(1, strlen(l:element_name) + 3)
-    let l:cursor_transition = l:cursor_transition . "\<C-g>U\<Left>" " カーソルをタグと閉じタグの中央に移動
+    " カーソルをタグと閉じタグの中央に移動
+    let l:cursor_transition = l:cursor_transition . "\<C-g>U\<Left>"
   endfor
 
   if l:prev_char == "/" || l:prev_char == "-" || l:prev_char == "=" || l:prev_char == "%" || join(l:void_elements + l:not_element) =~ l:element_name || l:element_name =~ "/" || l:element_name == ""
     return a:ket
   else
     " キャンセル機能が有効な場合は、補完状態を保存する
-    if exists('g:autoclose#cancel_completion_enable') && g:autoclose#cancel_completion_enable == 1
+    if g:autoclose#cancel_completion_enable == 1
       call s:save_completion_strings(a:ket, "</" . l:element_name . a:ket)
     endif
     return a:ket . "</" . l:element_name . a:ket . l:cursor_transition
-  endif
-endfunction
-
-"
-" vimrcの設定を反映
-"
-function! autoclose#reflect_vimrc() abort
-  " 設定されていなければデフォルト値を設定
-  if !exists('g:autoclose#autoclosing_brackets_enable')
-    let g:autoclose#autoclosing_brackets_enable = 1
-  endif
-  if !exists('g:autoclose#autoclosing_quots_enable')
-    let g:autoclose#autoclosing_quots_enable = 1
-  endif
-  if !exists('g:autoclose#autoclosing_tags_enable')
-    let g:autoclose#autoclosing_tags_enable = 1
-  endif
-  if !exists('g:autoclose#autoclosing_eruby_tags_enable')
-    let g:autoclose#autoclosing_eruby_tags_enable = 1
-  endif
-  if !exists('g:autoclose#autoformat_newline_enable')
-    let g:autoclose#autoformat_newline_enable = 1
-  endif
-  " 設定されていればデフォルト値を上書き
-  if exists('g:autoclose#disable_nextpattern_autoclosing_brackets')
-    let s:disable_nextpattern_autoclosing_brackets = g:autoclose#disable_nextpattern_autoclosing_brackets
-  endif
-  if exists('g:autoclose#disable_nextpattern_autoclosing_quots')
-    let s:disable_nextpattern_autoclosing_quots = g:autoclose#disable_nextpattern_autoclosing_quots
-  endif
-  if exists('g:autoclose#enabled_autoclosing_tags_filetypes')
-    let s:enabled_autoclosing_tags_filetypes = g:autoclose#enabled_autoclosing_tags_filetypes
-  endif
-  if exists('g:autoclose#enabled_autoclosing_tags_exts')
-    let s:enabled_autoclosing_tags_exts =  map(g:autoclose#enabled_autoclosing_tags_exts, 'substitute(v:val, "*.", "", "")')
   endif
 endfunction
 
@@ -141,11 +116,12 @@ endfunction
 " erubyの<%%>補完
 "
 function! autoclose#autoclose_eruby_tag() abort
-  let l:prev_char = getline('.')[col('.') - 2] " カーソルの前の文字
+  " カーソルの前の文字
+  let l:prev_char = getline('.')[col('.') - 2]
   " カーソルの前の文字が<の場合、%>を補完し、それ以外は%を返す
   if l:prev_char == "<"
     " キャンセル機能が有効な場合は、補完状態を保存する
-    if exists('g:autoclose#cancel_completion_enable') && g:autoclose#cancel_completion_enable == 1
+    if g:autoclose#cancel_completion_enable == 1
       call s:save_completion_strings("<%", "%>")
     endif
     return "%%>\<Left>\<Left>"
@@ -213,12 +189,52 @@ endfunction
 " 改行時の挙動
 "
 function! autoclose#autoformat_newline()
-  let l:prev_char = getline('.')[col('.') - 2] " カーソルの前の文字
-  let l:next_char = getline('.')[col('.') - 1] " カーソルの次の文字
+  " カーソルの前の文字
+  let l:prev_char = getline('.')[col('.') - 2]
+  " カーソルの次の文字
+  let l:next_char = getline('.')[col('.') - 1]
   if l:next_char != "" && l:next_char == s:reverse_bracket(l:prev_char)
     return "\<Cr>\<Esc>O"
   else
     return "\<Cr>"
+  endif
+endfunction
+
+"
+" vimrcの設定を反映
+"
+function! autoclose#reflect_vimrc() abort
+  " 設定されていなければデフォルト値を設定
+  if !exists('g:autoclose#autoclosing_brackets_enable')
+    let g:autoclose#autoclosing_brackets_enable = 1
+  endif
+  if !exists('g:autoclose#autoclosing_quots_enable')
+    let g:autoclose#autoclosing_quots_enable = 1
+  endif
+  if !exists('g:autoclose#autoclosing_tags_enable')
+    let g:autoclose#autoclosing_tags_enable = 1
+  endif
+  if !exists('g:autoclose#autoclosing_eruby_tags_enable')
+    let g:autoclose#autoclosing_eruby_tags_enable = 1
+  endif
+  if !exists('g:autoclose#autoformat_newline_enable')
+    let g:autoclose#autoformat_newline_enable = 1
+  endif
+  if !exists('g:autoclose#cancel_completion_enable')
+    let g:autoclose#cancel_completion_enable = 0
+  endif
+  " 設定されていればデフォルト値を上書き
+  if exists('g:autoclose#disable_nextpattern_autoclosing_brackets')
+    let s:disable_nextpattern_autoclosing_brackets = g:autoclose#disable_nextpattern_autoclosing_brackets
+  endif
+  if exists('g:autoclose#disable_nextpattern_autoclosing_quots')
+    let s:disable_nextpattern_autoclosing_quots = g:autoclose#disable_nextpattern_autoclosing_quots
+  endif
+  if exists('g:autoclose#enabled_autoclosing_tags_filetypes')
+    let s:enabled_autoclosing_tags_filetypes = g:autoclose#enabled_autoclosing_tags_filetypes
+  endif
+  if exists('g:autoclose#enabled_autoclosing_tags_exts')
+    let s:enabled_autoclosing_tags_exts =  map(g:autoclose#enabled_autoclosing_tags_exts, 'substitute(v:val, "*.", "", "")')
   endif
 endfunction
 
@@ -277,9 +293,11 @@ function! s:reverse_bracket(bracket) abort
     \"<": ">"
   \}
 
-  if has_key(l:close_bracket, a:bracket) " 括弧が渡されたら閉じ括弧を返す
+  " 括弧が渡されたら閉じ括弧を返す
+  if has_key(l:close_bracket, a:bracket)
     return l:close_bracket[a:bracket]
-  elseif has_key(l:start_bracket, a:bracket) " 閉じ括弧が渡されたら括弧を返す
+  " 閉じ括弧が渡されたら括弧を返す
+  elseif has_key(l:start_bracket, a:bracket)
     return l:start_bracket[a:bracket]
   else
     return ""
@@ -350,3 +368,5 @@ function! s:save_completion_strings(trigger_str, completed_str) abort
     execute 'au InsertLeave * ++once unlet g:autoclose#completion_strings'
   augroup END
 endfunction
+
+" FIXME: :'<,>'norm I"などとすると、""と入力されてしまう
