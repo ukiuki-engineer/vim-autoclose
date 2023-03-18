@@ -353,3 +353,5 @@ function! s:save_completion_strings(trigger_str, completed_str) abort
     execute 'au InsertLeave * ++once unlet g:autoclose#completion_strings'
   augroup END
 endfunction
+
+" FIXME: :'<,>'norm I"などとすると、""と入力されてしまう
