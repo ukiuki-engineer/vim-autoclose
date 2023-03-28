@@ -73,8 +73,7 @@ endfunction
 function! autoclose#write_close_tag(ket) abort
   " カーソルの前の文字
   let l:prev_char = getline('.')[col('.') - 2]
-  let l:void_elements = ["br", "hr", "img", "input", "link", "meta"]
-  let l:not_element = ["%"]
+  let l:disable_elements = ["br", "hr", "img", "input", "link", "meta", "%"]
   " 以下の場合は閉じタグ補完を行わない
   " ・/>で閉じる場合
   " ・->と入力した場合
@@ -90,7 +89,7 @@ function! autoclose#write_close_tag(ket) abort
     let l:cursor_transition = l:cursor_transition . "\<C-g>U\<Left>"
   endfor
 
-  if l:prev_char == "/" || l:prev_char == "-" || l:prev_char == "=" || l:prev_char == "%" || join(l:void_elements + l:not_element) =~ l:element_name || l:element_name =~ "/" || l:element_name == ""
+  if l:prev_char == "/" || l:prev_char == "-" || l:prev_char == "=" || l:prev_char == "%" || index(l:disable_elements, l:element_name) != -1 || l:element_name =~ "/" || l:element_name == ""
     return a:ket
   else
     " キャンセル機能が有効な場合は、補完状態を保存する
