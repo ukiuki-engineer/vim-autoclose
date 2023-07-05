@@ -107,6 +107,31 @@ let g:autoclose#enabled_autoclosing_tags_exts = [
   \ "*.md"
 \ ]
 ```
+
+- カスタム補完  
+カスタム補完を定義することができます。  
+例:
+```vim
+" ex)
+augroup autoclose#custom_completion
+  autocmd!
+  " html commentout
+  autocmd FileType html,vue call autoclose#custom_completion({
+    \ 'prev_char' : '<',
+    \ 'input_char': '!',
+    \ 'output'    : '!--  -->',
+    \ 'back_count': 4
+  \ })
+  " eruby tag
+  autocmd FileType eruby call autoclose#custom_completion({
+    \ 'prev_char' : '<',
+    \ 'input_char': '%',
+    \ 'output'    : '%%>',
+    \ 'back_count': 2
+  \ })
+augroup END
+```
+
 - 改行の自動整形機能  
 括弧、htmlタグの改行を自動整形します。  
 例:

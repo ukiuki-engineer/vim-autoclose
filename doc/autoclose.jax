@@ -34,6 +34,7 @@ License : MIT license  {{{
   カーソルの次の文字で括弧補完、
   クォーテーション補完を制御				|autoclose-nextpattern|
   タグ補完を適用するファイルタイプ、拡張子の設定	|autoclose-file-types|
+  カスタム補完						|autoclose-custom-completion|
   改行の自動整形機能					|autoclose-newline|
   補完キャンセル機能					|autoclose-cancel|
 
@@ -140,6 +141,29 @@ vimrcに以下を追記します。:
 上記はデフォルト設定です。  
 何も設定しなければ、デフォルトで上記設定が適用されます。
 
+------------------------------------------------------------------------------
+カスタム補完					*autoclose-custom-completion*
+カスタム補完を定義することが出来ます。
+例えば、vimrcに以下のように設定します。:  
+>
+	augroup autoclose#custom_completion
+	  autocmd!
+	  " html commentout
+	  autocmd FileType html,vue call autoclose#custom_completion({
+	    \ 'prev_char' : '<',
+	    \ 'input_char': '!',
+	    \ 'output'    : '!--  -->',
+	    \ 'back_count': 4
+	  \ })
+	  " eruby tag
+	  autocmd FileType eruby call autoclose#custom_completion({
+	    \ 'prev_char' : '<',
+	    \ 'input_char': '%',
+	    \ 'output'    : '%%>',
+	    \ 'back_count': 2
+	  \ })
+	augroup END
+<
 ------------------------------------------------------------------------------
 改行の自動整形機能					*autoclose-newline*
 括弧、htmlタグの改行を自動整形します。:  

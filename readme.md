@@ -115,6 +115,31 @@ let g:autoclose#enabled_autoclosing_tags_exts = [
 ```
 The above settings are the default configuration.  
 If you do not specify any settings, these defaults will be applied.
+
+- Custom Completion  
+You can define custom completion.  
+
+For Example:
+```vim
+augroup autoclose#custom_completion
+  autocmd!
+  " html commentout
+  autocmd FileType html,vue call autoclose#custom_completion({
+    \ 'prev_char' : '<',
+    \ 'input_char': '!',
+    \ 'output'    : '!--  -->',
+    \ 'back_count': 4
+  \ })
+  " eruby tag
+  autocmd FileType eruby call autoclose#custom_completion({
+    \ 'prev_char' : '<',
+    \ 'input_char': '%',
+    \ 'output'    : '%%>',
+    \ 'back_count': 2
+  \ })
+augroup END
+```
+
 - Auto-format Line-Break Feature  
 Auto-format line-break in brackets and html tags.  
 For Example:
