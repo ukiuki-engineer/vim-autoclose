@@ -112,29 +112,32 @@ function! autoclose#enable_autoclose_tag() abort
 endfunction
 
 "
-" erubyの<%%>補完
-"
-function! autoclose#autoclose_eruby_tag() abort
-  " カーソルの前の文字
-  let l:prev_char = getline('.')[col('.') - 2]
-  " カーソルの前の文字が<の場合、%>を補完し、それ以外は%を返す
-  if l:prev_char == "<"
-    " キャンセル機能が有効な場合は、補完状態を保存する
-    if g:autoclose#cancel_completion_enable == 1
-      call s:save_completion_strings("<%", "%>")
-    endif
-    return "%%>\<Left>\<Left>"
-  else
-    return "%"
-  endif
+" カスタム補完を有効化
+" NOTE: 呼び出し例
+" autocmd FileType html,vue call autoclose#custom_completion({
+"   \ 'prev_char' : '<',
+"   \ 'input_char': '!',
+"   \ 'output'    : '!--  -->',
+"   \ 'back_count': 4
+" \ })
+
+function! autoclose#custom_completion(rule) abort
+  execute "inoremap <buffer><expr>"
+    \ a:rule['input_char']
+    \ "autoclose#output_custom_completion('" .. a:rule['prev_char'] .. "', '" .. a:rule['input_char'] .. "', '" .. a:rule['output'] .. "', " .. a:rule['back_count'] ..  ")"
 endfunction
 
 "
-" erubyの<%%>補完を有効化
+" カスタム補完
 "
-function! autoclose#enable_autoclose_eruby_tag() abort
-  if &filetype == "eruby" || expand("%:e") == "erb"
-    inoremap <buffer> <expr> % autoclose#autoclose_eruby_tag()
+function! autoclose#output_custom_completion(prev_char, input_char, output, back_count) abort
+  " カーソルの前の文字
+  let l:prev_char = getline('.')[col('.') - 2]
+  " カーソルの前の文字が<の場合、--  -->を補完し、それ以外は!を返す
+  if l:prev_char == a:prev_char
+    return a:output .. repeat("\<Left>", a:back_count)
+  else
+    return a:input_char
   endif
 endfunction
 
@@ -212,9 +215,6 @@ function! autoclose#reflect_vimrc() abort
   endif
   if !exists('g:autoclose#autoclosing_tags_enable')
     let g:autoclose#autoclosing_tags_enable = 1
-  endif
-  if !exists('g:autoclose#autoclosing_eruby_tags_enable')
-    let g:autoclose#autoclosing_eruby_tags_enable = 1
   endif
   if !exists('g:autoclose#autoformat_newline_enable')
     let g:autoclose#autoformat_newline_enable = 1

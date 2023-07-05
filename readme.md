@@ -5,7 +5,6 @@ This plugin automatically closes brackets, quotes, and HTML tags in Vim.
 ## Features:
 - Automatically close brackets and quotes.
 - Completes closing HTML tags when typing `>` or `</`.
-- Completes `<%%>` in eruby
 - Provides smart control over completion, so it doesn't interfere when you don't want it to. For example:
   - Doesn't automatically complete the closing character if you already typed both (e.g., `()` won't become `())`)
   - Does not automatically complete closing tags for **void elements** such as `<br>`, `<hr>`, `<img>`, `<input>`, `<link>`, `<meta>`
@@ -62,11 +61,6 @@ Default: `1`
 ```vim
 let g:autoclose#autoclosing_tags_enable = 0
 ```
-- Disabling completion of eruby's <%%>  
-Default: `1`
-```vim
-let g:autoclose#autoclosing_eruby_tags = 0
-```
 - The setting for the next pattern after cursor that disables bracket and quotation completion.  
 By default, the following patterns are set:  
 Default\*: `['\a', '\d', '[^\x01-\x7E]']`  
@@ -79,48 +73,73 @@ To change this setting, add the following to your vimrc file.
 ```vim
 " ex) add the end of line
 let g:autoclose#disable_nextpattern_autoclosing_brackets = [
-  \'\a',
-  \'\d',
-  \'[^\x01-\x7E]',
-  \'$'
-\]
+  \ '\a',
+  \ '\d',
+  \ '[^\x01-\x7E]',
+  \ '$'
+\ ]
 let g:autoclose#disable_nextpattern_autoclosing_quots = [
-  \'\a',
-  \'\d',
-  \'[^\x01-\x7E]',
-  \'$'
-\]
+  \ '\a',
+  \ '\d',
+  \ '[^\x01-\x7E]',
+  \ '$'
+\ ]
 ```
 - Filetypes which tag auto-closing should be enabled  
 Default: `["html", "xml", "javascript", "blade", "eruby", "vue"]`
 ```vim
 " ex) add "markdown"
 let g:autoclose#enabled_autoclosing_tags_filetypes = [
-  \"html",
-  \"xml",
-  \"javascript",
-  \"blade",
-  \"eruby",
-  \"vue",
-  \"markdown"
-\]
+  \ "html",
+  \ "xml",
+  \ "javascript",
+  \ "blade",
+  \ "eruby",
+  \ "vue",
+  \ "markdown"
+\ ]
 ```
 - Extensions which tag auto-closing should be enabled  
 Default: `["*.html", "*.xml", "*.javascript", "*.blade", "*.eruby", "*.vue"]`
 ```vim
 " ex) add "*.md"
 let g:autoclose#enabled_autoclosing_tags_exts = [
-  \"*.html",
-  \"*.xml",
-  \"*.js",
-  \"*.blade.php",
-  \"*.erb",
-  \"*.vue",
-  \"*.md"
-\]
+  \ "*.html",
+  \ "*.xml",
+  \ "*.js",
+  \ "*.blade.php",
+  \ "*.erb",
+  \ "*.vue",
+  \ "*.md"
+\ ]
 ```
 The above settings are the default configuration.  
 If you do not specify any settings, these defaults will be applied.
+
+- Custom Completion  
+You can define custom completion.  
+
+For Example:
+```vim
+augroup autoclose#custom_completion
+  autocmd!
+  " html commentout
+  autocmd FileType html,vue call autoclose#custom_completion({
+    \ 'prev_char' : '<',
+    \ 'input_char': '!',
+    \ 'output'    : '!--  -->',
+    \ 'back_count': 4
+  \ })
+  " eruby tag
+  autocmd FileType eruby call autoclose#custom_completion({
+    \ 'prev_char' : '<',
+    \ 'input_char': '%',
+    \ 'output'    : '%%>',
+    \ 'back_count': 2
+  \ })
+augroup END
+```
+
 - Auto-format Line-Break Feature  
 Auto-format line-break in brackets and html tags.  
 For Example:

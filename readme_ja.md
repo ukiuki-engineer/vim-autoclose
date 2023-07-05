@@ -7,7 +7,6 @@
 - 閉じタグの補完  
 →以下を入力した場合に閉じタグが補完される  
 `>`or`</`
-- erubyの<%%>を補完
 - 補完をいい感じに制御
 →補完してほしくない時は無効になるようにいい感じに制御してある。
 例えば以下ように制御してある。(全部を書くと多いので一部だけです)
@@ -56,11 +55,6 @@ Default: `1`
 ```vim
 let g:autoclose#autoclosing_tags_enable = 0
 ```
-- erubyの<%%>補完を無効化
-Default: `1`
-```vim
-let g:autoclose#autoclosing_eruby_tags = 0
-```
 - 括弧補完、クォーテーションを無効にするカーソルの次の文字(pattern)の設定
 デフォルトでは以下が設定されています。  
 Default\*: `['\a', '\d', '[^\x01-\x7E]']`  
@@ -73,46 +67,71 @@ Default\*: `['\a', '\d', '[^\x01-\x7E]']`
 ```vim
 " ex) 行末を追加
 let g:autoclose#disable_nextpattern_autoclosing_brackets = [
-  \'\a',
-  \'\d',
-  \'[^\x01-\x7E]',
-  \'$'
-\]
+  \ '\a',
+  \ '\d',
+  \ '[^\x01-\x7E]',
+  \ '$'
+\ ]
 let g:autoclose#disable_nextpattern_autoclosing_quots = [
-  \'\a',
-  \'\d',
-  \'[^\x01-\x7E]',
-  \'$'
-\]
+  \ '\a',
+  \ '\d',
+  \ '[^\x01-\x7E]',
+  \ '$'
+\ ]
 ```
 - タグ補完を適用するファイルタイプ  
 Default: `["html", "xml", "javascript", "blade", "eruby", "vue"]`
 ```vim
 " ex) "markdown"を追加
 let g:autoclose#enabled_autoclosing_tags_filetypes = [
-  \"html",
-  \"xml",
-  \"javascript",
-  \"blade",
-  \"eruby",
-  \"vue",
-  \"markdown"
-\]
+  \ "html",
+  \ "xml",
+  \ "javascript",
+  \ "blade",
+  \ "eruby",
+  \ "vue",
+  \ "markdown"
+\ ]
 ````
 - タグ補完を適用する拡張子  
 Default: `["*.html", "*.xml", "*.javascript", "*.blade", "*.eruby", "*.vue"]`
 ```vim
 " ex) "*.md"を追加
 let g:autoclose#enabled_autoclosing_tags_exts = [
-  \"*.html",
-  \"*.xml",
-  \"*.js",
-  \"*.blade.php",
-  \"*.erb",
-  \"*.vue",
-  \"*.md"
-\]
+  \ "*.html",
+  \ "*.xml",
+  \ "*.js",
+  \ "*.blade.php",
+  \ "*.erb",
+  \ "*.vue",
+  \ "*.md"
+\ ]
 ```
+
+- カスタム補完  
+カスタム補完を定義することができます。  
+例:
+```vim
+" ex)
+augroup autoclose#custom_completion
+  autocmd!
+  " html commentout
+  autocmd FileType html,vue call autoclose#custom_completion({
+    \ 'prev_char' : '<',
+    \ 'input_char': '!',
+    \ 'output'    : '!--  -->',
+    \ 'back_count': 4
+  \ })
+  " eruby tag
+  autocmd FileType eruby call autoclose#custom_completion({
+    \ 'prev_char' : '<',
+    \ 'input_char': '%',
+    \ 'output'    : '%%>',
+    \ 'back_count': 2
+  \ })
+augroup END
+```
+
 - 改行の自動整形機能  
 括弧、htmlタグの改行を自動整形します。  
 例:
