@@ -42,14 +42,6 @@ if g:autoclose#autoclosing_tags_enable == 1
   augroup END
 endif
 
-" erubyの<%%>補完
-if g:autoclose#autoclosing_eruby_tags_enable == 1
-  augroup autocloseErubyTag
-    au!
-    au FileType,BufEnter * call autoclose#enable_autoclose_eruby_tag()
-  augroup END
-endif
-
 " 改行を良い感じに
 " FIXME: cocの補完決定とダブってしまう。coc-pairsではどうしているのかを見てみる
 if g:autoclose#autoformat_newline_enable == 1

@@ -31,7 +31,6 @@ License : MIT license  {{{
   括弧補完無効化					|autoclose-brackets|
   クォーテーション補完無効化				|autoclose-quots|
   タグ補完無効化					|autoclose-tags|
-  erubyの<%%>補完を無効化				|autoclose-eruby|
   カーソルの次の文字で括弧補完、
   クォーテーション補完を制御				|autoclose-nextpattern|
   タグ補完を適用するファイルタイプ、拡張子の設定	|autoclose-file-types|
@@ -66,7 +65,6 @@ htmlのタグ補完
 	括弧補完             →有効
 	クォーテーション補完 →有効
 	タグ補完             →有効
-	erubyの<%%>補完      →有効
 	タグ補完が有効なファイルの種類:  
 		FileTypes(ファイルタイプ):
 			html, javascript, blade, vue  
@@ -92,12 +90,6 @@ vimrcに以下を追記します。:
 	let g:autoclose#autoclosing_tags_enable = 0
 <
 ------------------------------------------------------------------------------
-erubyの<%%>補完を無効化					*autoclose-eruby*
-vimrcに以下を追記します。:  
->
-	let g:autoclose#autoclosing_eruby_tags = 0
-<
-------------------------------------------------------------------------------
 カーソルの次の文字で括弧補完、クォーテーション補完を制御	*autoclose-nextpattern*
 デフォルトでは以下が設定されています。:  
 	`['\a', '\d', '[^\x01-\x7E]']
@@ -110,16 +102,16 @@ vimrcに以下を追記します。:
 >
 	" ex) 行末を追加
 	let g:autoclose#disable_nextpattern_autoclosing_brackets = [
-	  \'\a',
-	  \'\d',
-	  \'[^\x01-\x7E]',
-	  \'$'
+	  \ '\a',
+	  \ '\d',
+	  \ '[^\x01-\x7E]',
+	  \ '$'
 	\]
 	let g:autoclose#disable_nextpattern_autoclosing_quots = [
-	  \'\a',
-	  \'\d',
-	  \'[^\x01-\x7E]',
-	  \'$'
+	  \ '\a',
+	  \ '\d',
+	  \ '[^\x01-\x7E]',
+	  \ '$'
 	\]
 <
 ------------------------------------------------------------------------------
@@ -128,21 +120,21 @@ vimrcに以下を追記します。:
 >
 	" FileTypes(default)
 	let g:autoclose#enabled_autoclosing_tags_filetypes = [
-	  \"html",
-	  \"xml",
-	  \"javascript",
-	  \"blade",
-	  \"eruby",
-	  \"vue"
+	  \ "html",
+	  \ "xml",
+	  \ "javascript",
+	  \ "blade",
+	  \ "eruby",
+	  \ "vue"
 	\]
 	" extension(default)
 	let g:autoclose#enabled_autoclosing_tags_exts = [
-	  \"*.html",
-	  \"*.xml",
-	  \"*.js",
-	  \"*.blade.php",
-	  \"*.erb",
-	  \"*.vue"
+	  \ "*.html",
+	  \ "*.xml",
+	  \ "*.js",
+	  \ "*.blade.php",
+	  \ "*.erb",
+	  \ "*.vue"
 	\]
 <
 上記はデフォルト設定です。  
