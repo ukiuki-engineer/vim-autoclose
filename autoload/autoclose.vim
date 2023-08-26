@@ -368,4 +368,3 @@ function! s:save_completion_strings(trigger_str, completed_str) abort
   augroup END
 endfunction
 
-" FIXME: :'<,>'norm I"などとすると、""と入力されてしまう
