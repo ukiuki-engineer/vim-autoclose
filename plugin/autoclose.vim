@@ -35,11 +35,7 @@ endif
 
 " タグ補完
 if g:autoclose#autoclosing_tags_enable == 1
-  " タグ入力
-  augroup autocloseTag
-    au!
-    au FileType,BufEnter * call autoclose#enable_autoclose_tag()
-  augroup END
+  call autoclose#enable_autoclose_tag()
 endif
 
 " 改行を良い感じに

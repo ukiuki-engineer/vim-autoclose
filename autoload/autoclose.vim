@@ -101,14 +101,11 @@ function! autoclose#write_close_tag(ket) abort
 endfunction
 
 "
-" 閉じタグ補完を有効化するか判定して、有効化する
+" 閉じタグ補完のmappingを呼ぶ
 "
 function! autoclose#enable_autoclose_tag() abort
-  if index(s:enabled_autoclosing_tags_filetypes, &filetype) != -1 || index(s:enabled_autoclosing_tags_exts, expand('%:e')) != -1
-    " NOTE: mapの引数に<buffer>を指定することで、カレントバッファだけマップする
-    inoremap <buffer> <expr> > autoclose#write_close_tag(">")
-    inoremap <buffer> </ </<C-x><C-o><ESC>F<i
-  endif
+  let filetypes = join(s:enabled_autoclosing_tags_filetypes, ',')
+  execute "augroup autocloseTag | au! | au FileType " .. filetypes .. " call s:mapping_autoclose_tags() | augroup EMD"
 endfunction
 
 "
@@ -366,5 +363,14 @@ function! s:save_completion_strings(trigger_str, completed_str) abort
     au!
     execute 'au InsertLeave * ++once unlet g:autoclose#completion_strings'
   augroup END
+endfunction
+
+"
+" 閉じタグ補完のmapping
+"
+function! s:mapping_autoclose_tags() abort
+  " バッファローカルにマップする
+  inoremap <buffer> <expr> > autoclose#write_close_tag(">")
+  inoremap <buffer> </ </<C-x><C-o><ESC>F<i
 endfunction
 
