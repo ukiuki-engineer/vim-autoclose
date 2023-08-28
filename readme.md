@@ -50,7 +50,6 @@ git clone https://github.com/ukiuki-engineer/vim-autoclose
 
 ```
 FileTypes: html, javascript, blade, vue
-Extensions: *.html, *.js, *.blade.php, *.erb, *.vue
 ```
 
 ## Usage
