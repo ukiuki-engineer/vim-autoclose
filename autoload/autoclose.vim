@@ -105,7 +105,7 @@ endfunction
 "
 function! autoclose#enable_autoclose_tag() abort
   let filetypes = join(s:enabled_autoclosing_tags_filetypes, ',')
-  execute "augroup autocloseTag | au! | au FileType " .. filetypes .. " call s:mapping_autoclose_tags() | augroup EMD"
+  execute "augroup autocloseTag | au! | au FileType " . filetypes . " call s:mapping_autoclose_tags() | augroup EMD"
 endfunction
 
 "
