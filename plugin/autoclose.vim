@@ -43,3 +43,12 @@ endif
 if g:autoclose#autoformat_newline_enable == 1
   inoremap <expr> <Cr> autoclose#autoformat_newline()
 endif
+
+let g:autoclose#disabled_filetypes = ["html"]
+
+" 指定されたFileTypeで補完無効化
+if exists('g:autoclose#disabled_filetypes')
+  let filetypes = join(g:autoclose#disabled_filetypes, ',')
+  execute "autocmd FileType " .. filetypes .. " call autoclose#disable_completion()"
+endif
+

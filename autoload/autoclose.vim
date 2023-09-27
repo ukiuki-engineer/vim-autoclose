@@ -117,7 +117,6 @@ endfunction
 "   \ 'output'    : '!--  -->',
 "   \ 'back_count': 4
 " \ })
-
 function! autoclose#custom_completion(rule) abort
   execute "inoremap <buffer><expr>"
     \ a:rule['input_char']
@@ -234,6 +233,20 @@ function! autoclose#reflect_vimrc() abort
   endif
 endfunction
 
+" 
+" 補完無効化
+" 
+function! autoclose#disable_completion() abort
+  inoremap <buffer> ( (
+  inoremap <buffer> ) )
+  inoremap <buffer> [ [
+  inoremap <buffer> ] ]
+  inoremap <buffer> { {
+  inoremap <buffer> } }
+  inoremap <buffer> " "
+  inoremap <buffer> ' '
+  inoremap <buffer> ` `
+endfunction
 " ------------------------------------------------------------------------------
 " private
 " ------------------------------------------------------------------------------
