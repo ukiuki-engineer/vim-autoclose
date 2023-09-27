@@ -100,7 +100,6 @@ let g:autoclose#cancel_completion_enable = 1 " Default: 0
 " Key mapping for cancel feature
 inoremap <expr> <C-c> autoclose#is_completion() ? autoclose#cancel_completion() : "\<Esc>"
 
-" Autocompletion Cancel Feature
 " -----------------------------------------------------------------------------
 " Custom Completion
 augroup autoclose#custom_completion
@@ -134,22 +133,8 @@ augroup autoclose#custom_completion
         \ 'back_count': 3
         \ })
 augroup END
-" -----------------------------------------------------------------------------
-" Disable Completion
-augroup autoclose#disable_completion
-  autocmd!
-  autocmd FileType TelescopePrompt call DisableAutocloseCompletion()
-augroup END
 
-function! DisableAutocloseCompletion() abort
-  inoremap <buffer> ( (
-  inoremap <buffer> ) )
-  inoremap <buffer> [ [
-  inoremap <buffer> ] ]
-  inoremap <buffer> { {
-  inoremap <buffer> } }
-  inoremap <buffer> " "
-  inoremap <buffer> ' '
-  inoremap <buffer> ` `
-endfunction
+" -----------------------------------------------------------------------------
+" Disable Completion FileTypes
+let g:autoclose#disabled_filetypes = ["TelescopePrompt"]
 ```
