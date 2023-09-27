@@ -117,7 +117,6 @@ endfunction
 "   \ 'output'    : '!--  -->',
 "   \ 'back_count': 4
 " \ })
-
 function! autoclose#custom_completion(rule) abort
   execute "inoremap <buffer><expr>"
     \ a:rule['input_char']
