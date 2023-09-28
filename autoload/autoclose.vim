@@ -233,9 +233,9 @@ function! autoclose#reflect_vimrc() abort
   endif
 endfunction
 
-" 
+"
 " 補完無効化
-" 
+"
 function! autoclose#disable_completion() abort
   inoremap <buffer> ( (
   inoremap <buffer> ) )
