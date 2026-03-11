@@ -101,6 +101,8 @@ inoremap <expr> <C-c> autoclose#is_completion() ? autoclose#cancel_completion() 
 
 " -----------------------------------------------------------------------------
 " Custom Completion
+" NOTE:
+"   prev_char に '' を指定すると、直前文字に関係なく補完されます。
 augroup autoclose#custom_completion
   autocmd!
   " html commentout

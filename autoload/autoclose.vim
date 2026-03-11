@@ -129,8 +129,8 @@ endfunction
 function! autoclose#output_custom_completion(prev_char, input_char, output, back_count) abort
   " カーソルの前の文字
   let l:prev_char = getline('.')[col('.') - 2]
-  " カーソルの前の文字が<の場合、--  -->を補完し、それ以外は!を返す
-  if l:prev_char == a:prev_char
+  " prev_char が空文字の場合はワイルドカードとして扱う
+  if a:prev_char == '' || l:prev_char == a:prev_char
     return a:output .. repeat("\<Left>", a:back_count)
   else
     return a:input_char
@@ -386,4 +386,3 @@ function! s:mapping_autoclose_tags() abort
   inoremap <buffer> <expr> > autoclose#write_close_tag(">")
   inoremap <buffer> </ </<C-x><C-o><ESC>F<i
 endfunction
-
